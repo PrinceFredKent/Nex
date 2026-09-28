@@ -1,0 +1,1648 @@
+{
+  "movies": [
+    {
+      "id": "movie-avatar-3",
+      "tmdbId": 83533,
+      "imdbId": "tt1757678",
+      "title": "AVATAR 3: FIRE AND ASH",
+      "originalTitle": "Avatar: Fire and Ash",
+      "type": "movie",
+      "overview": "Avatar: Fire and Ash is an epic sci-fi adventure that continues the journey of Jake Sully and Neytiri as they protect their family and Pandora from growing threats.",
+      "tagline": "The battle for Pandora continues.",
+      "posterUrl": "https://image.tmdb.org/t/p/w500/vL5LR6WdxWPjC3U29hR88W9oV4R.jpg",
+      "backdropUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1600&auto=format&fit=crop",
+      "releaseDate": "2025-12-19",
+      "rating": 8.2,
+      "voteCount": 4500,
+      "runtime": 180,
+      "genres": [
+        "Science Fiction",
+        "Adventure",
+        "Action"
+      ],
+      "cast": [
+        {
+          "name": "Sam Worthington",
+          "character": "Jake Sully"
+        },
+        {
+          "name": "Zoe Saldaña",
+          "character": "Neytiri"
+        },
+        {
+          "name": "Sigourney Weaver",
+          "character": "Kiri"
+        }
+      ],
+      "director": "James Cameron",
+      "trailerKey": "d9MyW72ELq0",
+      "trailerUrl": "https://www.youtube.com/watch?v=d9MyW72ELq0",
+      "featured": true,
+      "trending": true,
+      "status": "published",
+      "views": 45200,
+      "createdAt": "2024-04-01T00:00:00Z",
+      "updatedAt": "2024-04-01T00:00:00Z",
+      "streams": [
+        {
+          "id": "vidlink-83533-0-0",
+          "serverName": "VidLink (Ultra Fast HD)",
+          "quality": "1080p HD",
+          "type": "embed",
+          "url": "https://vidlink.pro/movie/83533?primaryColor=e50914&autoplay=false",
+          "isWorking": true
+        },
+        {
+          "id": "vidsrc-xyz-83533-0-0",
+          "serverName": "VidSrc Alpha (Multi-Sub)",
+          "quality": "1080p",
+          "type": "embed",
+          "url": "https://vidsrc.xyz/embed/movie?tmdb=83533",
+          "isWorking": true
+        },
+        {
+          "id": "vidsrc-cc-83533-0-0",
+          "serverName": "VidSrc VIP (Ad-Reduced)",
+          "quality": "1080p HD",
+          "type": "embed",
+          "url": "https://vidsrc.cc/v2/embed/movie/83533",
+          "isWorking": true
+        },
+        {
+          "id": "superembed-83533-0-0",
+          "serverName": "SuperEmbed / MultiStream",
+          "quality": "Auto / 4K",
+          "type": "embed",
+          "url": "https://multiembed.mov/?video_id=83533&tmdb=1",
+          "isWorking": true
+        },
+        {
+          "id": "autoembed-83533-0-0",
+          "serverName": "AutoEmbed Global",
+          "quality": "1080p",
+          "type": "embed",
+          "url": "https://player.autoembed.cc/embed/movie/83533",
+          "isWorking": true
+        },
+        {
+          "id": "2embed-83533-0-0",
+          "serverName": "2Embed Server",
+          "quality": "720p/1080p",
+          "type": "embed",
+          "url": "https://www.2embed.cc/embed/83533",
+          "isWorking": true
+        },
+        {
+          "id": "smashystream-83533-0-0",
+          "serverName": "SmashyStream Fast",
+          "quality": "1080p",
+          "type": "embed",
+          "url": "https://embed.smashystream.com/playere.php?tmdb=83533",
+          "isWorking": true
+        }
+      ]
+    },
+    {
+      "id": "tv-71446",
+      "tmdbId": 71446,
+      "imdbId": "tt6468322",
+      "title": "Money Heist",
+      "originalTitle": "La Casa de Papel",
+      "type": "tv",
+      "overview": "To carry out the biggest heist in history, a mysterious man called The Professor recruits a band of eight robbers who have a single characteristic: none of them has anything to lose.",
+      "tagline": "The ultimate heist.",
+      "posterUrl": "https://image.tmdb.org/t/p/w500/reEMJA1uzscCbk5rUh1bGWiAbX.jpg",
+      "backdropUrl": "https://image.tmdb.org/t/p/original/gFZri2YbFUBulBgSMrXdEILHiBm.jpg",
+      "releaseDate": "2017-05-02",
+      "rating": 8.3,
+      "voteCount": 18500,
+      "runtime": 50,
+      "genres": [
+        "Crime",
+        "Drama"
+      ],
+      "cast": [
+        {
+          "name": "Álvaro Morte",
+          "character": "The Professor"
+        },
+        {
+          "name": "Úrsula Corberó",
+          "character": "Tokyo"
+        },
+        {
+          "name": "Pedro Alonso",
+          "character": "Berlin"
+        }
+      ],
+      "director": "Álex Pina",
+      "trailerKey": "_InqQJRqGW4",
+      "trailerUrl": "https://www.youtube.com/watch?v=_InqQJRqGW4",
+      "featured": false,
+      "trending": true,
+      "status": "published",
+      "views": 38200,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z",
+      "streams": [],
+      "seasons": [
+        {
+          "seasonNumber": 1,
+          "name": "Season 1",
+          "episodeCount": 13,
+          "episodes": [
+            {
+              "id": "ep-71446-1-1",
+              "episodeNumber": 1,
+              "seasonNumber": 1,
+              "title": "Episode 1",
+              "streams": [
+                {
+                  "id": "vidlink-71446-1-1",
+                  "serverName": "VidLink (Ultra Fast HD)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidlink.pro/tv/71446/1/1?primaryColor=e50914&autoplay=false",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-xyz-71446-1-1",
+                  "serverName": "VidSrc Alpha (Multi-Sub)",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://vidsrc.xyz/embed/tv?tmdb=71446&season=1&episode=1",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-cc-71446-1-1",
+                  "serverName": "VidSrc VIP (Ad-Reduced)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidsrc.cc/v2/embed/tv/71446/1/1",
+                  "isWorking": true
+                },
+                {
+                  "id": "superembed-71446-1-1",
+                  "serverName": "SuperEmbed / MultiStream",
+                  "quality": "Auto / 4K",
+                  "type": "embed",
+                  "url": "https://multiembed.mov/?video_id=71446&tmdb=1&s=1&e=1",
+                  "isWorking": true
+                },
+                {
+                  "id": "autoembed-71446-1-1",
+                  "serverName": "AutoEmbed Global",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://player.autoembed.cc/embed/tv/71446/1/1",
+                  "isWorking": true
+                },
+                {
+                  "id": "2embed-71446-1-1",
+                  "serverName": "2Embed Server",
+                  "quality": "720p/1080p",
+                  "type": "embed",
+                  "url": "https://www.2embed.cc/embedtv/71446&s=1&e=1",
+                  "isWorking": true
+                },
+                {
+                  "id": "smashystream-71446-1-1",
+                  "serverName": "SmashyStream Fast",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://embed.smashystream.com/playere.php?tmdb=71446&season=1&episode=1",
+                  "isWorking": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tv-94997",
+      "tmdbId": 94997,
+      "imdbId": "tt11198330",
+      "title": "House of the Dragon",
+      "originalTitle": "House of the Dragon",
+      "type": "tv",
+      "overview": "The Targaryen dynasty is at the absolute apex of its power, with more than 15 dragons under their yoke. Most empires crumble from heights such as these. In the case of the Targaryens, their slow fall begins when King Viserys breaks with a century of tradition by naming his daughter Rhaenyra heir to the Iron Throne.",
+      "tagline": "Fire will reign.",
+      "posterUrl": "https://image.tmdb.org/t/p/w500/1X4h40fcB4WWUmIBK0auT4zRBAV.jpg",
+      "backdropUrl": "https://image.tmdb.org/t/p/original/etj5CuMuam3hD6p27objegMiBQG.jpg",
+      "releaseDate": "2022-08-21",
+      "rating": 8.4,
+      "voteCount": 4200,
+      "runtime": 60,
+      "genres": [
+        "Drama",
+        "Sci-Fi & Fantasy",
+        "Action & Adventure"
+      ],
+      "cast": [
+        {
+          "name": "Emma D'Arcy",
+          "character": "Princess Rhaenyra Targaryen"
+        },
+        {
+          "name": "Matt Smith",
+          "character": "Prince Daemon Targaryen"
+        }
+      ],
+      "director": "Ryan J. Condal",
+      "trailerKey": "DotnJ7tTA34",
+      "trailerUrl": "https://www.youtube.com/watch?v=DotnJ7tTA34",
+      "featured": false,
+      "trending": true,
+      "status": "published",
+      "views": 41200,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z",
+      "streams": [],
+      "seasons": [
+        {
+          "seasonNumber": 1,
+          "name": "Season 1",
+          "episodeCount": 10,
+          "episodes": [
+            {
+              "id": "ep-94997-1-1",
+              "episodeNumber": 1,
+              "seasonNumber": 1,
+              "title": "The Heirs of the Dragon",
+              "streams": [
+                {
+                  "id": "vidlink-94997-1-1",
+                  "serverName": "VidLink (Ultra Fast HD)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidlink.pro/tv/94997/1/1?primaryColor=e50914&autoplay=false",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-xyz-94997-1-1",
+                  "serverName": "VidSrc Alpha (Multi-Sub)",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://vidsrc.xyz/embed/tv?tmdb=94997&season=1&episode=1",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-cc-94997-1-1",
+                  "serverName": "VidSrc VIP (Ad-Reduced)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidsrc.cc/v2/embed/tv/94997/1/1",
+                  "isWorking": true
+                },
+                {
+                  "id": "superembed-94997-1-1",
+                  "serverName": "SuperEmbed / MultiStream",
+                  "quality": "Auto / 4K",
+                  "type": "embed",
+                  "url": "https://multiembed.mov/?video_id=94997&tmdb=1&s=1&e=1",
+                  "isWorking": true
+                },
+                {
+                  "id": "autoembed-94997-1-1",
+                  "serverName": "AutoEmbed Global",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://player.autoembed.cc/embed/tv/94997/1/1",
+                  "isWorking": true
+                },
+                {
+                  "id": "2embed-94997-1-1",
+                  "serverName": "2Embed Server",
+                  "quality": "720p/1080p",
+                  "type": "embed",
+                  "url": "https://www.2embed.cc/embedtv/94997&s=1&e=1",
+                  "isWorking": true
+                },
+                {
+                  "id": "smashystream-94997-1-1",
+                  "serverName": "SmashyStream Fast",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://embed.smashystream.com/playere.php?tmdb=94997&season=1&episode=1",
+                  "isWorking": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tv-1399",
+      "tmdbId": 1399,
+      "imdbId": "tt0944947",
+      "title": "Game of Thrones",
+      "originalTitle": "Game of Thrones",
+      "type": "tv",
+      "overview": "Seven noble families fight for control of the mythical land of Westeros. Friction between the houses leads to full-scale war. All while a very ancient evil awakens in the farthest north.",
+      "tagline": "Winter is Coming.",
+      "posterUrl": "https://image.tmdb.org/t/p/w500/1XS1oqL89opfnbLl8WnZY1O1uJx.jpg",
+      "backdropUrl": "https://image.tmdb.org/t/p/original/2OMB0ynKlyIenMJWI2Dy9IWT4c.jpg",
+      "releaseDate": "2011-04-17",
+      "rating": 8.4,
+      "voteCount": 23000,
+      "runtime": 60,
+      "genres": [
+        "Sci-Fi & Fantasy",
+        "Drama",
+        "Action & Adventure"
+      ],
+      "cast": [
+        {
+          "name": "Emilia Clarke",
+          "character": "Daenerys Targaryen"
+        },
+        {
+          "name": "Kit Harington",
+          "character": "Jon Snow"
+        },
+        {
+          "name": "Peter Dinklage",
+          "character": "Tyrion Lannister"
+        }
+      ],
+      "director": "David Benioff",
+      "trailerKey": "KPLWWIOCOOQ",
+      "trailerUrl": "https://www.youtube.com/watch?v=KPLWWIOCOOQ",
+      "featured": false,
+      "trending": true,
+      "status": "published",
+      "views": 65006,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z",
+      "streams": [],
+      "seasons": [
+        {
+          "seasonNumber": 1,
+          "name": "Season 1",
+          "episodeCount": 10,
+          "episodes": [
+            {
+              "id": "ep-1399-1-1",
+              "episodeNumber": 1,
+              "seasonNumber": 1,
+              "title": "Winter Is Coming",
+              "streams": [
+                {
+                  "id": "vidlink-1399-1-1",
+                  "serverName": "VidLink (Ultra Fast HD)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidlink.pro/tv/1399/1/1?primaryColor=e50914&autoplay=false",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-xyz-1399-1-1",
+                  "serverName": "VidSrc Alpha (Multi-Sub)",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://vidsrc.xyz/embed/tv?tmdb=1399&season=1&episode=1",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-cc-1399-1-1",
+                  "serverName": "VidSrc VIP (Ad-Reduced)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidsrc.cc/v2/embed/tv/1399/1/1",
+                  "isWorking": true
+                },
+                {
+                  "id": "superembed-1399-1-1",
+                  "serverName": "SuperEmbed / MultiStream",
+                  "quality": "Auto / 4K",
+                  "type": "embed",
+                  "url": "https://multiembed.mov/?video_id=1399&tmdb=1&s=1&e=1",
+                  "isWorking": true
+                },
+                {
+                  "id": "autoembed-1399-1-1",
+                  "serverName": "AutoEmbed Global",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://player.autoembed.cc/embed/tv/1399/1/1",
+                  "isWorking": true
+                },
+                {
+                  "id": "2embed-1399-1-1",
+                  "serverName": "2Embed Server",
+                  "quality": "720p/1080p",
+                  "type": "embed",
+                  "url": "https://www.2embed.cc/embedtv/1399&s=1&e=1",
+                  "isWorking": true
+                },
+                {
+                  "id": "smashystream-1399-1-1",
+                  "serverName": "SmashyStream Fast",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://embed.smashystream.com/playere.php?tmdb=1399&season=1&episode=1",
+                  "isWorking": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "movie-693134",
+      "tmdbId": 693134,
+      "imdbId": "tt15239678",
+      "title": "Dune: Part Two",
+      "originalTitle": "Dune: Part Two",
+      "type": "movie",
+      "overview": "Follow the mythic journey of Paul Atreides as he unites with Chani and the Fremen while on a path of revenge against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the universe, he endeavors to prevent a terrible future only he can foresee.",
+      "tagline": "Long live the fighters.",
+      "posterUrl": "https://image.tmdb.org/t/p/w500/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg",
+      "backdropUrl": "https://image.tmdb.org/t/p/original/xOMo8BRK7PfcJv9JCnx7s520b2.jpg",
+      "releaseDate": "2024-02-27",
+      "rating": 8.2,
+      "voteCount": 5200,
+      "runtime": 166,
+      "genres": [
+        "Science Fiction",
+        "Adventure"
+      ],
+      "cast": [
+        {
+          "name": "Timothée Chalamet",
+          "character": "Paul Atreides",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/BE2sdjpgsa2rNTFa66f7upkaOP.jpg"
+        },
+        {
+          "name": "Zendaya",
+          "character": "Chani",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/r3A7dr7emgjIPAQAcLNs3954qp7.jpg"
+        },
+        {
+          "name": "Rebecca Ferguson",
+          "character": "Lady Jessica",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/6NRV5k3p1p0q7P4GvWkY3fI6lFk.jpg"
+        },
+        {
+          "name": "Javier Bardem",
+          "character": "Stilgar",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/6PjhC4c9f1r1zF3vjU7sBq4W5l6.jpg"
+        }
+      ],
+      "director": "Denis Villeneuve",
+      "trailerKey": "Way9Dexny3w",
+      "trailerUrl": "https://www.youtube.com/watch?v=Way9Dexny3w",
+      "featured": true,
+      "trending": true,
+      "status": "published",
+      "views": 18450,
+      "createdAt": "2024-03-01T10:00:00Z",
+      "updatedAt": "2024-03-01T10:00:00Z",
+      "streams": [
+        {
+          "id": "vidlink-693134-0-0",
+          "serverName": "VidLink (Ultra Fast HD)",
+          "quality": "1080p HD",
+          "type": "embed",
+          "url": "https://vidlink.pro/movie/693134?primaryColor=e50914&autoplay=false",
+          "isWorking": true
+        },
+        {
+          "id": "vidsrc-xyz-693134-0-0",
+          "serverName": "VidSrc Alpha (Multi-Sub)",
+          "quality": "1080p",
+          "type": "embed",
+          "url": "https://vidsrc.xyz/embed/movie?tmdb=693134",
+          "isWorking": true
+        },
+        {
+          "id": "vidsrc-cc-693134-0-0",
+          "serverName": "VidSrc VIP (Ad-Reduced)",
+          "quality": "1080p HD",
+          "type": "embed",
+          "url": "https://vidsrc.cc/v2/embed/movie/693134",
+          "isWorking": true
+        },
+        {
+          "id": "superembed-693134-0-0",
+          "serverName": "SuperEmbed / MultiStream",
+          "quality": "Auto / 4K",
+          "type": "embed",
+          "url": "https://multiembed.mov/?video_id=693134&tmdb=1",
+          "isWorking": true
+        },
+        {
+          "id": "autoembed-693134-0-0",
+          "serverName": "AutoEmbed Global",
+          "quality": "1080p",
+          "type": "embed",
+          "url": "https://player.autoembed.cc/embed/movie/693134",
+          "isWorking": true
+        },
+        {
+          "id": "2embed-693134-0-0",
+          "serverName": "2Embed Server",
+          "quality": "720p/1080p",
+          "type": "embed",
+          "url": "https://www.2embed.cc/embed/693134",
+          "isWorking": true
+        },
+        {
+          "id": "smashystream-693134-0-0",
+          "serverName": "SmashyStream Fast",
+          "quality": "1080p",
+          "type": "embed",
+          "url": "https://embed.smashystream.com/playere.php?tmdb=693134",
+          "isWorking": true
+        }
+      ]
+    },
+    {
+      "id": "movie-872585",
+      "tmdbId": 872585,
+      "imdbId": "tt15398776",
+      "title": "Oppenheimer",
+      "originalTitle": "Oppenheimer",
+      "type": "movie",
+      "overview": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II, his leadership of the Manhattan Project's Los Alamos Laboratory, and the political fallout thereafter.",
+      "tagline": "The world forever changes.",
+      "posterUrl": "https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg",
+      "backdropUrl": "https://image.tmdb.org/t/p/original/rM5Y09xC9YNiFAVhyII5nv2LQA0.jpg",
+      "releaseDate": "2023-07-19",
+      "rating": 8.1,
+      "voteCount": 9200,
+      "runtime": 181,
+      "genres": [
+        "Drama",
+        "History"
+      ],
+      "cast": [
+        {
+          "name": "Cillian Murphy",
+          "character": "J. Robert Oppenheimer",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/iT63tXz7Z7vj2b8X6q4Vw6N3F0P.jpg"
+        },
+        {
+          "name": "Emily Blunt",
+          "character": "Katherine Oppenheimer",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/h1B7E20j1B3gq4F2M8e4U7R9hL8.jpg"
+        },
+        {
+          "name": "Matt Damon",
+          "character": "Leslie Groves",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/elSlNg0WqjAonvssyBnx6a1bW1K.jpg"
+        },
+        {
+          "name": "Robert Downey Jr.",
+          "character": "Lewis Strauss",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/1YjdSym1jA7LnUXw1p6k4L8sV4e.jpg"
+        }
+      ],
+      "director": "Christopher Nolan",
+      "trailerKey": "uYPbbksJxIg",
+      "trailerUrl": "https://www.youtube.com/watch?v=uYPbbksJxIg",
+      "featured": true,
+      "trending": true,
+      "status": "published",
+      "views": 24200,
+      "createdAt": "2024-01-10T12:00:00Z",
+      "updatedAt": "2024-01-10T12:00:00Z",
+      "streams": [
+        {
+          "id": "vidlink-872585-0-0",
+          "serverName": "VidLink (Ultra Fast HD)",
+          "quality": "1080p HD",
+          "type": "embed",
+          "url": "https://vidlink.pro/movie/872585?primaryColor=e50914&autoplay=false",
+          "isWorking": true
+        },
+        {
+          "id": "vidsrc-xyz-872585-0-0",
+          "serverName": "VidSrc Alpha (Multi-Sub)",
+          "quality": "1080p",
+          "type": "embed",
+          "url": "https://vidsrc.xyz/embed/movie?tmdb=872585",
+          "isWorking": true
+        },
+        {
+          "id": "vidsrc-cc-872585-0-0",
+          "serverName": "VidSrc VIP (Ad-Reduced)",
+          "quality": "1080p HD",
+          "type": "embed",
+          "url": "https://vidsrc.cc/v2/embed/movie/872585",
+          "isWorking": true
+        },
+        {
+          "id": "superembed-872585-0-0",
+          "serverName": "SuperEmbed / MultiStream",
+          "quality": "Auto / 4K",
+          "type": "embed",
+          "url": "https://multiembed.mov/?video_id=872585&tmdb=1",
+          "isWorking": true
+        },
+        {
+          "id": "autoembed-872585-0-0",
+          "serverName": "AutoEmbed Global",
+          "quality": "1080p",
+          "type": "embed",
+          "url": "https://player.autoembed.cc/embed/movie/872585",
+          "isWorking": true
+        },
+        {
+          "id": "2embed-872585-0-0",
+          "serverName": "2Embed Server",
+          "quality": "720p/1080p",
+          "type": "embed",
+          "url": "https://www.2embed.cc/embed/872585",
+          "isWorking": true
+        },
+        {
+          "id": "smashystream-872585-0-0",
+          "serverName": "SmashyStream Fast",
+          "quality": "1080p",
+          "type": "embed",
+          "url": "https://embed.smashystream.com/playere.php?tmdb=872585",
+          "isWorking": true
+        }
+      ]
+    },
+    {
+      "id": "movie-157336",
+      "tmdbId": 157336,
+      "imdbId": "tt0816692",
+      "title": "Interstellar",
+      "originalTitle": "Interstellar",
+      "type": "movie",
+      "overview": "The adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel and conquer the vast distances involved in an interstellar voyage.",
+      "tagline": "Mankind was born on Earth. It was never meant to die here.",
+      "posterUrl": "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
+      "backdropUrl": "https://image.tmdb.org/t/p/original/rAiYTsqOdAc0V9avXnGnTyB9aqE.jpg",
+      "releaseDate": "2014-11-05",
+      "rating": 8.4,
+      "voteCount": 35000,
+      "runtime": 169,
+      "genres": [
+        "Adventure",
+        "Drama",
+        "Science Fiction"
+      ],
+      "cast": [
+        {
+          "name": "Matthew McConaughey",
+          "character": "Joseph Cooper"
+        },
+        {
+          "name": "Anne Hathaway",
+          "character": "Dr. Amelia Brand"
+        },
+        {
+          "name": "Jessica Chastain",
+          "character": "Murphy Cooper"
+        },
+        {
+          "name": "Michael Caine",
+          "character": "Professor John Brand"
+        }
+      ],
+      "director": "Christopher Nolan",
+      "trailerKey": "zSWdZVtXT7E",
+      "trailerUrl": "https://www.youtube.com/watch?v=zSWdZVtXT7E",
+      "featured": true,
+      "trending": false,
+      "status": "published",
+      "views": 31050,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z",
+      "streams": [
+        {
+          "id": "vidlink-157336-0-0",
+          "serverName": "VidLink (Ultra Fast HD)",
+          "quality": "1080p HD",
+          "type": "embed",
+          "url": "https://vidlink.pro/movie/157336?primaryColor=e50914&autoplay=false",
+          "isWorking": true
+        },
+        {
+          "id": "vidsrc-xyz-157336-0-0",
+          "serverName": "VidSrc Alpha (Multi-Sub)",
+          "quality": "1080p",
+          "type": "embed",
+          "url": "https://vidsrc.xyz/embed/movie?tmdb=157336",
+          "isWorking": true
+        },
+        {
+          "id": "vidsrc-cc-157336-0-0",
+          "serverName": "VidSrc VIP (Ad-Reduced)",
+          "quality": "1080p HD",
+          "type": "embed",
+          "url": "https://vidsrc.cc/v2/embed/movie/157336",
+          "isWorking": true
+        },
+        {
+          "id": "superembed-157336-0-0",
+          "serverName": "SuperEmbed / MultiStream",
+          "quality": "Auto / 4K",
+          "type": "embed",
+          "url": "https://multiembed.mov/?video_id=157336&tmdb=1",
+          "isWorking": true
+        },
+        {
+          "id": "autoembed-157336-0-0",
+          "serverName": "AutoEmbed Global",
+          "quality": "1080p",
+          "type": "embed",
+          "url": "https://player.autoembed.cc/embed/movie/157336",
+          "isWorking": true
+        },
+        {
+          "id": "2embed-157336-0-0",
+          "serverName": "2Embed Server",
+          "quality": "720p/1080p",
+          "type": "embed",
+          "url": "https://www.2embed.cc/embed/157336",
+          "isWorking": true
+        },
+        {
+          "id": "smashystream-157336-0-0",
+          "serverName": "SmashyStream Fast",
+          "quality": "1080p",
+          "type": "embed",
+          "url": "https://embed.smashystream.com/playere.php?tmdb=157336",
+          "isWorking": true
+        }
+      ]
+    },
+    {
+      "id": "tv-100088",
+      "tmdbId": 100088,
+      "imdbId": "tt3581920",
+      "title": "The Last of Us",
+      "originalTitle": "The Last of Us",
+      "type": "tv",
+      "overview": "Twenty years after modern civilization has been destroyed, Joel, a hardened survivor, is hired to smuggle Ellie, a 14-year-old girl, out of an oppressive quarantine zone. What starts as a small job soon becomes a brutal, heartbreaking journey, as they both must traverse the U.S. and depend on each other for survival.",
+      "tagline": "When you're lost in the darkness, look for the light.",
+      "posterUrl": "https://image.tmdb.org/t/p/w500/uKvVjHNqB5VmOrdxqAt2V7JMrne.jpg",
+      "backdropUrl": "https://image.tmdb.org/t/p/original/uDgy6hyPd82kOHh6I95FLtLnj6p.jpg",
+      "releaseDate": "2023-01-15",
+      "rating": 8.6,
+      "voteCount": 5000,
+      "runtime": 60,
+      "genres": [
+        "Drama",
+        "Action & Adventure",
+        "Sci-Fi & Fantasy"
+      ],
+      "cast": [
+        {
+          "name": "Pedro Pascal",
+          "character": "Joel Miller"
+        },
+        {
+          "name": "Bella Ramsey",
+          "character": "Ellie Williams"
+        },
+        {
+          "name": "Gabriel Luna",
+          "character": "Tommy Miller"
+        }
+      ],
+      "director": "Craig Mazin",
+      "trailerKey": "uLtkt8BonwM",
+      "trailerUrl": "https://www.youtube.com/watch?v=uLtkt8BonwM",
+      "featured": true,
+      "trending": true,
+      "status": "published",
+      "views": 29500,
+      "createdAt": "2024-02-15T00:00:00Z",
+      "updatedAt": "2024-02-15T00:00:00Z",
+      "streams": [],
+      "seasons": [
+        {
+          "seasonNumber": 1,
+          "name": "Season 1",
+          "overview": "Twenty years after a fungal infection devastates the planet, survivors Joel and Ellie embark on a cross-country mission.",
+          "posterUrl": "https://image.tmdb.org/t/p/w342/uKvVjHNqB5VmOrdxqAt2V7JMrne.jpg",
+          "episodeCount": 9,
+          "episodes": [
+            {
+              "id": "ep-100088-1-1",
+              "episodeNumber": 1,
+              "seasonNumber": 1,
+              "title": "When You're Lost in the Darkness",
+              "overview": "Twenty years after a fungal outbreak ravages the planet, survivors Joel and Tess are tasked with a mission that could change everything.",
+              "stillUrl": "https://image.tmdb.org/t/p/w780/6Lw54zT5sv28AtAOGmxEZFe2RRF.jpg",
+              "runtime": 81,
+              "streams": [
+                {
+                  "id": "vidlink-100088-1-1",
+                  "serverName": "VidLink (Ultra Fast HD)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidlink.pro/tv/100088/1/1?primaryColor=e50914&autoplay=false",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-xyz-100088-1-1",
+                  "serverName": "VidSrc Alpha (Multi-Sub)",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://vidsrc.xyz/embed/tv?tmdb=100088&season=1&episode=1",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-cc-100088-1-1",
+                  "serverName": "VidSrc VIP (Ad-Reduced)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidsrc.cc/v2/embed/tv/100088/1/1",
+                  "isWorking": true
+                },
+                {
+                  "id": "superembed-100088-1-1",
+                  "serverName": "SuperEmbed / MultiStream",
+                  "quality": "Auto / 4K",
+                  "type": "embed",
+                  "url": "https://multiembed.mov/?video_id=100088&tmdb=1&s=1&e=1",
+                  "isWorking": true
+                },
+                {
+                  "id": "autoembed-100088-1-1",
+                  "serverName": "AutoEmbed Global",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://player.autoembed.cc/embed/tv/100088/1/1",
+                  "isWorking": true
+                },
+                {
+                  "id": "2embed-100088-1-1",
+                  "serverName": "2Embed Server",
+                  "quality": "720p/1080p",
+                  "type": "embed",
+                  "url": "https://www.2embed.cc/embedtv/100088&s=1&e=1",
+                  "isWorking": true
+                },
+                {
+                  "id": "smashystream-100088-1-1",
+                  "serverName": "SmashyStream Fast",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://embed.smashystream.com/playere.php?tmdb=100088&season=1&episode=1",
+                  "isWorking": true
+                }
+              ]
+            },
+            {
+              "id": "ep-100088-1-2",
+              "episodeNumber": 2,
+              "seasonNumber": 1,
+              "title": "Infected",
+              "overview": "After escaping the QZ, Joel and Tess clash over Ellie's fate while navigating the ruins of a long-abandoned Boston.",
+              "stillUrl": "https://image.tmdb.org/t/p/w780/hPe655vV4l3q8d2s9fGgWzZf5d9.jpg",
+              "runtime": 53,
+              "streams": [
+                {
+                  "id": "vidlink-100088-1-2",
+                  "serverName": "VidLink (Ultra Fast HD)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidlink.pro/tv/100088/1/2?primaryColor=e50914&autoplay=false",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-xyz-100088-1-2",
+                  "serverName": "VidSrc Alpha (Multi-Sub)",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://vidsrc.xyz/embed/tv?tmdb=100088&season=1&episode=2",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-cc-100088-1-2",
+                  "serverName": "VidSrc VIP (Ad-Reduced)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidsrc.cc/v2/embed/tv/100088/1/2",
+                  "isWorking": true
+                },
+                {
+                  "id": "superembed-100088-1-2",
+                  "serverName": "SuperEmbed / MultiStream",
+                  "quality": "Auto / 4K",
+                  "type": "embed",
+                  "url": "https://multiembed.mov/?video_id=100088&tmdb=1&s=1&e=2",
+                  "isWorking": true
+                },
+                {
+                  "id": "autoembed-100088-1-2",
+                  "serverName": "AutoEmbed Global",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://player.autoembed.cc/embed/tv/100088/1/2",
+                  "isWorking": true
+                },
+                {
+                  "id": "2embed-100088-1-2",
+                  "serverName": "2Embed Server",
+                  "quality": "720p/1080p",
+                  "type": "embed",
+                  "url": "https://www.2embed.cc/embedtv/100088&s=1&e=2",
+                  "isWorking": true
+                },
+                {
+                  "id": "smashystream-100088-1-2",
+                  "serverName": "SmashyStream Fast",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://embed.smashystream.com/playere.php?tmdb=100088&season=1&episode=2",
+                  "isWorking": true
+                }
+              ]
+            },
+            {
+              "id": "ep-100088-1-3",
+              "episodeNumber": 3,
+              "seasonNumber": 1,
+              "title": "Long, Long Time",
+              "overview": "When a stranger approaches his compound, survivalist Bill forges an unlikely connection. Years later, Joel and Ellie seek Bill's guidance.",
+              "stillUrl": "https://image.tmdb.org/t/p/w780/kKeq6d7y3f5jG6p7q2w9x8f9.jpg",
+              "runtime": 76,
+              "streams": [
+                {
+                  "id": "vidlink-100088-1-3",
+                  "serverName": "VidLink (Ultra Fast HD)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidlink.pro/tv/100088/1/3?primaryColor=e50914&autoplay=false",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-xyz-100088-1-3",
+                  "serverName": "VidSrc Alpha (Multi-Sub)",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://vidsrc.xyz/embed/tv?tmdb=100088&season=1&episode=3",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-cc-100088-1-3",
+                  "serverName": "VidSrc VIP (Ad-Reduced)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidsrc.cc/v2/embed/tv/100088/1/3",
+                  "isWorking": true
+                },
+                {
+                  "id": "superembed-100088-1-3",
+                  "serverName": "SuperEmbed / MultiStream",
+                  "quality": "Auto / 4K",
+                  "type": "embed",
+                  "url": "https://multiembed.mov/?video_id=100088&tmdb=1&s=1&e=3",
+                  "isWorking": true
+                },
+                {
+                  "id": "autoembed-100088-1-3",
+                  "serverName": "AutoEmbed Global",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://player.autoembed.cc/embed/tv/100088/1/3",
+                  "isWorking": true
+                },
+                {
+                  "id": "2embed-100088-1-3",
+                  "serverName": "2Embed Server",
+                  "quality": "720p/1080p",
+                  "type": "embed",
+                  "url": "https://www.2embed.cc/embedtv/100088&s=1&e=3",
+                  "isWorking": true
+                },
+                {
+                  "id": "smashystream-100088-1-3",
+                  "serverName": "SmashyStream Fast",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://embed.smashystream.com/playere.php?tmdb=100088&season=1&episode=3",
+                  "isWorking": true
+                }
+              ]
+            },
+            {
+              "id": "ep-100088-1-4",
+              "episodeNumber": 4,
+              "seasonNumber": 1,
+              "title": "Please Hold to My Hand",
+              "overview": "After abandoning their truck in Kansas City, Joel and Ellie must escape without drawing the attention of a vindictive rebel leader.",
+              "stillUrl": "https://image.tmdb.org/t/p/w780/uLtkt8BonwM.jpg",
+              "runtime": 45,
+              "streams": [
+                {
+                  "id": "vidlink-100088-1-4",
+                  "serverName": "VidLink (Ultra Fast HD)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidlink.pro/tv/100088/1/4?primaryColor=e50914&autoplay=false",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-xyz-100088-1-4",
+                  "serverName": "VidSrc Alpha (Multi-Sub)",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://vidsrc.xyz/embed/tv?tmdb=100088&season=1&episode=4",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-cc-100088-1-4",
+                  "serverName": "VidSrc VIP (Ad-Reduced)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidsrc.cc/v2/embed/tv/100088/1/4",
+                  "isWorking": true
+                },
+                {
+                  "id": "superembed-100088-1-4",
+                  "serverName": "SuperEmbed / MultiStream",
+                  "quality": "Auto / 4K",
+                  "type": "embed",
+                  "url": "https://multiembed.mov/?video_id=100088&tmdb=1&s=1&e=4",
+                  "isWorking": true
+                },
+                {
+                  "id": "autoembed-100088-1-4",
+                  "serverName": "AutoEmbed Global",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://player.autoembed.cc/embed/tv/100088/1/4",
+                  "isWorking": true
+                },
+                {
+                  "id": "2embed-100088-1-4",
+                  "serverName": "2Embed Server",
+                  "quality": "720p/1080p",
+                  "type": "embed",
+                  "url": "https://www.2embed.cc/embedtv/100088&s=1&e=4",
+                  "isWorking": true
+                },
+                {
+                  "id": "smashystream-100088-1-4",
+                  "serverName": "SmashyStream Fast",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://embed.smashystream.com/playere.php?tmdb=100088&season=1&episode=4",
+                  "isWorking": true
+                }
+              ]
+            },
+            {
+              "id": "ep-100088-1-5",
+              "episodeNumber": 5,
+              "seasonNumber": 1,
+              "title": "Endure and Survive",
+              "overview": "While attempting to evade the rebels, Joel and Ellie cross paths with the most wanted man in Kansas City.",
+              "stillUrl": "https://image.tmdb.org/t/p/w780/6Lw54zT5sv28AtAOGmxEZFe2RRF.jpg",
+              "runtime": 59,
+              "streams": [
+                {
+                  "id": "vidlink-100088-1-5",
+                  "serverName": "VidLink (Ultra Fast HD)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidlink.pro/tv/100088/1/5?primaryColor=e50914&autoplay=false",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-xyz-100088-1-5",
+                  "serverName": "VidSrc Alpha (Multi-Sub)",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://vidsrc.xyz/embed/tv?tmdb=100088&season=1&episode=5",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-cc-100088-1-5",
+                  "serverName": "VidSrc VIP (Ad-Reduced)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidsrc.cc/v2/embed/tv/100088/1/5",
+                  "isWorking": true
+                },
+                {
+                  "id": "superembed-100088-1-5",
+                  "serverName": "SuperEmbed / MultiStream",
+                  "quality": "Auto / 4K",
+                  "type": "embed",
+                  "url": "https://multiembed.mov/?video_id=100088&tmdb=1&s=1&e=5",
+                  "isWorking": true
+                },
+                {
+                  "id": "autoembed-100088-1-5",
+                  "serverName": "AutoEmbed Global",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://player.autoembed.cc/embed/tv/100088/1/5",
+                  "isWorking": true
+                },
+                {
+                  "id": "2embed-100088-1-5",
+                  "serverName": "2Embed Server",
+                  "quality": "720p/1080p",
+                  "type": "embed",
+                  "url": "https://www.2embed.cc/embedtv/100088&s=1&e=5",
+                  "isWorking": true
+                },
+                {
+                  "id": "smashystream-100088-1-5",
+                  "serverName": "SmashyStream Fast",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://embed.smashystream.com/playere.php?tmdb=100088&season=1&episode=5",
+                  "isWorking": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tv-66732",
+      "tmdbId": 66732,
+      "imdbId": "tt4574334",
+      "title": "Stranger Things",
+      "originalTitle": "Stranger Things",
+      "type": "tv",
+      "overview": "When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces and one strange little girl.",
+      "tagline": "Every ending has a beginning.",
+      "posterUrl": "https://image.tmdb.org/t/p/w500/49WJfeN0moxb9IPfGn8AIqMGskD.jpg",
+      "backdropUrl": "https://image.tmdb.org/t/p/original/56v2KjBlU4XaOv9rVYEQypROD7P.jpg",
+      "releaseDate": "2016-07-15",
+      "rating": 8.6,
+      "voteCount": 16800,
+      "runtime": 50,
+      "genres": [
+        "Sci-Fi & Fantasy",
+        "Drama",
+        "Mystery"
+      ],
+      "cast": [
+        {
+          "name": "Millie Bobby Brown",
+          "character": "Eleven"
+        },
+        {
+          "name": "Finn Wolfhard",
+          "character": "Mike Wheeler"
+        },
+        {
+          "name": "David Harbour",
+          "character": "Jim Hopper"
+        },
+        {
+          "name": "Winona Ryder",
+          "character": "Joyce Byers"
+        }
+      ],
+      "director": "The Duffer Brothers",
+      "trailerKey": "b9EkMc79ZSU",
+      "trailerUrl": "https://www.youtube.com/watch?v=b9EkMc79ZSU",
+      "featured": true,
+      "trending": true,
+      "status": "published",
+      "views": 45000,
+      "createdAt": "2024-01-05T00:00:00Z",
+      "updatedAt": "2024-01-05T00:00:00Z",
+      "streams": [],
+      "seasons": [
+        {
+          "seasonNumber": 1,
+          "name": "Season 1",
+          "overview": "A young boy vanishes without a trace. As friends, family and local police search for answers, they are drawn into an extraordinary mystery.",
+          "posterUrl": "https://image.tmdb.org/t/p/w342/49WJfeN0moxb9IPfGn8AIqMGskD.jpg",
+          "episodeCount": 8,
+          "episodes": [
+            {
+              "id": "ep-66732-1-1",
+              "episodeNumber": 1,
+              "seasonNumber": 1,
+              "title": "Chapter One: The Vanishing of Will Byers",
+              "overview": "On his way home from a friend's house, young Will sees something terrifying. Nearby, a sinister secret lurks in the depths of a government lab.",
+              "stillUrl": "https://image.tmdb.org/t/p/w780/56v2KjBlU4XaOv9rVYEQypROD7P.jpg",
+              "runtime": 48,
+              "streams": [
+                {
+                  "id": "vidlink-66732-1-1",
+                  "serverName": "VidLink (Ultra Fast HD)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidlink.pro/tv/66732/1/1?primaryColor=e50914&autoplay=false",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-xyz-66732-1-1",
+                  "serverName": "VidSrc Alpha (Multi-Sub)",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://vidsrc.xyz/embed/tv?tmdb=66732&season=1&episode=1",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-cc-66732-1-1",
+                  "serverName": "VidSrc VIP (Ad-Reduced)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidsrc.cc/v2/embed/tv/66732/1/1",
+                  "isWorking": true
+                },
+                {
+                  "id": "superembed-66732-1-1",
+                  "serverName": "SuperEmbed / MultiStream",
+                  "quality": "Auto / 4K",
+                  "type": "embed",
+                  "url": "https://multiembed.mov/?video_id=66732&tmdb=1&s=1&e=1",
+                  "isWorking": true
+                },
+                {
+                  "id": "autoembed-66732-1-1",
+                  "serverName": "AutoEmbed Global",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://player.autoembed.cc/embed/tv/66732/1/1",
+                  "isWorking": true
+                },
+                {
+                  "id": "2embed-66732-1-1",
+                  "serverName": "2Embed Server",
+                  "quality": "720p/1080p",
+                  "type": "embed",
+                  "url": "https://www.2embed.cc/embedtv/66732&s=1&e=1",
+                  "isWorking": true
+                },
+                {
+                  "id": "smashystream-66732-1-1",
+                  "serverName": "SmashyStream Fast",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://embed.smashystream.com/playere.php?tmdb=66732&season=1&episode=1",
+                  "isWorking": true
+                }
+              ]
+            },
+            {
+              "id": "ep-66732-1-2",
+              "episodeNumber": 2,
+              "seasonNumber": 1,
+              "title": "Chapter Two: The Weirdo on Maple Street",
+              "overview": "Lucas, Mike and Dustin try to talk to the girl they found in the woods. Hopper questions an anxious Joyce about an unsettling phone call.",
+              "stillUrl": "https://image.tmdb.org/t/p/w780/56v2KjBlU4XaOv9rVYEQypROD7P.jpg",
+              "runtime": 55,
+              "streams": [
+                {
+                  "id": "vidlink-66732-1-2",
+                  "serverName": "VidLink (Ultra Fast HD)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidlink.pro/tv/66732/1/2?primaryColor=e50914&autoplay=false",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-xyz-66732-1-2",
+                  "serverName": "VidSrc Alpha (Multi-Sub)",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://vidsrc.xyz/embed/tv?tmdb=66732&season=1&episode=2",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-cc-66732-1-2",
+                  "serverName": "VidSrc VIP (Ad-Reduced)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidsrc.cc/v2/embed/tv/66732/1/2",
+                  "isWorking": true
+                },
+                {
+                  "id": "superembed-66732-1-2",
+                  "serverName": "SuperEmbed / MultiStream",
+                  "quality": "Auto / 4K",
+                  "type": "embed",
+                  "url": "https://multiembed.mov/?video_id=66732&tmdb=1&s=1&e=2",
+                  "isWorking": true
+                },
+                {
+                  "id": "autoembed-66732-1-2",
+                  "serverName": "AutoEmbed Global",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://player.autoembed.cc/embed/tv/66732/1/2",
+                  "isWorking": true
+                },
+                {
+                  "id": "2embed-66732-1-2",
+                  "serverName": "2Embed Server",
+                  "quality": "720p/1080p",
+                  "type": "embed",
+                  "url": "https://www.2embed.cc/embedtv/66732&s=1&e=2",
+                  "isWorking": true
+                },
+                {
+                  "id": "smashystream-66732-1-2",
+                  "serverName": "SmashyStream Fast",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://embed.smashystream.com/playere.php?tmdb=66732&season=1&episode=2",
+                  "isWorking": true
+                }
+              ]
+            },
+            {
+              "id": "ep-66732-1-3",
+              "episodeNumber": 3,
+              "seasonNumber": 1,
+              "title": "Chapter Three: Holly, Jolly",
+              "overview": "An increasingly concerned Nancy looks for Barb and finds out what Jonathan's been up to. Joyce is convinced Will is trying to talk to her.",
+              "stillUrl": "https://image.tmdb.org/t/p/w780/56v2KjBlU4XaOv9rVYEQypROD7P.jpg",
+              "runtime": 51,
+              "streams": [
+                {
+                  "id": "vidlink-66732-1-3",
+                  "serverName": "VidLink (Ultra Fast HD)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidlink.pro/tv/66732/1/3?primaryColor=e50914&autoplay=false",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-xyz-66732-1-3",
+                  "serverName": "VidSrc Alpha (Multi-Sub)",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://vidsrc.xyz/embed/tv?tmdb=66732&season=1&episode=3",
+                  "isWorking": true
+                },
+                {
+                  "id": "vidsrc-cc-66732-1-3",
+                  "serverName": "VidSrc VIP (Ad-Reduced)",
+                  "quality": "1080p HD",
+                  "type": "embed",
+                  "url": "https://vidsrc.cc/v2/embed/tv/66732/1/3",
+                  "isWorking": true
+                },
+                {
+                  "id": "superembed-66732-1-3",
+                  "serverName": "SuperEmbed / MultiStream",
+                  "quality": "Auto / 4K",
+                  "type": "embed",
+                  "url": "https://multiembed.mov/?video_id=66732&tmdb=1&s=1&e=3",
+                  "isWorking": true
+                },
+                {
+                  "id": "autoembed-66732-1-3",
+                  "serverName": "AutoEmbed Global",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://player.autoembed.cc/embed/tv/66732/1/3",
+                  "isWorking": true
+                },
+                {
+                  "id": "2embed-66732-1-3",
+                  "serverName": "2Embed Server",
+                  "quality": "720p/1080p",
+                  "type": "embed",
+                  "url": "https://www.2embed.cc/embedtv/66732&s=1&e=3",
+                  "isWorking": true
+                },
+                {
+                  "id": "smashystream-66732-1-3",
+                  "serverName": "SmashyStream Fast",
+                  "quality": "1080p",
+                  "type": "embed",
+                  "url": "https://embed.smashystream.com/playere.php?tmdb=66732&season=1&episode=3",
+                  "isWorking": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "movie-569094",
+      "tmdbId": 569094,
+      "imdbId": "tt9362722",
+      "title": "Spider-Man: Across the Spider-Verse",
+      "originalTitle": "Spider-Man: Across the Spider-Verse",
+      "type": "movie",
+      "overview": "After reuniting with Gwen Stacy, Brooklyn’s full-time, friendly neighborhood Spider-Man is catapulted across the Multiverse, where he encounters the Spider-Society, a team of Spider-Heroes charged with protecting the Multiverse’s very existence.",
+      "tagline": "It's how you wear the mask that matters.",
+      "posterUrl": "https://image.tmdb.org/t/p/w500/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
+      "backdropUrl": "https://image.tmdb.org/t/p/original/4HodYYKEIsGOdinkGi2Ucz6X9i0.jpg",
+      "releaseDate": "2023-05-31",
+      "rating": 8.4,
+      "voteCount": 6800,
+      "runtime": 140,
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure",
+        "Science Fiction"
+      ],
+      "cast": [
+        {
+          "name": "Shameik Moore",
+          "character": "Miles Morales (voice)"
+        },
+        {
+          "name": "Hailee Steinfeld",
+          "character": "Gwen Stacy (voice)"
+        },
+        {
+          "name": "Oscar Isaac",
+          "character": "Miguel O'Hara (voice)"
+        }
+      ],
+      "director": "Joaquim Dos Santos",
+      "trailerKey": "cqGjhVJWtEg",
+      "trailerUrl": "https://www.youtube.com/watch?v=cqGjhVJWtEg",
+      "featured": false,
+      "trending": true,
+      "status": "published",
+      "views": 19800,
+      "createdAt": "2024-02-01T00:00:00Z",
+      "updatedAt": "2024-02-01T00:00:00Z",
+      "streams": [
+        {
+          "id": "vidlink-569094-0-0",
+          "serverName": "VidLink (Ultra Fast HD)",
+          "quality": "1080p HD",
+          "type": "embed",
+          "url": "https://vidlink.pro/movie/569094?primaryColor=e50914&autoplay=false",
+          "isWorking": true
+        },
+        {
+          "id": "vidsrc-xyz-569094-0-0",
+          "serverName": "VidSrc Alpha (Multi-Sub)",
+          "quality": "1080p",
+          "type": "embed",
+          "url": "https://vidsrc.xyz/embed/movie?tmdb=569094",
+          "isWorking": true
+        },
+        {
+          "id": "vidsrc-cc-569094-0-0",
+          "serverName": "VidSrc VIP (Ad-Reduced)",
+          "quality": "1080p HD",
+          "type": "embed",
+          "url": "https://vidsrc.cc/v2/embed/movie/569094",
+          "isWorking": true
+        },
+        {
+          "id": "superembed-569094-0-0",
+          "serverName": "SuperEmbed / MultiStream",
+          "quality": "Auto / 4K",
+          "type": "embed",
+          "url": "https://multiembed.mov/?video_id=569094&tmdb=1",
+          "isWorking": true
+        },
+        {
+          "id": "autoembed-569094-0-0",
+          "serverName": "AutoEmbed Global",
+          "quality": "1080p",
+          "type": "embed",
+          "url": "https://player.autoembed.cc/embed/movie/569094",
+          "isWorking": true
+        },
+        {
+          "id": "2embed-569094-0-0",
+          "serverName": "2Embed Server",
+          "quality": "720p/1080p",
+          "type": "embed",
+          "url": "https://www.2embed.cc/embed/569094",
+          "isWorking": true
+        },
+        {
+          "id": "smashystream-569094-0-0",
+          "serverName": "SmashyStream Fast",
+          "quality": "1080p",
+          "type": "embed",
+          "url": "https://embed.smashystream.com/playere.php?tmdb=569094",
+          "isWorking": true
+        }
+      ]
+    },
+    {
+      "id": "movie-27205",
+      "tmdbId": 27205,
+      "imdbId": "tt1375666",
+      "title": "Inception",
+      "originalTitle": "Inception",
+      "type": "movie",
+      "overview": "Cobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets is offered a chance to regain his old life as payment for a task considered to be impossible: \"inception\", the implantation of another person's idea into a target's subconscious.",
+      "tagline": "Your mind is the scene of the crime.",
+      "posterUrl": "https://image.tmdb.org/t/p/w500/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg",
+      "backdropUrl": "https://image.tmdb.org/t/p/original/8ZTVqvKDQ8emSGUEMjsS4yHAwrp.jpg",
+      "releaseDate": "2010-07-15",
+      "rating": 8.4,
+      "voteCount": 36000,
+      "runtime": 148,
+      "genres": [
+        "Action",
+        "Science Fiction",
+        "Adventure"
+      ],
+      "cast": [
+        {
+          "name": "Leonardo DiCaprio",
+          "character": "Dom Cobb"
+        },
+        {
+          "name": "Joseph Gordon-Levitt",
+          "character": "Arthur"
+        },
+        {
+          "name": "Elliot Page",
+          "character": "Ariadne"
+        },
+        {
+          "name": "Tom Hardy",
+          "character": "Eames"
+        }
+      ],
+      "director": "Christopher Nolan",
+      "trailerKey": "YoHD9XEInc0",
+      "trailerUrl": "https://www.youtube.com/watch?v=YoHD9XEInc0",
+      "featured": false,
+      "trending": false,
+      "status": "published",
+      "views": 42100,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z",
+      "streams": [
+        {
+          "id": "vidlink-27205-0-0",
+          "serverName": "VidLink (Ultra Fast HD)",
+          "quality": "1080p HD",
+          "type": "embed",
+          "url": "https://vidlink.pro/movie/27205?primaryColor=e50914&autoplay=false",
+          "isWorking": true
+        },
+        {
+          "id": "vidsrc-xyz-27205-0-0",
+          "serverName": "VidSrc Alpha (Multi-Sub)",
+          "quality": "1080p",
+          "type": "embed",
+          "url": "https://vidsrc.xyz/embed/movie?tmdb=27205",
+          "isWorking": true
+        },
+        {
+          "id": "vidsrc-cc-27205-0-0",
+          "serverName": "VidSrc VIP (Ad-Reduced)",
+          "quality": "1080p HD",
+          "type": "embed",
+          "url": "https://vidsrc.cc/v2/embed/movie/27205",
+          "isWorking": true
+        },
+        {
+          "id": "superembed-27205-0-0",
+          "serverName": "SuperEmbed / MultiStream",
+          "quality": "Auto / 4K",
+          "type": "embed",
+          "url": "https://multiembed.mov/?video_id=27205&tmdb=1",
+          "isWorking": true
+        },
+        {
+          "id": "autoembed-27205-0-0",
+          "serverName": "AutoEmbed Global",
+          "quality": "1080p",
+          "type": "embed",
+          "url": "https://player.autoembed.cc/embed/movie/27205",
+          "isWorking": true
+        },
+        {
+          "id": "2embed-27205-0-0",
+          "serverName": "2Embed Server",
+          "quality": "720p/1080p",
+          "type": "embed",
+          "url": "https://www.2embed.cc/embed/27205",
+          "isWorking": true
+        },
+        {
+          "id": "smashystream-27205-0-0",
+          "serverName": "SmashyStream Fast",
+          "quality": "1080p",
+          "type": "embed",
+          "url": "https://embed.smashystream.com/playere.php?tmdb=27205",
+          "isWorking": true
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "siteName": "Nex",
+    "siteDescription": "Stream unlimited movies, TV shows, and series in HD with multiple fast servers.",
+    "tmdbApiKey": "841459a58d04735c026040cd8ab00d02",
+    "primaryStreamProvider": "vidlink",
+    "enableAutoStreams": true,
+    "disclaimer": "This site does not store any files on its server. All contents are provided by non-affiliated third parties."
+  }
+}
