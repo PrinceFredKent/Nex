@@ -4,6 +4,7 @@ import Sidebar from '@/components/Sidebar';
 import TopHeader from '@/components/TopHeader';
 import FloatingDock from '@/components/FloatingDock';
 import { WatchlistProvider } from '@/components/WatchlistProvider';
+import { AuthProvider } from '@/components/AuthProvider';
 
 export const metadata: Metadata = {
   title: 'Nex | Stream Movies & TV Shows',
@@ -18,9 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-surface-app text-gray-900 min-h-screen flex flex-col antialiased selection:bg-brand-500 selection:text-white p-3 sm:p-5 pb-24">
-        <WatchlistProvider>
-          {/* Main App Container */}
-          <div className="max-w-[1440px] mx-auto w-full flex flex-col space-y-4">
+        <AuthProvider>
+          <WatchlistProvider>
+            {/* Main App Container */}
+            <div className="max-w-[1440px] mx-auto w-full flex flex-col space-y-4">
             {/* Top Navigation Bar */}
             <TopHeader />
 
@@ -41,6 +43,7 @@ export default function RootLayout({
           {/* Floating Dock at bottom center */}
           <FloatingDock />
         </WatchlistProvider>
+        </AuthProvider>
       </body>
     </html>
   );

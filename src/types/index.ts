@@ -88,3 +88,12 @@ export interface WatchHistoryItem {
   duration?: number;
   lastWatchedAt: string;
 }
+
+export interface UserProfile {
+  id: string;
+  email: string;
+  fullName: string;
+  avatarUrl?: string;
+  role: 'admin' | 'user';
+  createdAt?: string;
+}

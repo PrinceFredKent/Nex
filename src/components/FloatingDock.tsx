@@ -3,18 +3,19 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Heart, Download, Bell, Tv, User, Shield } from 'lucide-react';
+import { Home, Heart, Download, Tv, User } from 'lucide-react';
+import { useAuth } from './AuthProvider';
 
 export default function FloatingDock() {
   const pathname = usePathname();
+  const { profile } = useAuth();
 
   const dockItems = [
     { label: 'Home', href: '/', icon: Home },
     { label: 'Favorites', href: '/watchlist', icon: Heart },
     { label: 'Browse', href: '/browse', icon: Download },
-    { label: 'Notifications', href: '/admin', icon: Bell },
     { label: 'TV Shows', href: '/browse?type=tv', icon: Tv },
-    { label: 'Admin', href: '/admin', icon: User },
+    { label: profile ? 'Profile' : 'Sign In', href: profile ? '/profile' : '/auth/login', icon: User },
   ];
 
   return (

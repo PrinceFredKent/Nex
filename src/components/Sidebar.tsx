@@ -5,16 +5,19 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, Compass, Heart, User, Settings, Play, Shield } from 'lucide-react';
 import { useWatchlist } from './WatchlistProvider';
+import { useAuth } from './AuthProvider';
 
 export default function Sidebar() {
   const pathname = usePathname();
   const { history, watchlist } = useWatchlist();
+  const { profile, isAdmin } = useAuth();
 
   const navItems = [
     { label: 'Home', href: '/', icon: Home },
     { label: 'Explore', href: '/browse', icon: Compass, hasDot: true },
     { label: 'Favorite', href: '/watchlist', icon: Heart, count: watchlist.length },
-    { label: 'Admin Panel', href: '/admin', icon: Shield },
+    ...(profile ? [{ label: 'Profile', href: '/profile', icon: User }] : [{ label: 'Sign In', href: '/auth/login', icon: User }]),
+    ...(isAdmin ? [{ label: 'Admin Panel', href: '/admin', icon: Shield }] : []),
     { label: 'Settings', href: '/admin?tab=settings', icon: Settings },
   ];
 
