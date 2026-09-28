@@ -2,7 +2,7 @@ import { MediaItem, MediaType, Season, Episode, CastMember } from '@/types';
 import { generateStreamSources } from './streams';
 
 // Default TMDB API key with fallback
-const DEFAULT_TMDB_API_KEY = '4e44d9029b1270a757cddc766a1bcb63'; // Verified working TMDB API key
+const DEFAULT_TMDB_API_KEY = '78def161c2fe525795ba67ecb09f8556'; // User's own TMDB API key
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p';
 

@@ -1,4 +1,5 @@
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import { MediaItem, SystemSettings } from '@/types';
 import { supabase, isSupabaseConfigured } from './supabase';
@@ -8,8 +9,38 @@ interface DatabaseSchema {
   settings: SystemSettings;
 }
 
-const DATA_DIR = path.join(process.cwd(), 'data');
-const DB_FILE = path.join(DATA_DIR, 'db.json');
+const PROJECT_DATA_DIR = path.join(process.cwd(), 'data');
+const FALLBACK_DATA_DIR = path.join(os.tmpdir(), 'cool-maxwell-data');
+
+let DATA_DIR = PROJECT_DATA_DIR;
+let DB_FILE = path.join(DATA_DIR, 'db.json');
+
+function resolveWritableDataStore() {
+  const candidates = [
+    { dir: PROJECT_DATA_DIR, file: path.join(PROJECT_DATA_DIR, 'db.json') },
+    { dir: FALLBACK_DATA_DIR, file: path.join(FALLBACK_DATA_DIR, 'db.json') },
+  ];
+
+  for (const candidate of candidates) {
+    try {
+      if (!fs.existsSync(candidate.dir)) {
+        fs.mkdirSync(candidate.dir, { recursive: true });
+      }
+      fs.accessSync(candidate.dir, fs.constants.W_OK);
+      DATA_DIR = candidate.dir;
+      DB_FILE = candidate.file;
+      return;
+    } catch {
+      // Fall through to the next candidate so the app keeps running on read-only deployments.
+    }
+  }
+
+  DATA_DIR = FALLBACK_DATA_DIR;
+  DB_FILE = path.join(FALLBACK_DATA_DIR, 'db.json');
+  if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+  }
+}
 
 const DEFAULT_SETTINGS: SystemSettings = {
   siteName: 'Nex',
@@ -21,6 +52,8 @@ const DEFAULT_SETTINGS: SystemSettings = {
 };
 
 function ensureDbExists(): DatabaseSchema {
+  resolveWritableDataStore();
+
   if (!fs.existsSync(DATA_DIR)) {
     fs.mkdirSync(DATA_DIR, { recursive: true });
   }
@@ -56,7 +89,10 @@ function ensureDbExists(): DatabaseSchema {
 }
 
 function saveDb(data: DatabaseSchema): void {
-  ensureDbExists();
+  resolveWritableDataStore();
+  if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+  }
   fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
 }
 
