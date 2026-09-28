@@ -14,7 +14,7 @@ const DB_FILE = path.join(DATA_DIR, 'db.json');
 const DEFAULT_SETTINGS: SystemSettings = {
   siteName: 'Nex',
   siteDescription: 'Stream unlimited movies, TV shows, and series in HD with multiple fast servers.',
-  tmdbApiKey: '841459a58d04735c026040cd8ab00d02',
+  tmdbApiKey: '4e44d9029b1270a757cddc766a1bcb63',
   primaryStreamProvider: 'vidlink',
   enableAutoStreams: true,
   disclaimer: 'This site does not store any files on its server. All contents are provided by non-affiliated third parties.',
