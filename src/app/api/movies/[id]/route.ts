@@ -4,7 +4,7 @@ import { db } from '@/lib/db';
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const id = params.id;
-    const media = db.getById(id);
+    const media = await db.getById(id);
     if (!media) {
       return NextResponse.json({ success: false, error: 'Media not found' }, { status: 404 });
     }
@@ -18,7 +18,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
   try {
     const id = params.id;
     const body = await req.json();
-    const updated = db.update(id, body);
+    const updated = await db.update(id, body);
     if (!updated) {
       return NextResponse.json({ success: false, error: 'Media not found' }, { status: 404 });
     }
@@ -31,7 +31,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const id = params.id;
-    const deleted = db.delete(id);
+    const deleted = await db.delete(id);
     if (!deleted) {
       return NextResponse.json({ success: false, error: 'Media not found' }, { status: 404 });
     }

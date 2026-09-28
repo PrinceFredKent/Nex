@@ -12,16 +12,16 @@ interface WatchPageProps {
   params: { id: string };
 }
 
-export default function WatchPage({ params }: WatchPageProps) {
+export default async function WatchPage({ params }: WatchPageProps) {
   const id = params.id;
-  const media = db.getById(id);
+  const media = await db.getById(id);
 
   if (!media) {
     notFound();
   }
 
   // Related / Recommended titles
-  const allMedia = db.getAll();
+  const allMedia = await db.getAll();
   const related = allMedia
     .filter((m) => m.id !== media.id)
     .slice(0, 3);

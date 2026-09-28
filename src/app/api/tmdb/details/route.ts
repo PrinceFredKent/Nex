@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
     const details = await fetchFullTMDBDetails(tmdbId, type, settings.tmdbApiKey);
 
     if (autoSave) {
-      const saved = db.create(details as any);
+      const saved = await db.create(details as any);
       return NextResponse.json({ success: true, saved: true, data: saved });
     }
 

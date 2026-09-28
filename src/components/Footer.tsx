@@ -13,8 +13,11 @@ export default function Footer() {
               <div className="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center">
                 <Film className="w-4 h-4 text-white" />
               </div>
-              <span className="text-xl font-black tracking-tight text-white font-sans">
-                CINE<span className="text-brand-500">STREAM</span>
+              <span className="text-xl font-black tracking-tight text-white font-sans flex items-center gap-2">
+                NEX
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-500/20 text-brand-400 border border-brand-500/30 font-mono">
+                  1.2
+                </span>
               </span>
             </Link>
             <p className="text-xs text-gray-400 leading-relaxed">
@@ -68,7 +71,9 @@ export default function Footer() {
           <p>
             Disclaimer: Nex does not host or store any media files on its servers. All videos and embeds are provided by non-affiliated 3rd-party services.
           </p>
-          <div className="flex items-center justify-center gap-1 text-gray-400">
+          <div className="flex items-center justify-center gap-2 text-gray-400 text-[11px]">
+            <span className="font-semibold text-gray-300">Nex 1.2</span>
+            <span>•</span>
             <span>Built with modern high-performance streaming technology</span>
           </div>
         </div>

@@ -94,10 +94,17 @@ export default function TopHeader() {
     <>
       <header className="flex flex-col lg:flex-row items-center justify-between gap-4 w-full">
         {/* Left: Search Input Pill */}
-        <div className="w-full lg:w-64 shrink-0">
+        <div className="w-full lg:w-64 shrink-0 flex items-center gap-2.5">
+          <Link
+            href="/"
+            className="lg:hidden shrink-0 flex items-center gap-1.5 bg-white px-3 py-2 rounded-full border border-slate-100/80 shadow-sm"
+          >
+            <span className="text-xs font-black tracking-wider text-brand-500 uppercase font-sans">NEX</span>
+            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-brand-50 text-brand-600 font-mono">1.2</span>
+          </Link>
           <button
             onClick={() => setIsSearchOpen(true)}
-            className="w-full bg-white rounded-full px-4 py-2.5 flex items-center gap-2.5 shadow-sm border border-slate-100/80 text-gray-400 hover:text-gray-600 transition text-sm text-left group"
+            className="flex-1 lg:w-full bg-white rounded-full px-4 py-2.5 flex items-center gap-2.5 shadow-sm border border-slate-100/80 text-gray-400 hover:text-gray-600 transition text-sm text-left group"
           >
             <Search className="w-4 h-4 text-gray-400 group-hover:text-brand-500 transition-colors shrink-0" />
             <span className="text-gray-400 text-xs sm:text-sm font-medium">Search</span>

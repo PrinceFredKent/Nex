@@ -1,7 +1,7 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { MediaItem, SystemSettings } from '@/types';
+import { MediaItem, MediaType, SystemSettings } from '@/types';
 import { supabase, isSupabaseConfigured } from './supabase';
 
 interface DatabaseSchema {
@@ -31,7 +31,7 @@ function resolveWritableDataStore() {
       DB_FILE = candidate.file;
       return;
     } catch {
-      // Fall through to the next candidate so the app keeps running on read-only deployments.
+      // Fall through to next candidate
     }
   }
 
@@ -45,7 +45,7 @@ function resolveWritableDataStore() {
 const DEFAULT_SETTINGS: SystemSettings = {
   siteName: 'Nex',
   siteDescription: 'Stream unlimited movies, TV shows, and series in HD with multiple fast servers.',
-  tmdbApiKey: '4e44d9029b1270a757cddc766a1bcb63',
+  tmdbApiKey: '78def161c2fe525795ba67ecb09f8556',
   primaryStreamProvider: 'vidlink',
   enableAutoStreams: true,
   disclaimer: 'This site does not store any files on its server. All contents are provided by non-affiliated third parties.',
@@ -63,7 +63,9 @@ function ensureDbExists(): DatabaseSchema {
       movies: [],
       settings: DEFAULT_SETTINGS,
     };
-    fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2), 'utf-8');
+    try {
+      fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2), 'utf-8');
+    } catch {}
     return initialData;
   }
 
@@ -78,65 +80,118 @@ function ensureDbExists(): DatabaseSchema {
     }
     return parsed;
   } catch (err) {
-    console.error('Error reading db.json, recreating clean state...', err);
     const initialData: DatabaseSchema = {
       movies: [],
       settings: DEFAULT_SETTINGS,
     };
-    fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2), 'utf-8');
+    try {
+      fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2), 'utf-8');
+    } catch {}
     return initialData;
   }
 }
 
 function saveDb(data: DatabaseSchema): void {
-  resolveWritableDataStore();
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-  }
-  fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
-}
-
-async function syncSupabaseUpsert(data: any) {
-  if (!isSupabaseConfigured || !supabase) return;
   try {
-    await supabase.from('movies').upsert(data);
+    resolveWritableDataStore();
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true });
+    }
+    fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
   } catch (e) {
-    console.error('Supabase upsert error:', e);
+    // Ignore write errors on read-only serverless lambdas
   }
 }
 
-async function syncSupabaseInsert(data: any) {
-  if (!isSupabaseConfigured || !supabase) return;
-  try {
-    await supabase.from('movies').insert(data);
-  } catch (e) {
-    console.error('Supabase insert error:', e);
-  }
+function mapSupabaseRowToMediaItem(row: any): MediaItem {
+  return {
+    id: String(row.id),
+    tmdbId: row.tmdb_id ? Number(row.tmdb_id) : undefined,
+    imdbId: row.imdb_id || undefined,
+    title: row.title || 'Untitled',
+    originalTitle: row.original_title || row.title || 'Untitled',
+    type: (row.type === 'tv' ? 'tv' : 'movie') as MediaType,
+    overview: row.overview || '',
+    tagline: row.tagline || '',
+    posterUrl: row.poster_url || '',
+    backdropUrl: row.backdrop_url || row.poster_url || '',
+    releaseDate: row.release_date || '',
+    rating: typeof row.rating === 'number' ? row.rating : (parseFloat(row.rating) || 7.5),
+    voteCount: row.vote_count ? Number(row.vote_count) : undefined,
+    runtime: row.runtime ? Number(row.runtime) : undefined,
+    genres: Array.isArray(row.genres) ? row.genres : [],
+    cast: Array.isArray(row.cast_members) ? row.cast_members : (Array.isArray(row.cast) ? row.cast : []),
+    director: row.director || '',
+    trailerKey: row.trailer_key || '',
+    trailerUrl: row.trailer_url || (row.trailer_key ? `https://www.youtube.com/watch?v=${row.trailer_key}` : ''),
+    featured: Boolean(row.featured),
+    trending: Boolean(row.trending),
+    status: (row.status || 'published') as 'published' | 'draft',
+    views: Number(row.views) || 0,
+    createdAt: row.created_at || new Date().toISOString(),
+    updatedAt: row.updated_at || new Date().toISOString(),
+    streams: Array.isArray(row.streams) ? row.streams : [],
+    seasons: Array.isArray(row.seasons) ? row.seasons : [],
+  };
 }
 
-async function syncSupabaseUpdate(id: string, data: any) {
-  if (!isSupabaseConfigured || !supabase) return;
-  try {
-    await supabase.from('movies').update(data).eq('id', id);
-  } catch (e) {
-    console.error('Supabase update error:', e);
-  }
-}
-
-async function syncSupabaseDelete(id: string) {
-  if (!isSupabaseConfigured || !supabase) return;
-  try {
-    await supabase.from('movies').delete().eq('id', id);
-  } catch (e) {
-    console.error('Supabase delete error:', e);
-  }
+function mapMediaItemToSupabaseRow(item: MediaItem) {
+  return {
+    id: item.id,
+    tmdb_id: item.tmdbId,
+    imdb_id: item.imdbId,
+    title: item.title,
+    type: item.type,
+    overview: item.overview,
+    tagline: item.tagline,
+    poster_url: item.posterUrl,
+    backdrop_url: item.backdropUrl,
+    release_date: item.releaseDate,
+    rating: item.rating,
+    runtime: item.runtime,
+    genres: item.genres,
+    cast_members: item.cast,
+    director: item.director,
+    trailer_key: item.trailerKey,
+    featured: item.featured,
+    trending: item.trending,
+    status: item.status || 'published',
+    streams: item.streams,
+    seasons: item.seasons,
+    views: item.views || 0,
+    updated_at: new Date().toISOString(),
+  };
 }
 
 // Database operations
 export const db = {
-  getAll: (query?: { type?: string; genre?: string; search?: string; status?: string; sort?: string }): MediaItem[] => {
-    const { movies } = ensureDbExists();
-    let results = [...movies];
+  getAll: async (query?: { type?: string; genre?: string; search?: string; status?: string; sort?: string }): Promise<MediaItem[]> => {
+    let items: MediaItem[] = [];
+
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const { data, error } = await supabase.from('movies').select('*');
+        if (!error && data) {
+          items = data.map(mapSupabaseRowToMediaItem);
+        }
+      } catch (e) {
+        console.error('Supabase fetch movies error, falling back to db.json:', e);
+      }
+    }
+
+    if (items.length === 0) {
+      const { movies } = ensureDbExists();
+      items = [...movies];
+    } else {
+      // Sync local db.json cache
+      try {
+        const current = ensureDbExists();
+        current.movies = items;
+        saveDb(current);
+      } catch (e) {}
+    }
+
+    let results = [...items];
 
     if (query?.status) {
       results = results.filter(m => m.status === query.status);
@@ -158,7 +213,7 @@ export const db = {
         (m.originalTitle && m.originalTitle.toLowerCase().includes(q)) ||
         m.overview.toLowerCase().includes(q) ||
         m.genres.some(g => g.toLowerCase().includes(q)) ||
-        m.cast.some(c => c.name.toLowerCase().includes(q))
+        m.cast.some(c => c.name?.toLowerCase().includes(q))
       );
     }
 
@@ -184,144 +239,127 @@ export const db = {
     return results;
   },
 
-  getById: (id: string): MediaItem | undefined => {
+  getById: async (id: string): Promise<MediaItem | undefined> => {
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const numericId = !isNaN(Number(id)) ? Number(id) : null;
+        let query = supabase.from('movies').select('*');
+        if (numericId) {
+          query = query.or(`id.eq.${id},tmdb_id.eq.${numericId}`);
+        } else {
+          query = query.or(`id.eq.${id},imdb_id.eq.${id}`);
+        }
+        
+        const { data, error } = await query;
+        if (!error && data && data.length > 0) {
+          return mapSupabaseRowToMediaItem(data[0]);
+        }
+      } catch (e) {
+        console.error('Supabase getById error:', e);
+      }
+    }
+
     const { movies } = ensureDbExists();
     return movies.find(m => m.id === id || String(m.tmdbId) === id || m.imdbId === id);
   },
 
-  create: (item: Omit<MediaItem, 'id' | 'createdAt' | 'updatedAt' | 'views'> & { id?: string }): MediaItem => {
+  create: async (item: Omit<MediaItem, 'id' | 'createdAt' | 'updatedAt' | 'views'> & { id?: string }): Promise<MediaItem> => {
     const current = ensureDbExists();
     const id = item.id || (item.tmdbId ? `${item.type}-${item.tmdbId}` : `custom-${Date.now()}`);
     
-    // Check if already exists
     const existingIndex = current.movies.findIndex(m => m.id === id || (item.tmdbId && m.tmdbId === item.tmdbId && m.type === item.type));
-    
     const now = new Date().toISOString();
+
     const newItem: MediaItem = {
       ...item,
       id,
-      views: 0,
-      createdAt: now,
+      views: existingIndex >= 0 ? (current.movies[existingIndex].views || 0) : 0,
+      createdAt: existingIndex >= 0 ? current.movies[existingIndex].createdAt : now,
       updatedAt: now,
     };
 
     if (existingIndex >= 0) {
-      current.movies[existingIndex] = {
-        ...current.movies[existingIndex],
-        ...newItem,
-        id: current.movies[existingIndex].id,
-        views: current.movies[existingIndex].views,
-        createdAt: current.movies[existingIndex].createdAt,
-        updatedAt: now,
-      };
-      saveDb(current);
-
-      syncSupabaseUpsert({
-        id: current.movies[existingIndex].id,
-        tmdb_id: current.movies[existingIndex].tmdbId,
-        imdb_id: current.movies[existingIndex].imdbId,
-        title: current.movies[existingIndex].title,
-        type: current.movies[existingIndex].type,
-        overview: current.movies[existingIndex].overview,
-        tagline: current.movies[existingIndex].tagline,
-        poster_url: current.movies[existingIndex].posterUrl,
-        backdrop_url: current.movies[existingIndex].backdropUrl,
-        release_date: current.movies[existingIndex].releaseDate,
-        rating: current.movies[existingIndex].rating,
-        runtime: current.movies[existingIndex].runtime,
-        genres: current.movies[existingIndex].genres,
-        cast_members: current.movies[existingIndex].cast,
-        director: current.movies[existingIndex].director,
-        trailer_key: current.movies[existingIndex].trailerKey,
-        featured: current.movies[existingIndex].featured,
-        trending: current.movies[existingIndex].trending,
-        streams: current.movies[existingIndex].streams,
-        seasons: current.movies[existingIndex].seasons,
-        views: current.movies[existingIndex].views,
-      });
-
-      return current.movies[existingIndex];
+      current.movies[existingIndex] = newItem;
+    } else {
+      current.movies.unshift(newItem);
     }
-
-    current.movies.unshift(newItem);
     saveDb(current);
 
-    syncSupabaseInsert({
-      id: newItem.id,
-      tmdb_id: newItem.tmdbId,
-      imdb_id: newItem.imdbId,
-      title: newItem.title,
-      type: newItem.type,
-      overview: newItem.overview,
-      tagline: newItem.tagline,
-      poster_url: newItem.posterUrl,
-      backdrop_url: newItem.backdropUrl,
-      release_date: newItem.releaseDate,
-      rating: newItem.rating,
-      runtime: newItem.runtime,
-      genres: newItem.genres,
-      cast_members: newItem.cast,
-      director: newItem.director,
-      trailer_key: newItem.trailerKey,
-      featured: newItem.featured,
-      trending: newItem.trending,
-      streams: newItem.streams,
-      seasons: newItem.seasons,
-      views: 0,
-    });
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const row = mapMediaItemToSupabaseRow(newItem);
+        await supabase.from('movies').upsert(row);
+      } catch (e) {
+        console.error('Supabase create error:', e);
+      }
+    }
 
     return newItem;
   },
 
-  update: (id: string, updates: Partial<MediaItem>): MediaItem | null => {
+  update: async (id: string, updates: Partial<MediaItem>): Promise<MediaItem | null> => {
     const current = ensureDbExists();
     const index = current.movies.findIndex(m => m.id === id);
-    if (index === -1) return null;
 
-    current.movies[index] = {
-      ...current.movies[index],
-      ...updates,
-      updatedAt: new Date().toISOString(),
-    };
+    let updatedItem: MediaItem;
+    if (index >= 0) {
+      current.movies[index] = {
+        ...current.movies[index],
+        ...updates,
+        updatedAt: new Date().toISOString(),
+      };
+      updatedItem = current.movies[index];
+      saveDb(current);
+    } else {
+      const existing = await db.getById(id);
+      if (!existing) return null;
+      updatedItem = {
+        ...existing,
+        ...updates,
+        updatedAt: new Date().toISOString(),
+      };
+      current.movies.unshift(updatedItem);
+      saveDb(current);
+    }
 
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const row = mapMediaItemToSupabaseRow(updatedItem);
+        await supabase.from('movies').upsert(row);
+      } catch (e) {
+        console.error('Supabase update error:', e);
+      }
+    }
+
+    return updatedItem;
+  },
+
+  delete: async (id: string): Promise<boolean> => {
+    const current = ensureDbExists();
+    current.movies = current.movies.filter(m => m.id !== id);
     saveDb(current);
 
-    syncSupabaseUpdate(id, {
-      featured: updates.featured,
-      trending: updates.trending,
-      rating: updates.rating,
-      overview: updates.overview,
-      streams: updates.streams,
-      seasons: updates.seasons,
-      updated_at: new Date().toISOString(),
-    });
-
-    return current.movies[index];
-  },
-
-  delete: (id: string): boolean => {
-    const current = ensureDbExists();
-    const initialLen = current.movies.length;
-    current.movies = current.movies.filter(m => m.id !== id);
-    if (current.movies.length !== initialLen) {
-      saveDb(current);
-      syncSupabaseDelete(id);
-      return true;
+    if (isSupabaseConfigured && supabase) {
+      try {
+        await supabase.from('movies').delete().eq('id', id);
+      } catch (e) {
+        console.error('Supabase delete error:', e);
+      }
     }
-    return false;
+
+    return true;
   },
 
-  incrementViews: (id: string): void => {
-    const current = ensureDbExists();
-    const item = current.movies.find(m => m.id === id || String(m.tmdbId) === id);
+  incrementViews: async (id: string): Promise<void> => {
+    const item = await db.getById(id);
     if (item) {
-      item.views = (item.views || 0) + 1;
-      saveDb(current);
+      const newViews = (item.views || 0) + 1;
+      await db.update(item.id, { views: newViews });
     }
   },
 
-  getStats: () => {
-    const { movies } = ensureDbExists();
+  getStats: async () => {
+    const movies = await db.getAll();
     const totalMovies = movies.filter(m => m.type === 'movie').length;
     const totalTv = movies.filter(m => m.type === 'tv').length;
     const totalViews = movies.reduce((acc, m) => acc + (m.views || 0), 0);

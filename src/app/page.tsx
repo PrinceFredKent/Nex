@@ -6,8 +6,8 @@ import Link from 'next/link';
 
 export const revalidate = 0;
 
-export default function HomePage() {
-  const allMedia = db.getAll();
+export default async function HomePage() {
+  const allMedia = await db.getAll();
 
   const featured = allMedia.filter((m) => m.featured);
   const heroItems = featured.length > 0 ? featured : allMedia.slice(0, 5);

@@ -366,6 +366,17 @@ export default function ProfilePage() {
               )}
             </button>
           </form>
+
+          {/* App Version Info Card */}
+          <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+            <div>
+              <p className="font-bold text-gray-800">System Platform</p>
+              <p className="text-[11px] text-gray-400">Nex High-Performance Streaming Platform</p>
+            </div>
+            <span className="font-mono font-bold bg-slate-100 text-gray-700 px-3 py-1 rounded-full border border-slate-200">
+              Nex 1.2
+            </span>
+          </div>
         </div>
       )}
     </div>

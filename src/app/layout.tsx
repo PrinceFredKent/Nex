@@ -5,7 +5,7 @@ import { WatchlistProvider } from '@/components/WatchlistProvider';
 import { AuthProvider } from '@/components/AuthProvider';
 
 export const metadata: Metadata = {
-  title: 'Nex | Stream Movies & TV Shows',
+  title: 'Nex 1.2 | Stream Movies & TV Shows',
   description: 'Watch unlimited movies, TV shows, and series in HD with instant multi-server streaming.',
 };
 

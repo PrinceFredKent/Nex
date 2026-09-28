@@ -305,6 +305,9 @@ function AdminContent() {
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-brand-500 text-white font-bold">
                   LIVE
                 </span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-bold border border-slate-200 font-mono">
+                  Nex 1.2
+                </span>
               </h1>
               <p className="text-xs text-gray-500 mt-0.5">
                 Search movie titles, auto-pull details, and attach free multi-server streaming links
@@ -712,9 +715,17 @@ function AdminContent() {
 
       {/* TAB 5: Settings */}
       {activeTab === 'settings' && (
-        <div className="max-w-2xl bg-white rounded-3xl p-6 sm:p-8 shadow-app border border-slate-100/80 space-y-4">
-          <h3 className="text-base font-bold text-gray-900">System & TMDB Configuration</h3>
-          <form onSubmit={handleSaveSettings} className="space-y-3 text-xs">
+        <div className="max-w-2xl bg-white rounded-3xl p-6 sm:p-8 shadow-app border border-slate-100/80 space-y-5">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+            <div>
+              <h3 className="text-base font-bold text-gray-900">System & TMDB Configuration</h3>
+              <p className="text-xs text-gray-500">Manage streaming platform configuration</p>
+            </div>
+            <div className="flex items-center gap-1.5 bg-brand-50 text-brand-600 px-3 py-1 rounded-full border border-brand-200/60 text-xs font-mono font-bold">
+              <span>Nex 1.2</span>
+            </div>
+          </div>
+          <form onSubmit={handleSaveSettings} className="space-y-4 text-xs">
             <div>
               <label className="font-bold text-gray-700">Site Name</label>
               <input

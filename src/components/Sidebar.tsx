@@ -27,10 +27,15 @@ export default function Sidebar() {
     <aside className="w-64 bg-white rounded-3xl p-6 flex flex-col justify-between shadow-app shrink-0 border border-slate-100/80">
       <div className="space-y-8">
         {/* Brand Logo */}
-        <Link href="/" className="block">
-          <span className="text-sm font-black tracking-wider text-brand-500 uppercase font-sans flex items-center gap-1.5">
-            NEX
-          </span>
+        <Link href="/" className="flex items-center justify-between group">
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-black tracking-wider text-brand-500 uppercase font-sans flex items-center gap-1.5">
+              NEX
+            </span>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-50 text-brand-600 border border-brand-200/60 font-mono tracking-tight">
+              1.2
+            </span>
+          </div>
         </Link>
 
         {/* Navigation Menu */}
@@ -101,6 +106,15 @@ export default function Sidebar() {
             </div>
           </div>
         )}
+      </div>
+
+      {/* App Version Info */}
+      <div className="pt-4 mt-6 border-t border-slate-100 flex items-center justify-between text-[11px] text-gray-400">
+        <span className="font-semibold text-gray-500">Nex 1.2</span>
+        <span className="flex items-center gap-1.5 text-[10px] text-emerald-600 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
+          <span>v1.2</span>
+        </span>
       </div>
     </aside>
   );
