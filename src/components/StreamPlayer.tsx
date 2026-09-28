@@ -1,21 +1,17 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { MediaItem, Episode, Season, StreamSource } from '@/types';
+import { MediaItem, StreamSource } from '@/types';
 import { generateStreamSources } from '@/lib/streams';
 import { 
   Server, 
   RotateCw, 
-  Tv, 
   Play, 
-  ChevronRight, 
-  ChevronLeft, 
-  Layers, 
   Sparkles, 
-  ShieldAlert,
-  Sliders,
-  CheckCircle2,
-  ExternalLink
+  ExternalLink,
+  Layers,
+  ArrowRight,
+  AlertTriangle
 } from 'lucide-react';
 import { useWatchlist } from './WatchlistProvider';
 
@@ -44,13 +40,22 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
     : (media.streams?.length ? media.streams : generateStreamSources('movie', media.tmdbId, media.imdbId));
 
   const [selectedServerId, setSelectedServerId] = useState<string>(
-    currentStreams[0]?.id || 'vidlink'
+    currentStreams[0]?.id || 'vidsrc-cc'
   );
   const [isCinemaMode, setIsCinemaMode] = useState<boolean>(false);
   const [keyReload, setKeyReload] = useState<number>(0);
 
+  // Sync selectedServerId if stream list changes
+  useEffect(() => {
+    if (currentStreams.length > 0 && !currentStreams.some((s) => s.id === selectedServerId)) {
+      setSelectedServerId(currentStreams[0].id);
+    }
+  }, [currentStreams, selectedServerId]);
+
   // Active stream source
   const activeStream = currentStreams.find((s) => s.id === selectedServerId) || currentStreams[0];
+  const activeIndex = currentStreams.findIndex((s) => s.id === (activeStream?.id || ''));
+  const nextStream = currentStreams[(activeIndex + 1) % (currentStreams.length || 1)];
 
   // Save viewing progress
   useEffect(() => {
@@ -69,13 +74,19 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
     fetch(`/api/views/${media.id}`, { method: 'POST' }).catch(() => {});
   }, [media.id, isTv, selectedSeasonNum, selectedEpisodeNum]);
 
-  // Navigate TV episodes
-  const hasNextEpisode = () => {
-    if (!activeSeason) return false;
+  const handleNextServer = () => {
+    if (nextStream) {
+      setSelectedServerId(nextStream.id);
+      setKeyReload((k) => k + 1);
+    }
+  };
+
+  const handlePrevEpisode = () => {
+    if (!activeSeason) return;
     const currentIndex = activeSeason.episodes.findIndex((e) => e.episodeNumber === selectedEpisodeNum);
-    if (currentIndex < activeSeason.episodes.length - 1) return true;
-    const seasonIndex = seasons.findIndex((s) => s.seasonNumber === selectedSeasonNum);
-    return seasonIndex < seasons.length - 1;
+    if (currentIndex > 0) {
+      setSelectedEpisodeNum(activeSeason.episodes[currentIndex - 1].episodeNumber);
+    }
   };
 
   const handleNextEpisode = () => {
@@ -90,14 +101,6 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
         setSelectedSeasonNum(nextSeason.seasonNumber);
         setSelectedEpisodeNum(nextSeason.episodes[0]?.episodeNumber || 1);
       }
-    }
-  };
-
-  const handlePrevEpisode = () => {
-    if (!activeSeason) return;
-    const currentIndex = activeSeason.episodes.findIndex((e) => e.episodeNumber === selectedEpisodeNum);
-    if (currentIndex > 0) {
-      setSelectedEpisodeNum(activeSeason.episodes[currentIndex - 1].episodeNumber);
     }
   };
 
@@ -119,14 +122,15 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
             src={activeStream?.url || ''}
             title={media.title}
             allowFullScreen
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
             className="w-full h-full border-0"
             referrerPolicy="origin"
+            loading="eager"
           />
         )}
 
-        {/* Top Floating Controls on Hover */}
-        <div className="absolute top-3 right-3 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 backdrop-blur-md p-1.5 rounded-xl border border-white/10">
+        {/* Top Floating Controls */}
+        <div className="absolute top-3 right-3 flex items-center gap-2 bg-black/70 backdrop-blur-md p-1.5 rounded-xl border border-white/10 z-20">
           <button
             onClick={() => setKeyReload((k) => k + 1)}
             title="Reload Video Stream"
@@ -142,60 +146,89 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
             }`}
           >
             <Layers className="w-4 h-4" />
-            <span>{isCinemaMode ? 'Exit Cinema' : 'Cinema Mode'}</span>
+            <span className="hidden sm:inline">{isCinemaMode ? 'Exit' : 'Cinema'}</span>
           </button>
         </div>
       </div>
 
-      {/* Stream Control Bar */}
-      <div className="bg-dark-900 border border-white/10 rounded-2xl p-4 sm:p-5 space-y-4">
-        {/* Stream Servers Selector */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
-          <div className="flex items-center gap-2">
-            <Server className="w-4 h-4 text-brand-500" />
-            <span className="text-sm font-bold text-white uppercase tracking-wider">
-              Streaming Servers:
-            </span>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2">
-            {currentStreams.map((source, idx) => (
-              <button
-                key={source.id || idx}
-                onClick={() => setSelectedServerId(source.id)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                  selectedServerId === source.id
-                    ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/30'
-                    : 'bg-dark-800 hover:bg-dark-700 text-gray-300 hover:text-white border border-white/10'
-                }`}
-              >
-                <span>{source.serverName}</span>
-                <span className="text-[10px] opacity-75 px-1 py-0.2 bg-black/40 rounded">
-                  {source.quality || 'HD'}
-                </span>
-              </button>
-            ))}
-
-            {activeStream?.url && (
-              <a
-                href={activeStream.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/10 hover:bg-white/20 text-gray-200 hover:text-white transition"
-                title="Open stream player in new window"
-              >
-                <ExternalLink className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">External Player</span>
-              </a>
-            )}
+      {/* Instant Stream Switcher Quick Bar */}
+      <div className="bg-gradient-to-r from-brand-950/70 via-dark-900 to-dark-900 border border-brand-500/30 rounded-2xl p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-lg">
+        <div className="flex items-center gap-2.5 text-xs text-gray-200">
+          <Sparkles className="w-4 h-4 text-brand-400 shrink-0 animate-pulse" />
+          <div>
+            <p className="font-bold text-white">Stuck on loading or buffering?</p>
+            <p className="text-[11px] text-gray-400">Different servers host different sources. Tap another server below:</p>
           </div>
         </div>
 
-        {/* Server Switcher Tip */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-gray-400 bg-white/5 p-3 rounded-xl border border-white/5">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-3.5 h-3.5 text-yellow-500 shrink-0" />
-            <span>If the video is buffering or blocked, tap another server above to switch streams instantly.</span>
+        <div className="flex items-center gap-2 shrink-0">
+          {nextStream && (
+            <button
+              onClick={handleNextServer}
+              className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-xs font-bold shadow-md shadow-brand-500/30 transition"
+            >
+              <span>Switch to Next Server</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          )}
+
+          {activeStream?.url && (
+            <a
+              href={activeStream.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/10 transition"
+              title="Open stream in a clean external tab"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+              <span>Direct Player</span>
+            </a>
+          )}
+        </div>
+      </div>
+
+      {/* Stream Control Bar & All Servers */}
+      <div className="bg-dark-900 border border-white/10 rounded-2xl p-4 sm:p-5 space-y-4">
+        {/* Stream Servers Selector */}
+        <div className="space-y-2.5 border-b border-white/10 pb-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Server className="w-4 h-4 text-brand-500" />
+              <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                Select Streaming Server ({currentStreams.length} Available):
+              </span>
+            </div>
+            <span className="text-[11px] text-gray-400">
+              Active: <strong className="text-brand-400">{activeStream?.serverName}</strong>
+            </span>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+            {currentStreams.map((source, idx) => {
+              const isSelected = selectedServerId === source.id;
+              return (
+                <button
+                  key={source.id || idx}
+                  onClick={() => {
+                    setSelectedServerId(source.id);
+                    setKeyReload((k) => k + 1);
+                  }}
+                  className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all text-left ${
+                    isSelected
+                      ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/30 ring-2 ring-brand-400'
+                      : 'bg-dark-800 hover:bg-dark-700 text-gray-300 hover:text-white border border-white/10'
+                  }`}
+                >
+                  <div className="flex items-center gap-2 truncate">
+                    <Play className={`w-3 h-3 shrink-0 ${isSelected ? 'text-white fill-white' : 'text-gray-400'}`} />
+                    <span className="truncate">{source.serverName}</span>
+                  </div>
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono shrink-0 ml-1 ${isSelected ? 'bg-black/30 text-white' : 'bg-black/40 text-gray-400'}`}>
+                    {source.quality || 'HD'}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -228,60 +261,48 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
               <div className="flex items-center gap-2">
                 <button
                   onClick={handlePrevEpisode}
-                  disabled={selectedEpisodeNum <= 1}
-                  className="flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-medium bg-dark-800 hover:bg-dark-700 disabled:opacity-30 disabled:pointer-events-none text-gray-300"
+                  disabled={selectedEpisodeNum <= 1 && selectedSeasonNum <= 1}
+                  className="px-3 py-1.5 rounded-lg bg-dark-800 hover:bg-dark-700 disabled:opacity-40 text-gray-300 text-xs font-semibold transition"
                 >
-                  <ChevronLeft className="w-3.5 h-3.5" />
-                  <span>Prev Ep</span>
+                  Prev Episode
                 </button>
                 <button
                   onClick={handleNextEpisode}
-                  disabled={!hasNextEpisode()}
-                  className="flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-medium bg-brand-500/90 hover:bg-brand-500 disabled:opacity-30 disabled:pointer-events-none text-white shadow"
+                  className="px-3 py-1.5 rounded-lg bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold transition"
                 >
-                  <span>Next Ep</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
+                  Next Episode
                 </button>
               </div>
             </div>
 
-            {/* Episode Grid / Selector */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 max-h-64 overflow-y-auto p-1">
-              {activeSeason?.episodes.map((ep) => {
-                const isSelected = ep.episodeNumber === selectedEpisodeNum;
-                return (
-                  <button
-                    key={ep.id || ep.episodeNumber}
-                    onClick={() => setSelectedEpisodeNum(ep.episodeNumber)}
-                    className={`flex flex-col text-left p-2 rounded-xl transition border ${
-                      isSelected
-                        ? 'bg-brand-500/15 border-brand-500 text-white'
-                        : 'bg-dark-850 hover:bg-dark-800 border-white/5 text-gray-300'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between text-xs mb-1">
-                      <span className={`font-bold ${isSelected ? 'text-brand-400' : 'text-gray-400'}`}>
+            {/* Episode List */}
+            {activeSeason && (
+              <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2 max-h-48 overflow-y-auto pr-1">
+                {activeSeason.episodes.map((ep) => {
+                  const isSelected = selectedEpisodeNum === ep.episodeNumber;
+                  return (
+                    <button
+                      key={ep.episodeNumber}
+                      onClick={() => setSelectedEpisodeNum(ep.episodeNumber)}
+                      className={`p-2 rounded-xl text-left transition border ${
+                        isSelected
+                          ? 'bg-brand-500/20 border-brand-500 text-white'
+                          : 'bg-dark-800/60 border-white/5 text-gray-400 hover:text-white hover:bg-dark-700'
+                      }`}
+                    >
+                      <span className="text-[10px] font-bold uppercase block text-brand-400">
                         EP {ep.episodeNumber}
                       </span>
-                      {ep.runtime && <span className="text-[10px] text-gray-500">{ep.runtime}m</span>}
-                    </div>
-                    <span className="text-xs font-medium line-clamp-1">
-                      {ep.title}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
+                      <span className="text-xs font-semibold block truncate">
+                        {ep.title || `Episode ${ep.episodeNumber}`}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
         )}
-
-        {/* Helpful Tip */}
-        <div className="flex items-center gap-2 text-[11px] text-gray-400 bg-dark-850 p-2.5 rounded-xl border border-white/5">
-          <ShieldAlert className="w-4 h-4 text-brand-400 shrink-0" />
-          <span>
-            If the current server is slow or buffering, simply switch to another streaming server above.
-          </span>
-        </div>
       </div>
     </div>
   );
