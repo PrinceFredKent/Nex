@@ -11,11 +11,13 @@ function LoginForm() {
   const searchParams = useSearchParams();
   const next = searchParams.get('next') || '/';
 
-  const { signIn, user } = useAuth();
+  const { signIn, confirmEmail, user } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isActivating, setIsActivating] = useState(false);
+  const [activationSuccess, setActivationSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   // If already logged in, redirect
@@ -24,6 +26,35 @@ function LoginForm() {
       router.push(next);
     }
   }, [user, next, router]);
+
+  const handleManualActivate = async () => {
+    if (!email.trim()) {
+      setError('Please enter your email address first.');
+      return;
+    }
+    setIsActivating(true);
+    setError(null);
+    try {
+      const res = await confirmEmail(email.trim());
+      if (res.success) {
+        setActivationSuccess('Email verified successfully! You can now sign in.');
+        setError(null);
+        // Automatically attempt sign in if password is entered
+        if (password) {
+          const loginRes = await signIn(email.trim(), password);
+          if (!loginRes.error) {
+            router.push(next);
+          }
+        }
+      } else {
+        setError(res.error || 'Failed to activate account');
+      }
+    } catch (e: any) {
+      setError(e?.message || 'Error confirming account');
+    } finally {
+      setIsActivating(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,11 +104,45 @@ function LoginForm() {
           </p>
         </div>
 
+        {/* Success Alert */}
+        {activationSuccess && (
+          <div className="mb-6 p-4 rounded-2xl bg-emerald-50 border border-emerald-200/80 text-emerald-700 text-xs font-medium flex items-center gap-2.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+            <span>{activationSuccess}</span>
+          </div>
+        )}
+
         {/* Error Alert */}
         {error && (
-          <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200/80 text-red-600 text-xs font-medium flex items-center gap-2.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
-            <span>{error}</span>
+          <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200/80 text-red-600 text-xs font-medium space-y-2.5">
+            <div className="flex items-center gap-2.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
+              <span>{error}</span>
+            </div>
+
+            {/* Email Not Confirmed Action */}
+            {error.toLowerCase().includes('email not confirmed') && (
+              <div className="pt-2 border-t border-red-200/60 flex flex-col gap-2">
+                <p className="text-[11px] text-red-700">
+                  Your account is registered in Supabase but needs email activation.
+                </p>
+                <button
+                  type="button"
+                  onClick={handleManualActivate}
+                  disabled={isActivating}
+                  className="w-full py-2 px-3 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-xs font-bold transition shadow-sm flex items-center justify-center gap-1.5 disabled:opacity-50"
+                >
+                  {isActivating ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      <span>Activating in Supabase...</span>
+                    </>
+                  ) : (
+                    <span>Confirm & Activate Account Now</span>
+                  )}
+                </button>
+              </div>
+            )}
           </div>
         )}
 

@@ -13,6 +13,7 @@ interface AuthContextType {
   isAdmin: boolean;
   signIn: (email: string, password: string) => Promise<{ error?: string }>;
   signUp: (email: string, password: string, fullName: string) => Promise<{ error?: string; user?: any }>;
+  confirmEmail: (email: string) => Promise<{ success: boolean; error?: string }>;
   signOut: () => Promise<void>;
   updateProfile: (data: { fullName?: string; avatarUrl?: string }) => Promise<{ error?: string }>;
 }
@@ -85,6 +86,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
+  const confirmEmail = async (userEmail: string): Promise<{ success: boolean; error?: string }> => {
+    try {
+      const res = await fetch('/api/auth/confirm-user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: userEmail }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        return { success: false, error: data.error || 'Failed to confirm email' };
+      }
+      return { success: true };
+    } catch (err: any) {
+      return { success: false, error: err?.message || 'Failed to reach confirmation service' };
+    }
+  };
+
   const signIn = async (email: string, password: string): Promise<{ error?: string }> => {
     if (!isSupabaseConfigured || !supabase) {
       return { error: 'Supabase authentication is not configured. Please check your environment variables.' };
@@ -95,7 +113,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         email,
         password,
       });
-      if (error) return { error: error.message };
+
+      if (error) {
+        // If email not confirmed, automatically attempt server-side verification and retry
+        if (
+          error.message?.toLowerCase().includes('email not confirmed') ||
+          error.message?.toLowerCase().includes('not confirmed')
+        ) {
+          const confirmResult = await confirmEmail(email);
+          if (confirmResult.success) {
+            // Retry sign in after confirmation
+            const retry = await supabase.auth.signInWithPassword({ email, password });
+            if (!retry.error && retry.data.user) {
+              setUser(retry.data.user);
+              setSession(retry.data.session);
+              setProfile(buildProfile(retry.data.user));
+              return {};
+            }
+          }
+        }
+        return { error: error.message };
+      }
+
       if (data.user) {
         setUser(data.user);
         setSession(data.session);
@@ -123,7 +162,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           },
         },
       });
+
       if (error) return { error: error.message };
+
+      // Immediately confirm email in background so login works without delay
+      await confirmEmail(email).catch(() => {});
+
       if (data.user) {
         setUser(data.user);
         setSession(data.session);
@@ -183,6 +227,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isAdmin,
         signIn,
         signUp,
+        confirmEmail,
         signOut,
         updateProfile,
       }}
