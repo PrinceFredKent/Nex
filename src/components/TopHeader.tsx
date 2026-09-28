@@ -116,13 +116,23 @@ export default function TopHeader() {
           <CategoryPills />
         </Suspense>
 
-        {/* Right: Notification & Profile Pills */}
-        <div className="flex items-center gap-3 shrink-0 ml-auto lg:ml-0">
+        {/* Right: Admin, Notification & Profile Pills */}
+        <div className="flex items-center gap-2.5 shrink-0 ml-auto lg:ml-0">
+          {/* Direct Admin & Add Movies Button */}
+          <Link
+            href="/admin"
+            className="flex items-center gap-1.5 bg-brand-500 hover:bg-brand-600 text-white px-3.5 py-1.5 rounded-full shadow-sm text-xs font-bold transition shrink-0"
+            title="Admin Center - Add & Manage Movies"
+          >
+            <Shield className="w-3.5 h-3.5" />
+            <span>Admin</span>
+          </Link>
+
           {/* Notification Bell */}
           <button
-            onClick={() => router.push(isAdmin ? '/admin' : '/profile')}
-            title="Notifications"
-            className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-gray-600 hover:text-brand-500 shadow-sm border border-slate-100/80 transition"
+            onClick={() => router.push('/admin')}
+            title="System & Notifications"
+            className="w-9 h-9 rounded-full bg-white flex items-center justify-center text-gray-600 hover:text-brand-500 shadow-sm border border-slate-100/80 transition"
           >
             <Bell className="w-4 h-4" />
           </button>
@@ -171,16 +181,14 @@ export default function TopHeader() {
                     <span>Favorite Watchlist</span>
                   </Link>
 
-                  {isAdmin && (
-                    <Link
-                      href="/admin"
-                      onClick={() => setIsDropdownOpen(false)}
-                      className="w-full px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-slate-50 hover:text-brand-500 flex items-center gap-2.5 transition"
-                    >
-                      <Shield className="w-3.5 h-3.5 text-brand-500" />
-                      <span>Admin Center</span>
-                    </Link>
-                  )}
+                  <Link
+                    href="/admin"
+                    onClick={() => setIsDropdownOpen(false)}
+                    className="w-full px-4 py-2 text-xs font-bold text-brand-600 hover:bg-brand-50 flex items-center gap-2.5 transition"
+                  >
+                    <Shield className="w-3.5 h-3.5 text-brand-500" />
+                    <span>Admin & Add Movies</span>
+                  </Link>
 
                   <div className="border-t border-slate-100 my-1" />
 
@@ -201,7 +209,7 @@ export default function TopHeader() {
           ) : (
             <Link
               href="/auth/login"
-              className="flex items-center gap-1.5 bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-full shadow-sm text-xs font-bold transition"
+              className="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-gray-800 px-3.5 py-1.5 rounded-full shadow-sm text-xs font-bold transition"
             >
               <LogIn className="w-3.5 h-3.5" />
               <span>Sign In</span>

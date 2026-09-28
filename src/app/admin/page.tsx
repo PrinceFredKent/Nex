@@ -6,7 +6,6 @@ import {
   Shield, 
   Search, 
   Plus, 
-  Download, 
   Trash2, 
   Eye, 
   Star, 
@@ -17,17 +16,24 @@ import {
   Database, 
   Settings, 
   ExternalLink,
-  Flame
+  Flame,
+  Film,
+  Tv,
+  Image as ImageIcon,
+  Play
 } from 'lucide-react';
 import { MediaItem, MediaType, StreamSource, SystemSettings } from '@/types';
-import { STREAM_PROVIDERS } from '@/lib/streams';
 import Link from 'next/link';
 
 function AdminContent() {
   const searchParams = useSearchParams();
   const initialTab = (searchParams.get('tab') as any) || 'search';
 
-  const [activeTab, setActiveTab] = useState<'search' | 'library' | 'trending' | 'manual' | 'settings'>(initialTab);
+  const [activeTab, setActiveTab] = useState<'search' | 'manual' | 'library' | 'trending' | 'settings'>(
+    initialTab === 'manual' || initialTab === 'library' || initialTab === 'trending' || initialTab === 'settings'
+      ? initialTab
+      : 'search'
+  );
 
   // Search Ingestion State
   const [searchQuery, setSearchQuery] = useState('');
@@ -56,17 +62,20 @@ function AdminContent() {
     backdropUrl: '',
     releaseDate: new Date().toISOString().split('T')[0],
     rating: 8.0,
-    genres: 'Action, Adventure',
+    genres: 'Action, Sci-Fi',
     streamUrl: '',
     serverName: 'Direct HD Stream',
+    backupStreamUrl: '',
+    backupServerName: 'Backup Server',
   });
+  const [isSubmittingManual, setIsSubmittingManual] = useState(false);
 
   // Settings & Stats
   const [stats, setStats] = useState<any>(null);
   const [settings, setSettings] = useState<SystemSettings>({
     siteName: 'Nex',
     siteDescription: '',
-    tmdbApiKey: '841459a58d04735c026040cd8ab00d02',
+    tmdbApiKey: '78def161c2fe525795ba67ecb09f8556',
     primaryStreamProvider: 'vidlink',
     enableAutoStreams: true,
     disclaimer: '',
@@ -115,7 +124,7 @@ function AdminContent() {
       const res = await fetch('/api/movies');
       const json = await res.json();
       if (json.success) {
-        setLibraryItems(json.data);
+        setLibraryItems(json.data || []);
       }
     } catch (e) {
       console.error('Failed to load library', e);
@@ -214,6 +223,26 @@ function AdminContent() {
     }
   };
 
+  // Clear Entire Catalog
+  const handleClearAll = async () => {
+    if (!confirm('⚠️ Are you sure you want to delete ALL titles from the catalog? This will remove all movies and TV shows completely.')) {
+      return;
+    }
+    try {
+      const res = await fetch('/api/movies?all=true', { method: 'DELETE' });
+      const json = await res.json();
+      if (json.success) {
+        setLibraryItems([]);
+        loadStats();
+        showNotification('success', 'All media has been removed from your catalog.');
+      } else {
+        showNotification('error', json.error || 'Failed to clear catalog');
+      }
+    } catch (e) {
+      showNotification('error', 'Error clearing catalog');
+    }
+  };
+
   // Handle Manual Add
   const handleManualSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -222,30 +251,49 @@ function AdminContent() {
       return;
     }
 
+    setIsSubmittingManual(true);
     try {
-      const genresList = manualForm.genres.split(',').map((g) => g.trim()).filter(Boolean);
-      const streams: StreamSource[] = manualForm.streamUrl
-        ? [
-            {
-              id: `custom-${Date.now()}`,
-              serverName: manualForm.serverName || 'Direct HD',
-              url: manualForm.streamUrl,
-              type: manualForm.streamUrl.endsWith('.mp4') ? 'mp4' : 'embed',
-              quality: '1080p HD',
-              isWorking: true,
-            },
-          ]
-        : [];
+      const genresList = manualForm.genres
+        .split(',')
+        .map((g) => g.trim())
+        .filter(Boolean);
+
+      const streams: StreamSource[] = [];
+      if (manualForm.streamUrl.trim()) {
+        streams.push({
+          id: `custom-main-${Date.now()}`,
+          serverName: manualForm.serverName || 'Direct Stream',
+          url: manualForm.streamUrl.trim(),
+          type: manualForm.streamUrl.includes('.mp4') ? 'mp4' : 'embed',
+          quality: '1080p HD',
+          isWorking: true,
+        });
+      }
+
+      if (manualForm.backupStreamUrl.trim()) {
+        streams.push({
+          id: `custom-backup-${Date.now()}`,
+          serverName: manualForm.backupServerName || 'Backup Stream',
+          url: manualForm.backupStreamUrl.trim(),
+          type: manualForm.backupStreamUrl.includes('.mp4') ? 'mp4' : 'embed',
+          quality: '1080p HD',
+          isWorking: true,
+        });
+      }
+
+      const defaultPoster = manualForm.type === 'tv'
+        ? 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=800&auto=format&fit=crop'
+        : 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=800&auto=format&fit=crop';
 
       const body = {
-        title: manualForm.title,
+        title: manualForm.title.trim(),
         type: manualForm.type,
-        overview: manualForm.overview || 'Custom streaming title.',
-        posterUrl: manualForm.posterUrl || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=800&auto=format&fit=crop',
-        backdropUrl: manualForm.backdropUrl || 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1600&auto=format&fit=crop',
+        overview: manualForm.overview.trim() || 'Custom streaming title added from Admin.',
+        posterUrl: manualForm.posterUrl.trim() || defaultPoster,
+        backdropUrl: manualForm.backdropUrl.trim() || manualForm.posterUrl.trim() || defaultPoster,
         releaseDate: manualForm.releaseDate,
         rating: Number(manualForm.rating) || 8.0,
-        genres: genresList,
+        genres: genresList.length > 0 ? genresList : ['Action'],
         cast: [],
         status: 'published' as const,
         streams,
@@ -259,13 +307,31 @@ function AdminContent() {
 
       const json = await res.json();
       if (json.success) {
-        showNotification('success', `Added "${manualForm.title}"!`);
+        showNotification('success', `Added "${manualForm.title}" to catalog!`);
+        setManualForm({
+          title: '',
+          type: 'movie',
+          overview: '',
+          posterUrl: '',
+          backdropUrl: '',
+          releaseDate: new Date().toISOString().split('T')[0],
+          rating: 8.0,
+          genres: 'Action, Sci-Fi',
+          streamUrl: '',
+          serverName: 'Direct HD Stream',
+          backupStreamUrl: '',
+          backupServerName: 'Backup Server',
+        });
         loadLibrary();
         loadStats();
         setActiveTab('library');
+      } else {
+        showNotification('error', json.error || 'Failed to add title');
       }
     } catch (e) {
-      showNotification('error', 'Failed to create manual item');
+      showNotification('error', 'Failed to create item');
+    } finally {
+      setIsSubmittingManual(false);
     }
   };
 
@@ -279,7 +345,7 @@ function AdminContent() {
         body: JSON.stringify(settings),
       });
       if (res.ok) {
-        showNotification('success', 'Settings saved!');
+        showNotification('success', 'Settings saved successfully!');
       }
     } catch (e) {
       showNotification('error', 'Failed to save settings');
@@ -293,14 +359,14 @@ function AdminContent() {
   return (
     <div className="space-y-6">
       {/* Top Banner Card */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-app border border-slate-100/80 space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-6">
+      <div className="bg-white rounded-3xl p-5 sm:p-7 shadow-app border border-slate-100/80 space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-500">
-              <Shield className="w-6 h-6" />
+            <div className="w-11 h-11 rounded-2xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-500 shrink-0">
+              <Shield className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-2xl font-black text-gray-900 tracking-tight flex items-center gap-2">
+              <h1 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight flex items-center gap-2">
                 Nex Admin Center
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-brand-500 text-white font-bold">
                   LIVE
@@ -310,38 +376,38 @@ function AdminContent() {
                 </span>
               </h1>
               <p className="text-xs text-gray-500 mt-0.5">
-                Search movie titles, auto-pull details, and attach free multi-server streaming links
+                Add your own movies, search TMDB titles, and manage streaming servers
               </p>
             </div>
           </div>
 
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-xs font-bold text-gray-700 hover:text-brand-500 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-full transition"
+            className="inline-flex items-center justify-center gap-2 text-xs font-bold text-gray-700 hover:text-brand-500 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-full transition w-full sm:w-auto"
           >
             <ExternalLink className="w-3.5 h-3.5" />
-            <span>Public Site</span>
+            <span>View Public Site</span>
           </Link>
         </div>
 
         {/* Stats Grid */}
         {stats && (
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl">
-              <span className="text-[11px] text-gray-500 uppercase font-bold">Catalog Titles</span>
-              <p className="text-2xl font-black text-gray-900 mt-0.5">{stats.totalItems}</p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+            <div className="bg-slate-50 border border-slate-100 p-3 sm:p-4 rounded-2xl">
+              <span className="text-[10px] sm:text-[11px] text-gray-500 uppercase font-bold">Catalog Titles</span>
+              <p className="text-xl sm:text-2xl font-black text-gray-900 mt-0.5">{stats.totalItems}</p>
             </div>
-            <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl">
-              <span className="text-[11px] text-gray-500 uppercase font-bold">Movies</span>
-              <p className="text-2xl font-black text-brand-500 mt-0.5">{stats.totalMovies}</p>
+            <div className="bg-slate-50 border border-slate-100 p-3 sm:p-4 rounded-2xl">
+              <span className="text-[10px] sm:text-[11px] text-gray-500 uppercase font-bold">Movies</span>
+              <p className="text-xl sm:text-2xl font-black text-brand-500 mt-0.5">{stats.totalMovies}</p>
             </div>
-            <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl">
-              <span className="text-[11px] text-gray-500 uppercase font-bold">TV Shows</span>
-              <p className="text-2xl font-black text-blue-600 mt-0.5">{stats.totalTv}</p>
+            <div className="bg-slate-50 border border-slate-100 p-3 sm:p-4 rounded-2xl">
+              <span className="text-[10px] sm:text-[11px] text-gray-500 uppercase font-bold">TV Shows</span>
+              <p className="text-xl sm:text-2xl font-black text-blue-600 mt-0.5">{stats.totalTv}</p>
             </div>
-            <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl">
-              <span className="text-[11px] text-gray-500 uppercase font-bold">Total Views</span>
-              <p className="text-2xl font-black text-emerald-600 mt-0.5">{stats.totalViews.toLocaleString()}</p>
+            <div className="bg-slate-50 border border-slate-100 p-3 sm:p-4 rounded-2xl">
+              <span className="text-[10px] sm:text-[11px] text-gray-500 uppercase font-bold">Total Views</span>
+              <p className="text-xl sm:text-2xl font-black text-emerald-600 mt-0.5">{stats.totalViews.toLocaleString()}</p>
             </div>
           </div>
         )}
@@ -365,19 +431,19 @@ function AdminContent() {
         </div>
       )}
 
-      {/* Tabs */}
-      <div className="flex flex-wrap items-center gap-2">
+      {/* Responsive Tabs Bar */}
+      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
         {[
-          { id: 'search', label: '🔍 Search & Auto-Import', icon: Search },
-          { id: 'trending', label: '🔥 Trending Ingest', icon: Flame },
-          { id: 'library', label: `🎬 Catalog (${libraryItems.length})`, icon: Database },
-          { id: 'manual', label: '➕ Direct Stream Link', icon: Plus },
-          { id: 'settings', label: '⚙️ Settings & TMDB', icon: Settings },
+          { id: 'search', label: '🔍 Search & Import' },
+          { id: 'manual', label: '➕ Add Your Movie' },
+          { id: 'library', label: `🎬 Catalog (${libraryItems.length})` },
+          { id: 'trending', label: '🔥 Trending Releases' },
+          { id: 'settings', label: '⚙️ Settings' },
         ].map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id as any)}
-            className={`px-4 py-2 rounded-full text-xs font-bold transition shadow-sm ${
+            className={`px-4 py-2 rounded-full text-xs font-bold transition whitespace-nowrap shadow-sm shrink-0 ${
               activeTab === tab.id
                 ? 'bg-brand-500 text-white shadow-brand-500/25'
                 : 'bg-white text-gray-600 hover:text-gray-950 border border-slate-100'
@@ -391,14 +457,14 @@ function AdminContent() {
       {/* TAB 1: Search & Auto-Ingest */}
       {activeTab === 'search' && (
         <div className="space-y-6">
-          <div className="bg-white rounded-3xl p-6 space-y-4 shadow-app border border-slate-100/80">
+          <div className="bg-white rounded-3xl p-5 sm:p-7 space-y-4 shadow-app border border-slate-100/80">
             <div className="space-y-1">
               <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-yellow-500" />
-                <span>Search Movie or Series Title</span>
+                <span>Search Any Movie or TV Series</span>
               </h3>
               <p className="text-xs text-gray-500">
-                Type any movie or show title. The system pulls details and generates free streaming server links instantly.
+                Type any movie or show title. The system pulls HD posters, cast, synopsis, and attaches multi-server streaming links automatically.
               </p>
             </div>
 
@@ -409,7 +475,7 @@ function AdminContent() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="e.g. Avatar, Inception, Breaking Bad, Gladiator..."
+                  placeholder="e.g. Deadpool, Inception, Gladiator, The Batman..."
                   className="w-full bg-slate-50 border border-slate-200 rounded-full px-4 py-2.5 pl-10 text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:border-brand-500"
                 />
                 <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-3" />
@@ -440,7 +506,7 @@ function AdminContent() {
           {isSearching ? (
             <div className="py-20 text-center text-gray-400 space-y-2">
               <Loader2 className="w-6 h-6 animate-spin text-brand-500 mx-auto" />
-              <p className="text-xs font-semibold">Searching TMDB catalog...</p>
+              <p className="text-xs font-semibold">Searching titles...</p>
             </div>
           ) : searchResults.length > 0 ? (
             <div className="space-y-3">
@@ -449,69 +515,55 @@ function AdminContent() {
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {searchResults.map((item) => {
-                  const mType = item.media_type || (item.title ? 'movie' : 'tv');
+                  const mediaType = item.media_type === 'tv' ? 'tv' : 'movie';
                   const title = item.title || item.name;
-                  const date = item.release_date || item.first_air_date || '';
-                  const year = date ? date.split('-')[0] : 'N/A';
                   const poster = item.poster_path
-                    ? `https://image.tmdb.org/t/p/w342${item.poster_path}`
-                    : 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=800&auto=format&fit=crop';
-                  const alreadyImported = isAlreadyInLibrary(item.id);
+                    ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+                    : 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=400&auto=format&fit=crop';
+                  const inLib = isAlreadyInLibrary(item.id);
                   const isIngesting = ingestingId === String(item.id);
 
                   return (
                     <div
-                      key={item.id}
-                      className="flex gap-3.5 p-3 rounded-2xl bg-white border border-slate-100/80 shadow-sm hover:shadow-md transition group"
+                      key={`${item.id}-${mediaType}`}
+                      className="bg-white rounded-2xl p-3 border border-slate-100 flex gap-3 shadow-sm hover:shadow-md transition"
                     >
                       <img
                         src={poster}
                         alt={title}
-                        className="w-16 h-24 object-cover rounded-xl shadow-sm shrink-0 bg-slate-100"
+                        className="w-16 h-24 object-cover rounded-xl shrink-0 bg-slate-100"
                       />
-                      <div className="flex-1 min-w-0 flex flex-col justify-between">
+                      <div className="flex flex-col justify-between flex-1 min-w-0">
                         <div>
-                          <div className="flex items-center gap-2">
-                            <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-100 text-gray-700">
-                              {mType}
+                          <div className="flex items-center gap-1.5 mb-1">
+                            <span className="text-[9px] px-1.5 py-0.5 rounded bg-slate-100 font-bold uppercase text-gray-600">
+                              {mediaType}
                             </span>
-                            <span className="text-xs text-yellow-600 font-bold flex items-center gap-0.5">
-                              <Star className="w-3 h-3 fill-yellow-500 text-yellow-500" />
+                            <span className="text-[10px] font-bold text-yellow-600 flex items-center gap-0.5">
+                              <Star className="w-3 h-3 fill-yellow-500" />
                               {item.vote_average ? item.vote_average.toFixed(1) : '7.0'}
                             </span>
-                            <span className="text-xs text-gray-400">{year}</span>
                           </div>
-                          <h4 className="text-gray-900 font-bold text-sm truncate mt-1 group-hover:text-brand-500 transition">
-                            {title}
-                          </h4>
-                          <p className="text-xs text-gray-500 line-clamp-2 mt-0.5">
-                            {item.overview || 'No synopsis.'}
+                          <h4 className="text-xs font-bold text-gray-900 truncate">{title}</h4>
+                          <p className="text-[11px] text-gray-400 line-clamp-2 mt-0.5">
+                            {item.overview || 'No overview available.'}
                           </p>
                         </div>
 
                         <div className="pt-2">
-                          {alreadyImported ? (
-                            <span className="flex items-center gap-1 text-xs font-semibold text-emerald-600">
-                              <CheckCircle className="w-3.5 h-3.5" />
-                              In Library
+                          {inLib ? (
+                            <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full border border-emerald-100 flex items-center gap-1 w-fit">
+                              <CheckCircle className="w-3 h-3" />
+                              <span>In Catalog</span>
                             </span>
                           ) : (
                             <button
-                              onClick={() => handleIngest(item.id, mType, title)}
+                              onClick={() => handleIngest(item.id, mediaType, title)}
                               disabled={isIngesting}
-                              className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-brand-500 hover:bg-brand-600 disabled:opacity-50 text-white font-bold text-xs shadow-sm transition"
+                              className="px-3 py-1.5 rounded-full bg-brand-500 hover:bg-brand-600 disabled:opacity-50 text-white font-bold text-xs shadow-sm flex items-center gap-1.5"
                             >
-                              {isIngesting ? (
-                                <>
-                                  <Loader2 className="w-3 h-3 animate-spin" />
-                                  <span>Importing...</span>
-                                </>
-                              ) : (
-                                <>
-                                  <Download className="w-3 h-3" />
-                                  <span>1-Click Auto Import</span>
-                                </>
-                              )}
+                              {isIngesting ? <Loader2 className="w-3 h-3 animate-spin" /> : <Plus className="w-3 h-3" />}
+                              <span>{isIngesting ? 'Importing...' : '1-Click Add'}</span>
                             </button>
                           )}
                         </div>
@@ -525,19 +577,402 @@ function AdminContent() {
         </div>
       )}
 
-      {/* TAB 2: Trending Ingest */}
+      {/* TAB 2: Add Your Own Movie (Manual) */}
+      {activeTab === 'manual' && (
+        <div className="bg-white rounded-3xl p-5 sm:p-7 shadow-app border border-slate-100/80 space-y-6">
+          <div className="border-b border-slate-100 pb-4">
+            <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+              <Plus className="w-5 h-5 text-brand-500" />
+              <span>Add Your Own Custom Movie or Show</span>
+            </h3>
+            <p className="text-xs text-gray-500 mt-1">
+              Publish any title directly with your custom direct video links (MP4, HLS, embed, YouTube, Google Drive, or streaming servers).
+            </p>
+          </div>
+
+          <form onSubmit={handleManualSubmit} className="space-y-4 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="sm:col-span-2">
+                <label className="font-bold text-gray-800">Movie / Show Title *</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. My Exclusive Action Movie"
+                  value={manualForm.title}
+                  onChange={(e) => setManualForm({ ...manualForm, title: e.target.value })}
+                  className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-gray-900 text-xs focus:outline-none focus:border-brand-500"
+                />
+              </div>
+
+              <div>
+                <label className="font-bold text-gray-800">Media Type</label>
+                <select
+                  value={manualForm.type}
+                  onChange={(e) => setManualForm({ ...manualForm, type: e.target.value as any })}
+                  className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-gray-900 text-xs focus:outline-none focus:border-brand-500 font-semibold"
+                >
+                  <option value="movie">Movie</option>
+                  <option value="tv">TV Series</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <label className="font-bold text-gray-800">Release Date</label>
+                <input
+                  type="date"
+                  value={manualForm.releaseDate}
+                  onChange={(e) => setManualForm({ ...manualForm, releaseDate: e.target.value })}
+                  className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-gray-900 text-xs focus:outline-none focus:border-brand-500"
+                />
+              </div>
+
+              <div>
+                <label className="font-bold text-gray-800">Rating (1 to 10)</label>
+                <input
+                  type="number"
+                  step="0.1"
+                  min="1"
+                  max="10"
+                  value={manualForm.rating}
+                  onChange={(e) => setManualForm({ ...manualForm, rating: parseFloat(e.target.value) || 8.0 })}
+                  className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-gray-900 text-xs focus:outline-none focus:border-brand-500"
+                />
+              </div>
+
+              <div>
+                <label className="font-bold text-gray-800">Genres (comma separated)</label>
+                <input
+                  type="text"
+                  placeholder="Action, Sci-Fi, Drama"
+                  value={manualForm.genres}
+                  onChange={(e) => setManualForm({ ...manualForm, genres: e.target.value })}
+                  className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-gray-900 text-xs focus:outline-none focus:border-brand-500"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="font-bold text-gray-800">Overview / Synopsis</label>
+              <textarea
+                rows={3}
+                placeholder="Enter storyline or description..."
+                value={manualForm.overview}
+                onChange={(e) => setManualForm({ ...manualForm, overview: e.target.value })}
+                className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl p-3 text-gray-900 text-xs focus:outline-none focus:border-brand-500 resize-none"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="font-bold text-gray-800 flex items-center gap-1.5">
+                  <ImageIcon className="w-3.5 h-3.5 text-gray-500" />
+                  <span>Poster Image URL (optional)</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="https://example.com/poster.jpg"
+                  value={manualForm.posterUrl}
+                  onChange={(e) => setManualForm({ ...manualForm, posterUrl: e.target.value })}
+                  className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-gray-900 text-xs focus:outline-none focus:border-brand-500"
+                />
+              </div>
+
+              <div>
+                <label className="font-bold text-gray-800 flex items-center gap-1.5">
+                  <ImageIcon className="w-3.5 h-3.5 text-gray-500" />
+                  <span>Backdrop / Banner URL (optional)</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="https://example.com/backdrop.jpg"
+                  value={manualForm.backdropUrl}
+                  onChange={(e) => setManualForm({ ...manualForm, backdropUrl: e.target.value })}
+                  className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-gray-900 text-xs focus:outline-none focus:border-brand-500"
+                />
+              </div>
+            </div>
+
+            {/* Poster Preview if entered */}
+            {manualForm.posterUrl && (
+              <div className="flex items-center gap-3 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                <img
+                  src={manualForm.posterUrl}
+                  alt="Poster preview"
+                  className="w-12 h-16 object-cover rounded-lg bg-slate-200"
+                  onError={(e) => ((e.target as any).style.display = 'none')}
+                />
+                <span className="text-gray-500 text-[11px]">Poster preview confirmed</span>
+              </div>
+            )}
+
+            {/* Streaming Links Section */}
+            <div className="pt-2 border-t border-slate-100 space-y-3">
+              <h4 className="font-bold text-gray-900 flex items-center gap-1.5">
+                <Play className="w-4 h-4 text-brand-500" />
+                <span>Streaming Server 1 (Primary)</span>
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label className="font-bold text-gray-700">Server Name</label>
+                  <input
+                    type="text"
+                    value={manualForm.serverName}
+                    onChange={(e) => setManualForm({ ...manualForm, serverName: e.target.value })}
+                    className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-gray-900 text-xs"
+                  />
+                </div>
+                <div className="sm:col-span-2">
+                  <label className="font-bold text-gray-700">Video / Embed URL</label>
+                  <input
+                    type="text"
+                    placeholder="https://... direct .mp4 or iframe embed player"
+                    value={manualForm.streamUrl}
+                    onChange={(e) => setManualForm({ ...manualForm, streamUrl: e.target.value })}
+                    className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-gray-900 font-mono text-xs"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="font-bold text-gray-900 flex items-center gap-1.5">
+                <Play className="w-4 h-4 text-gray-400" />
+                <span>Streaming Server 2 (Backup Mirror, Optional)</span>
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label className="font-bold text-gray-700">Server Name</label>
+                  <input
+                    type="text"
+                    value={manualForm.backupServerName}
+                    onChange={(e) => setManualForm({ ...manualForm, backupServerName: e.target.value })}
+                    className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-gray-900 text-xs"
+                  />
+                </div>
+                <div className="sm:col-span-2">
+                  <label className="font-bold text-gray-700">Backup Video / Embed URL</label>
+                  <input
+                    type="text"
+                    placeholder="https://... secondary mirror or embed link"
+                    value={manualForm.backupStreamUrl}
+                    onChange={(e) => setManualForm({ ...manualForm, backupStreamUrl: e.target.value })}
+                    className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-gray-900 font-mono text-xs"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <button
+                type="submit"
+                disabled={isSubmittingManual}
+                className="w-full py-3 rounded-full bg-brand-500 hover:bg-brand-600 disabled:opacity-50 text-white font-bold text-xs shadow-md shadow-brand-500/25 flex items-center justify-center gap-2 transition"
+              >
+                {isSubmittingManual ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
+                <span>{isSubmittingManual ? 'Publishing...' : 'Publish Movie to Catalog'}</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* TAB 3: Library Manager */}
+      {activeTab === 'library' && (
+        <div className="bg-white rounded-3xl p-5 sm:p-7 shadow-app border border-slate-100/80 space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+            <div>
+              <h3 className="text-base font-bold text-gray-900">Your Catalog ({libraryItems.length} Titles)</h3>
+              <p className="text-xs text-gray-500">Manage all movies and series in your catalog</p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-full">
+                {['all', 'movie', 'tv'].map((t) => (
+                  <button
+                    key={t}
+                    onClick={() => setLibraryFilter(t as any)}
+                    className={`px-3 py-1 rounded-full text-xs font-bold uppercase transition ${
+                      libraryFilter === t ? 'bg-brand-500 text-white' : 'text-gray-600'
+                    }`}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+
+              {libraryItems.length > 0 && (
+                <button
+                  onClick={handleClearAll}
+                  className="px-3 py-1.5 rounded-full text-xs font-bold text-red-600 hover:bg-red-50 border border-red-200 transition flex items-center gap-1 shrink-0"
+                  title="Clear all titles"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Clear All</span>
+                </button>
+              )}
+            </div>
+          </div>
+
+          {libraryLoading ? (
+            <div className="py-12 text-center text-gray-400">
+              <Loader2 className="w-6 h-6 animate-spin text-brand-500 mx-auto mb-2" />
+              <p className="text-xs">Loading catalog items...</p>
+            </div>
+          ) : libraryItems.length === 0 ? (
+            <div className="py-12 text-center text-gray-400 space-y-3">
+              <Film className="w-10 h-10 text-gray-300 mx-auto" />
+              <p className="text-xs font-semibold text-gray-600">Your catalog is currently empty.</p>
+              <button
+                onClick={() => setActiveTab('manual')}
+                className="px-4 py-2 rounded-full bg-brand-500 text-white font-bold text-xs shadow-sm hover:bg-brand-600 transition"
+              >
+                ➕ Add Your First Movie
+              </button>
+            </div>
+          ) : (
+            <>
+              {/* Mobile View: Clean Responsive Cards */}
+              <div className="grid grid-cols-1 gap-3 sm:hidden">
+                {libraryItems
+                  .filter((m) => (libraryFilter === 'all' ? true : m.type === libraryFilter))
+                  .map((item) => (
+                    <div
+                      key={item.id}
+                      className="p-3 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between gap-3"
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <img
+                          src={item.posterUrl || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=200&auto=format&fit=crop'}
+                          alt={item.title}
+                          className="w-12 h-16 object-cover rounded-xl bg-slate-200 shrink-0"
+                        />
+                        <div className="min-w-0">
+                          <h4 className="text-xs font-bold text-gray-900 truncate">{item.title}</h4>
+                          <div className="flex items-center gap-1.5 mt-1">
+                            <span className="text-[10px] uppercase font-bold text-brand-600 bg-brand-50 px-1.5 py-0.5 rounded">
+                              {item.type}
+                            </span>
+                            <span className="text-[10px] text-yellow-600 font-bold flex items-center gap-0.5">
+                              <Star className="w-3 h-3 fill-yellow-500" />
+                              {item.rating ? item.rating.toFixed(1) : '7.0'}
+                            </span>
+                          </div>
+                          <p className="text-[10px] text-gray-400 mt-0.5">
+                            {item.views || 0} views • {item.streams?.length || 0} servers
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <Link
+                          href={`/watch/${item.id}`}
+                          className="p-2 rounded-full bg-white hover:bg-slate-200 text-gray-700 shadow-sm border border-slate-200"
+                          title="Watch"
+                        >
+                          <Eye className="w-3.5 h-3.5" />
+                        </Link>
+                        <button
+                          onClick={() => handleDelete(item.id, item.title)}
+                          className="p-2 rounded-full bg-white hover:bg-red-50 text-red-500 shadow-sm border border-slate-200"
+                          title="Delete"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+
+              {/* Desktop View: Full Table */}
+              <div className="hidden sm:block overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-50 border-b border-slate-200 text-gray-500 uppercase font-bold">
+                    <tr>
+                      <th className="p-3">Title</th>
+                      <th className="p-3">Type</th>
+                      <th className="p-3">Rating</th>
+                      <th className="p-3">Streams</th>
+                      <th className="p-3">Views</th>
+                      <th className="p-3">Featured</th>
+                      <th className="p-3 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 text-gray-700">
+                    {libraryItems
+                      .filter((m) => (libraryFilter === 'all' ? true : m.type === libraryFilter))
+                      .map((item) => (
+                        <tr key={item.id} className="hover:bg-slate-50 transition">
+                          <td className="p-3 font-bold text-gray-900 flex items-center gap-2">
+                            <img
+                              src={item.posterUrl}
+                              alt={item.title}
+                              className="w-7 h-10 object-cover rounded bg-slate-200 shrink-0"
+                            />
+                            <span className="truncate max-w-[200px]">{item.title}</span>
+                          </td>
+                          <td className="p-3 uppercase font-semibold">{item.type}</td>
+                          <td className="p-3 font-semibold text-yellow-600 flex items-center gap-1">
+                            <Star className="w-3 h-3 fill-yellow-500" />
+                            {item.rating ? item.rating.toFixed(1) : '7.0'}
+                          </td>
+                          <td className="p-3">{item.streams?.length || 0}</td>
+                          <td className="p-3">{(item.views || 0).toLocaleString()}</td>
+                          <td className="p-3">
+                            <button
+                              onClick={() => handleToggleFeatured(item)}
+                              className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                                item.featured ? 'bg-brand-500 text-white' : 'bg-slate-100 text-gray-500'
+                              }`}
+                            >
+                              {item.featured ? '★ Featured' : 'Normal'}
+                            </button>
+                          </td>
+                          <td className="p-3 text-right">
+                            <div className="flex items-center justify-end gap-2">
+                              <Link
+                                href={`/watch/${item.id}`}
+                                className="p-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-gray-700 transition"
+                                title="Watch"
+                              >
+                                <Eye className="w-3.5 h-3.5" />
+                              </Link>
+                              <button
+                                onClick={() => handleDelete(item.id, item.title)}
+                                className="p-1.5 rounded-full bg-slate-100 hover:bg-red-50 text-red-500 transition"
+                                title="Delete"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
+        </div>
+      )}
+
+      {/* TAB 4: Trending Releases Ingest */}
       {activeTab === 'trending' && (
-        <div className="space-y-4">
-          <div className="flex items-center justify-between bg-white rounded-3xl p-4 border border-slate-100/80 shadow-sm">
-            <h3 className="text-sm font-bold text-gray-900">Trending Discovery</h3>
-            <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-full">
+        <div className="bg-white rounded-3xl p-5 sm:p-7 shadow-app border border-slate-100/80 space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+            <div>
+              <h3 className="text-base font-bold text-gray-900">Current Trending Releases</h3>
+              <p className="text-xs text-gray-500">1-Click import trending global movies and series into your catalog</p>
+            </div>
+            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-full w-fit">
               <button
                 onClick={() => setTrendingType('movie')}
                 className={`px-3 py-1 rounded-full text-xs font-bold transition ${
                   trendingType === 'movie' ? 'bg-brand-500 text-white' : 'text-gray-600'
                 }`}
               >
-                Trending Movies
+                Movies
               </button>
               <button
                 onClick={() => setTrendingType('tv')}
@@ -545,52 +980,64 @@ function AdminContent() {
                   trendingType === 'tv' ? 'bg-brand-500 text-white' : 'text-gray-600'
                 }`}
               >
-                Trending TV Shows
+                TV Series
               </button>
             </div>
           </div>
 
           {trendingLoading ? (
-            <div className="py-20 text-center text-gray-400 space-y-2">
-              <Loader2 className="w-6 h-6 animate-spin text-brand-500 mx-auto" />
-              <p className="text-xs font-semibold">Loading trending titles...</p>
+            <div className="py-12 text-center text-gray-400">
+              <Loader2 className="w-6 h-6 animate-spin text-brand-500 mx-auto mb-2" />
+              <p className="text-xs">Loading trending releases...</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {trendingResults.map((item) => {
                 const title = item.title || item.name;
                 const poster = item.poster_path
-                  ? `https://image.tmdb.org/t/p/w342${item.poster_path}`
-                  : 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=800&auto=format&fit=crop';
-                const alreadyImported = isAlreadyInLibrary(item.id);
+                  ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+                  : 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=400&auto=format&fit=crop';
+                const inLib = isAlreadyInLibrary(item.id);
                 const isIngesting = ingestingId === String(item.id);
 
                 return (
                   <div
                     key={item.id}
-                    className="flex gap-3.5 p-3 rounded-2xl bg-white border border-slate-100/80 shadow-sm hover:shadow-md transition"
+                    className="bg-slate-50 rounded-2xl p-3 border border-slate-100 flex gap-3 shadow-sm hover:shadow-md transition"
                   >
                     <img
                       src={poster}
                       alt={title}
-                      className="w-16 h-24 object-cover rounded-xl shadow-sm shrink-0 bg-slate-100"
+                      className="w-16 h-24 object-cover rounded-xl shrink-0 bg-slate-200"
                     />
-                    <div className="flex-1 min-w-0 flex flex-col justify-between">
+                    <div className="flex flex-col justify-between flex-1 min-w-0">
                       <div>
-                        <h4 className="text-gray-900 font-bold text-sm truncate">{title}</h4>
-                        <p className="text-xs text-gray-500 line-clamp-2 mt-0.5">{item.overview}</p>
+                        <div className="flex items-center gap-1.5 mb-1">
+                          <span className="text-[10px] font-bold text-yellow-600 flex items-center gap-0.5">
+                            <Star className="w-3 h-3 fill-yellow-500" />
+                            {item.vote_average ? item.vote_average.toFixed(1) : '7.0'}
+                          </span>
+                        </div>
+                        <h4 className="text-xs font-bold text-gray-900 truncate">{title}</h4>
+                        <p className="text-[11px] text-gray-400 line-clamp-2 mt-0.5">
+                          {item.overview || 'No description available.'}
+                        </p>
                       </div>
 
                       <div className="pt-2">
-                        {alreadyImported ? (
-                          <span className="text-xs font-semibold text-emerald-600">✓ In Library</span>
+                        {inLib ? (
+                          <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full border border-emerald-100 flex items-center gap-1 w-fit">
+                            <CheckCircle className="w-3 h-3" />
+                            <span>In Catalog</span>
+                          </span>
                         ) : (
                           <button
                             onClick={() => handleIngest(item.id, trendingType, title)}
                             disabled={isIngesting}
-                            className="px-3 py-1.5 rounded-full bg-brand-500 hover:bg-brand-600 text-white font-bold text-xs shadow-sm"
+                            className="px-3 py-1.5 rounded-full bg-brand-500 hover:bg-brand-600 disabled:opacity-50 text-white font-bold text-xs shadow-sm flex items-center gap-1.5"
                           >
-                            {isIngesting ? 'Importing...' : '1-Click Import'}
+                            {isIngesting ? <Loader2 className="w-3 h-3 animate-spin" /> : <Plus className="w-3 h-3" />}
+                            <span>{isIngesting ? 'Importing...' : '1-Click Add'}</span>
                           </button>
                         )}
                       </div>
@@ -603,119 +1050,9 @@ function AdminContent() {
         </div>
       )}
 
-      {/* TAB 3: Library Manager */}
-      {activeTab === 'library' && (
-        <div className="bg-white rounded-3xl p-6 shadow-app border border-slate-100/80 space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-base font-bold text-gray-900">Manage Catalog ({libraryItems.length})</h3>
-            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-full">
-              {['all', 'movie', 'tv'].map((t) => (
-                <button
-                  key={t}
-                  onClick={() => setLibraryFilter(t as any)}
-                  className={`px-3 py-1 rounded-full text-xs font-bold uppercase transition ${
-                    libraryFilter === t ? 'bg-brand-500 text-white' : 'text-gray-600'
-                  }`}
-                >
-                  {t}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 border-b border-slate-200 text-gray-500 uppercase font-bold">
-                <tr>
-                  <th className="p-3">Title</th>
-                  <th className="p-3">Type</th>
-                  <th className="p-3">Rating</th>
-                  <th className="p-3">Views</th>
-                  <th className="p-3">Featured</th>
-                  <th className="p-3 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 text-gray-700">
-                {libraryItems
-                  .filter((m) => (libraryFilter === 'all' ? true : m.type === libraryFilter))
-                  .map((item) => (
-                    <tr key={item.id} className="hover:bg-slate-50 transition">
-                      <td className="p-3 font-bold text-gray-900">{item.title}</td>
-                      <td className="p-3 uppercase">{item.type}</td>
-                      <td className="p-3 font-semibold text-yellow-600">{item.rating}</td>
-                      <td className="p-3">{(item.views || 0).toLocaleString()}</td>
-                      <td className="p-3">
-                        <button
-                          onClick={() => handleToggleFeatured(item)}
-                          className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                            item.featured ? 'bg-brand-500 text-white' : 'bg-slate-100 text-gray-500'
-                          }`}
-                        >
-                          {item.featured ? '★ Featured' : 'Normal'}
-                        </button>
-                      </td>
-                      <td className="p-3 text-right">
-                        <div className="flex items-center justify-end gap-2">
-                          <Link
-                            href={`/watch/${item.id}`}
-                            className="p-1 rounded-full bg-slate-100 hover:bg-slate-200 text-gray-700"
-                          >
-                            <Eye className="w-3.5 h-3.5" />
-                          </Link>
-                          <button
-                            onClick={() => handleDelete(item.id, item.title)}
-                            className="p-1 rounded-full bg-slate-100 hover:bg-red-50 text-red-500"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
-      {/* TAB 4: Manual Add */}
-      {activeTab === 'manual' && (
-        <div className="max-w-2xl bg-white rounded-3xl p-6 sm:p-8 shadow-app border border-slate-100/80 space-y-4">
-          <h3 className="text-base font-bold text-gray-900">Add Custom Direct Video Link</h3>
-          <form onSubmit={handleManualSubmit} className="space-y-3 text-xs">
-            <div>
-              <label className="font-bold text-gray-700">Title</label>
-              <input
-                type="text"
-                required
-                value={manualForm.title}
-                onChange={(e) => setManualForm({ ...manualForm, title: e.target.value })}
-                className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-gray-900 focus:outline-none focus:border-brand-500"
-              />
-            </div>
-            <div>
-              <label className="font-bold text-gray-700">Direct Video / Embed URL</label>
-              <input
-                type="text"
-                value={manualForm.streamUrl}
-                onChange={(e) => setManualForm({ ...manualForm, streamUrl: e.target.value })}
-                placeholder="https://example.com/stream.mp4 or embed url"
-                className="w-full mt-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-gray-900 focus:outline-none focus:border-brand-500 font-mono"
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full py-2.5 rounded-full bg-brand-500 hover:bg-brand-600 text-white font-bold text-xs shadow-md shadow-brand-500/25"
-            >
-              Publish Title
-            </button>
-          </form>
-        </div>
-      )}
-
       {/* TAB 5: Settings */}
       {activeTab === 'settings' && (
-        <div className="max-w-2xl bg-white rounded-3xl p-6 sm:p-8 shadow-app border border-slate-100/80 space-y-5">
+        <div className="max-w-2xl bg-white rounded-3xl p-5 sm:p-7 shadow-app border border-slate-100/80 space-y-5">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
             <div>
               <h3 className="text-base font-bold text-gray-900">System & TMDB Configuration</h3>

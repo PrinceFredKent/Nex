@@ -30,3 +30,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+    if (searchParams.get('all') === 'true') {
+      await db.clearAll();
+      return NextResponse.json({ success: true, message: 'All media items deleted successfully' });
+    }
+    return NextResponse.json({ success: false, error: 'Parameter all=true is required' }, { status: 400 });
+  } catch (error: any) {
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  }
+}

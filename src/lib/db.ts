@@ -350,6 +350,23 @@ export const db = {
     return true;
   },
 
+  clearAll: async (): Promise<boolean> => {
+    const current = ensureDbExists();
+    current.movies = [];
+    saveDb(current);
+
+    if (isSupabaseConfigured && supabase) {
+      try {
+        // Delete all rows in movies table
+        await supabase.from('movies').delete().neq('id', '____dummy_never_match____');
+      } catch (e) {
+        console.error('Supabase clearAll error:', e);
+      }
+    }
+
+    return true;
+  },
+
   incrementViews: async (id: string): Promise<void> => {
     const item = await db.getById(id);
     if (item) {

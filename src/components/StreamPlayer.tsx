@@ -14,7 +14,8 @@ import {
   Sparkles, 
   ShieldAlert,
   Sliders,
-  CheckCircle2
+  CheckCircle2,
+  ExternalLink
 } from 'lucide-react';
 import { useWatchlist } from './WatchlistProvider';
 
@@ -174,6 +175,27 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
                 </span>
               </button>
             ))}
+
+            {activeStream?.url && (
+              <a
+                href={activeStream.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/10 hover:bg-white/20 text-gray-200 hover:text-white transition"
+                title="Open stream player in new window"
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">External Player</span>
+              </a>
+            )}
+          </div>
+        </div>
+
+        {/* Server Switcher Tip */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-gray-400 bg-white/5 p-3 rounded-xl border border-white/5">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-3.5 h-3.5 text-yellow-500 shrink-0" />
+            <span>If the video is buffering or blocked, tap another server above to switch streams instantly.</span>
           </div>
         </div>
 

@@ -129,15 +129,13 @@ export default function ProfilePage() {
 
         {/* Action Buttons */}
         <div className="flex items-center gap-3 w-full sm:w-auto">
-          {isAdmin && (
-            <Link
-              href="/admin"
-              className="flex-1 sm:flex-initial px-4 py-2.5 bg-brand-500 hover:bg-brand-600 text-white rounded-2xl text-xs font-bold shadow-md shadow-brand-500/20 transition flex items-center justify-center gap-1.5"
-            >
-              <Shield className="w-4 h-4" />
-              <span>Admin Panel</span>
-            </Link>
-          )}
+          <Link
+            href="/admin"
+            className="flex-1 sm:flex-initial px-4 py-2.5 bg-brand-500 hover:bg-brand-600 text-white rounded-2xl text-xs font-bold shadow-md shadow-brand-500/20 transition flex items-center justify-center gap-1.5"
+          >
+            <Shield className="w-4 h-4" />
+            <span>Admin Center & Add Movies</span>
+          </Link>
 
           <button
             onClick={handleSignOut}
