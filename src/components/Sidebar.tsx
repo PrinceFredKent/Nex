@@ -21,29 +21,7 @@ export default function Sidebar() {
     { label: 'Settings', href: '/admin?tab=settings', icon: Settings },
   ];
 
-  // Default fallback continue watching items if user history is empty
-  const continueWatchingItems = history.length > 0 
-    ? history.slice(0, 4)
-    : [
-        {
-          mediaId: 'tv-66732',
-          mediaTitle: 'Stranger Things',
-          posterUrl: 'https://image.tmdb.org/t/p/w200/49WJfeN0moxb9IPfGn8AIqMGskD.jpg',
-          episode: 3,
-        },
-        {
-          mediaId: 'tv-66732',
-          mediaTitle: 'Stranger Things',
-          posterUrl: 'https://image.tmdb.org/t/p/w200/56v2KjBlU4XaOv9rVYEQypROD7P.jpg',
-          episode: 4,
-        },
-        {
-          mediaId: 'tv-100088',
-          mediaTitle: 'The Last of Us',
-          posterUrl: 'https://image.tmdb.org/t/p/w200/uKvVjHNqB5VmOrdxqAt2V7JMrne.jpg',
-          episode: 2,
-        },
-      ];
+  const continueWatchingItems = history.slice(0, 4);
 
   return (
     <aside className="w-64 bg-white rounded-3xl p-6 flex flex-col justify-between shadow-app shrink-0 border border-slate-100/80">
@@ -85,42 +63,44 @@ export default function Sidebar() {
           })}
         </nav>
 
-        {/* Continue Watching Section */}
-        <div className="space-y-3 pt-2">
-          <h3 className="text-xs font-bold text-gray-800 tracking-tight">
-            Continue watching
-          </h3>
+        {/* Continue Watching Section - only shown when user has watched titles */}
+        {continueWatchingItems.length > 0 && (
+          <div className="space-y-3 pt-2">
+            <h3 className="text-xs font-bold text-gray-800 tracking-tight">
+              Continue watching
+            </h3>
 
-          <div className="space-y-2.5">
-            {continueWatchingItems.map((item, idx) => (
-              <Link
-                key={`${item.mediaId}-${idx}`}
-                href={`/watch/${item.mediaId}`}
-                className="flex items-center justify-between p-1 rounded-xl hover:bg-slate-50 transition group"
-              >
-                <div className="flex items-center gap-2.5 min-w-0">
-                  <img
-                    src={item.posterUrl}
-                    alt={item.mediaTitle}
-                    className="w-10 h-8 object-cover rounded-lg shrink-0 shadow-sm"
-                  />
-                  <div className="min-w-0">
-                    <p className="text-xs font-bold text-gray-800 truncate group-hover:text-brand-500 transition">
-                      {item.mediaTitle}
-                    </p>
-                    <p className="text-[10px] text-gray-400 font-medium">
-                      EP {item.episode || 1}
-                    </p>
+            <div className="space-y-2.5">
+              {continueWatchingItems.map((item, idx) => (
+                <Link
+                  key={`${item.mediaId}-${idx}`}
+                  href={`/watch/${item.mediaId}`}
+                  className="flex items-center justify-between p-1 rounded-xl hover:bg-slate-50 transition group"
+                >
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <img
+                      src={item.posterUrl}
+                      alt={item.mediaTitle}
+                      className="w-10 h-8 object-cover rounded-lg shrink-0 shadow-sm"
+                    />
+                    <div className="min-w-0">
+                      <p className="text-xs font-bold text-gray-800 truncate group-hover:text-brand-500 transition">
+                        {item.mediaTitle}
+                      </p>
+                      <p className="text-[10px] text-gray-400 font-medium">
+                        EP {item.episode || 1}
+                      </p>
+                    </div>
                   </div>
-                </div>
 
-                <div className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center shrink-0 group-hover:bg-brand-500 group-hover:scale-105 transition">
-                  <Play className="w-2.5 h-2.5 fill-white ml-0.5" />
-                </div>
-              </Link>
-            ))}
+                  <div className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center shrink-0 group-hover:bg-brand-500 group-hover:scale-105 transition">
+                    <Play className="w-2.5 h-2.5 fill-white ml-0.5" />
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </aside>
   );

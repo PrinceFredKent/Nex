@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { Play, Download, Menu, ChevronUp, ChevronDown, Flame, Star, Film } from 'lucide-react';
+import { Play, ChevronUp, ChevronDown, Flame, Star, Film, Plus, Shield } from 'lucide-react';
 import { MediaItem } from '@/types';
 import TrailerModal from './TrailerModal';
 
@@ -14,30 +14,50 @@ export default function HeroFeaturedCard({ items }: HeroFeaturedCardProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTrailerOpen, setIsTrailerOpen] = useState(false);
 
-  // If no featured, fallback to seed
-  const featuredList = items.length > 0 ? items : [];
-  const current = featuredList[currentIndex] || {
-    id: 'movie-avatar',
-    title: 'AVATAR 3: FIRE AND ASH',
-    releaseDate: '2023',
-    runtime: 180,
-    rating: 8.2,
-    overview: 'Avatar: Fire and Ash is an epic sci-fi adventure that continues the journey of Jake Sully and Neytiri as they protect their family and Pandora from growing threats.',
-    backdropUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1600&auto=format&fit=crop',
-    posterUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop',
-    trailerKey: 'd9MyW72ELq0',
-  };
+  if (!items || items.length === 0) {
+    return (
+      <div className="relative w-full rounded-[2rem] bg-gradient-to-br from-cinemaDark-950 via-slate-900 to-black overflow-hidden shadow-hero min-h-[300px] flex items-center justify-between p-8 sm:p-12 border border-slate-800 text-white">
+        <div className="max-w-md space-y-4">
+          <div className="inline-flex items-center gap-2 bg-brand-500/20 text-brand-500 border border-brand-500/30 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+            <Film className="w-3.5 h-3.5" />
+            <span>Welcome to Nex</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+            Your Cinema Catalog is Ready
+          </h1>
+          <p className="text-xs sm:text-sm text-gray-400 font-medium leading-relaxed">
+            Search any movie or TV series title from the Admin Panel to automatically pull HD posters, cast, trailers, and free streaming servers.
+          </p>
+          <Link
+            href="/admin"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-brand-500 hover:bg-brand-600 text-white rounded-full text-xs font-bold shadow-lg shadow-brand-500/30 transition transform hover:scale-105"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Add Movies in Admin</span>
+          </Link>
+        </div>
+
+        <div className="hidden md:flex items-center justify-center w-36 h-36 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-500">
+          <Shield className="w-16 h-16 opacity-80" />
+        </div>
+      </div>
+    );
+  }
+
+  const current = items[currentIndex] || items[0];
 
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % featuredList.length);
+    setCurrentIndex((prev) => (prev + 1) % items.length);
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev === 0 ? featuredList.length - 1 : prev - 1));
+    setCurrentIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1));
   };
 
   const year = current.releaseDate ? current.releaseDate.split('-')[0] : '2024';
-  const hours = current.runtime ? `${Math.floor(current.runtime / 60)} hrs ${current.runtime % 60 ? `${current.runtime % 60}m` : ''}` : '2.5 hrs';
+  const hours = current.runtime 
+    ? `${Math.floor(current.runtime / 60)} hrs ${current.runtime % 60 ? `${current.runtime % 60}m` : ''}` 
+    : '2 hrs';
 
   return (
     <>
@@ -58,90 +78,88 @@ export default function HeroFeaturedCard({ items }: HeroFeaturedCardProps) {
         {/* Content Details */}
         <div className="relative z-10 p-6 sm:p-10 max-w-xl space-y-4">
           {/* Trending Badge */}
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-xs font-semibold text-gray-200 shadow-sm">
-            <Flame className="w-3.5 h-3.5 text-orange-400 fill-orange-400" />
-            <span>Trending Now</span>
+          <div className="inline-flex items-center gap-1.5 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold border border-white/10 text-brand-500">
+            <Flame className="w-3.5 h-3.5 fill-brand-500" />
+            <span className="text-white text-[11px] font-bold tracking-wide uppercase">Trending Now</span>
           </div>
 
           {/* Title */}
-          <h2 className="text-2xl sm:text-4xl font-black uppercase tracking-tight leading-tight drop-shadow-md">
+          <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight leading-tight uppercase font-sans line-clamp-2 drop-shadow-md">
             {current.title}
-          </h2>
+          </h1>
 
-          {/* Metadata String: 2023 • 3 hrs • IMDB 8.2/10 */}
-          <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-gray-300">
+          {/* Metadata Meta Pill */}
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-medium text-gray-300">
             <span>{year}</span>
-            <span>•</span>
+            <span className="w-1 h-1 rounded-full bg-gray-500" />
             <span>{hours}</span>
-            <span>•</span>
-            <span className="text-yellow-400 font-bold">
-              IMDB {current.rating ? current.rating.toFixed(1) : '8.0'}/10
+            <span className="w-1 h-1 rounded-full bg-gray-500" />
+            <span className="px-2 py-0.5 rounded-full bg-white/15 text-[11px] font-bold text-white border border-white/20">
+              {current.genres?.[0] || (current.type === 'tv' ? 'TV Series' : 'Movie')}
             </span>
+            <div className="flex items-center gap-1 text-amber-400 font-bold ml-1">
+              <Star className="w-3.5 h-3.5 fill-amber-400" />
+              <span>{current.rating ? current.rating.toFixed(1) : '7.5'}</span>
+            </div>
           </div>
 
-          {/* Synopsis */}
-          <p className="text-xs sm:text-sm text-gray-300/90 line-clamp-3 leading-relaxed max-w-md">
+          {/* Overview text */}
+          <p className="text-xs sm:text-sm text-gray-300 line-clamp-3 leading-relaxed max-w-lg font-normal drop-shadow-sm">
             {current.overview}
           </p>
 
           {/* Action Buttons */}
           <div className="flex items-center gap-3 pt-2">
-            {/* Watch Button */}
             <Link
               href={`/watch/${current.id}`}
-              className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-gray-950 font-bold text-xs sm:text-sm hover:bg-gray-100 hover:scale-105 transition shadow-lg"
+              className="px-7 py-3 rounded-full bg-white text-gray-950 font-bold text-xs hover:bg-slate-100 transition shadow-lg flex items-center gap-2 group transform active:scale-95"
             >
-              <Play className="w-3.5 h-3.5 fill-current" />
+              <Play className="w-3.5 h-3.5 fill-current text-gray-950 group-hover:text-brand-500 transition-colors" />
               <span>Watch</span>
             </Link>
 
-            {/* Download / Trailer Button */}
-            <button
-              onClick={() => setIsTrailerOpen(true)}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/15 text-white font-semibold text-xs sm:text-sm transition"
-            >
-              <Download className="w-3.5 h-3.5" />
-              <span>Trailer</span>
-            </button>
-
-            {/* List / Options Button */}
-            <Link
-              href={`/watch/${current.id}`}
-              className="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/15 text-white flex items-center justify-center transition"
-            >
-              <Menu className="w-4 h-4" />
-            </Link>
+            {current.trailerKey && (
+              <button
+                onClick={() => setIsTrailerOpen(true)}
+                className="px-5 py-3 rounded-full bg-black/40 hover:bg-black/60 border border-white/20 backdrop-blur-md text-white font-semibold text-xs transition flex items-center gap-2"
+              >
+                <Film className="w-3.5 h-3.5" />
+                <span>Trailer</span>
+              </button>
+            )}
           </div>
         </div>
 
-        {/* Up & Down Carousel Controls (Right) */}
-        {featuredList.length > 1 && (
-          <div className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-2">
+        {/* Vertical Carousel Controls (matching screenshot ^ and v navigation) */}
+        {items.length > 1 && (
+          <div className="absolute right-6 sm:right-8 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-3">
             <button
               onClick={prevSlide}
-              className="w-8 h-8 rounded-full bg-white/15 hover:bg-white/30 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition shadow-md"
               aria-label="Previous Slide"
+              className="w-10 h-10 rounded-full bg-black/50 hover:bg-brand-500 text-white backdrop-blur-md border border-white/15 flex items-center justify-center transition shadow-lg hover:scale-105 active:scale-95"
             >
-              <ChevronUp className="w-4 h-4" />
+              <ChevronUp className="w-5 h-5" />
             </button>
             <button
               onClick={nextSlide}
-              className="w-8 h-8 rounded-full bg-white/15 hover:bg-white/30 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition shadow-md"
               aria-label="Next Slide"
+              className="w-10 h-10 rounded-full bg-black/50 hover:bg-brand-500 text-white backdrop-blur-md border border-white/15 flex items-center justify-center transition shadow-lg hover:scale-105 active:scale-95"
             >
-              <ChevronDown className="w-4 h-4" />
+              <ChevronDown className="w-5 h-5" />
             </button>
           </div>
         )}
       </div>
 
-      {/* Trailer Lightbox */}
-      <TrailerModal
-        isOpen={isTrailerOpen}
-        onClose={() => setIsTrailerOpen(false)}
-        trailerKey={current.trailerKey}
-        title={current.title}
-      />
+      {/* Trailer Lightbox Modal */}
+      {current.trailerKey && (
+        <TrailerModal
+          isOpen={isTrailerOpen}
+          onClose={() => setIsTrailerOpen(false)}
+          trailerKey={current.trailerKey}
+          title={current.title}
+        />
+      )}
     </>
   );
 }

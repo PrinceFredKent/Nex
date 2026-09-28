@@ -19,15 +19,13 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const LOCAL_USER_KEY = 'nex_auth_user';
-
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Helper to construct profile object from user
+  // Helper to construct profile object from authenticated Supabase user
   const buildProfile = (supabaseUser: User | null): UserProfile | null => {
     if (!supabaseUser) return null;
     const metadata = supabaseUser.user_metadata || {};
@@ -71,24 +69,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             subscription.unsubscribe();
           };
         } catch (e) {
-          console.error('Error initializing Supabase Auth:', e);
+          console.error('Error connecting to Supabase Auth:', e);
         } finally {
           if (mounted) setIsLoading(false);
         }
       } else {
-        // Local mode fallback
-        try {
-          const savedLocalUser = localStorage.getItem(LOCAL_USER_KEY);
-          if (savedLocalUser) {
-            const parsed = JSON.parse(savedLocalUser);
-            setProfile(parsed);
-            setUser({ id: parsed.id, email: parsed.email, user_metadata: { full_name: parsed.fullName } } as any);
-          }
-        } catch (e) {
-          console.error('Error reading local auth user:', e);
-        } finally {
-          if (mounted) setIsLoading(false);
-        }
+        if (mounted) setIsLoading(false);
       }
     }
 
@@ -100,118 +86,89 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signIn = async (email: string, password: string): Promise<{ error?: string }> => {
-    if (isSupabaseConfigured && supabase) {
-      try {
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-        if (error) return { error: error.message };
-        if (data.user) {
-          setUser(data.user);
-          setSession(data.session);
-          setProfile(buildProfile(data.user));
-        }
-        return {};
-      } catch (err: any) {
-        return { error: err?.message || 'Failed to sign in' };
-      }
-    } else {
-      // Local demo mode sign in
-      const mockUser: UserProfile = {
-        id: 'local-' + Date.now(),
+    if (!isSupabaseConfigured || !supabase) {
+      return { error: 'Supabase authentication is not configured. Please check your environment variables.' };
+    }
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
-        fullName: email.split('@')[0],
-        avatarUrl: `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(email)}`,
-        role: email.toLowerCase().includes('admin') ? 'admin' : 'user',
-        createdAt: new Date().toISOString(),
-      };
-      setProfile(mockUser);
-      setUser({ id: mockUser.id, email: mockUser.email, user_metadata: { full_name: mockUser.fullName } } as any);
-      localStorage.setItem(LOCAL_USER_KEY, JSON.stringify(mockUser));
+        password,
+      });
+      if (error) return { error: error.message };
+      if (data.user) {
+        setUser(data.user);
+        setSession(data.session);
+        setProfile(buildProfile(data.user));
+      }
       return {};
+    } catch (err: any) {
+      return { error: err?.message || 'Failed to sign in' };
     }
   };
 
   const signUp = async (email: string, password: string, fullName: string): Promise<{ error?: string; user?: any }> => {
-    if (isSupabaseConfigured && supabase) {
-      try {
-        const { data, error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            data: {
-              full_name: fullName,
-              avatar_url: `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(email)}`,
-            },
-          },
-        });
-        if (error) return { error: error.message };
-        if (data.user) {
-          setUser(data.user);
-          setSession(data.session);
-          setProfile(buildProfile(data.user));
-        }
-        return { user: data.user };
-      } catch (err: any) {
-        return { error: err?.message || 'Failed to register account' };
-      }
-    } else {
-      // Local demo mode sign up
-      const mockUser: UserProfile = {
-        id: 'local-' + Date.now(),
+    if (!isSupabaseConfigured || !supabase) {
+      return { error: 'Supabase authentication is not configured. Please check your environment variables.' };
+    }
+
+    try {
+      const { data, error } = await supabase.auth.signUp({
         email,
-        fullName,
-        avatarUrl: `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(email)}`,
-        role: email.toLowerCase().includes('admin') ? 'admin' : 'user',
-        createdAt: new Date().toISOString(),
-      };
-      setProfile(mockUser);
-      setUser({ id: mockUser.id, email: mockUser.email, user_metadata: { full_name: mockUser.fullName } } as any);
-      localStorage.setItem(LOCAL_USER_KEY, JSON.stringify(mockUser));
-      return { user: mockUser };
+        password,
+        options: {
+          data: {
+            full_name: fullName,
+            avatar_url: `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(email)}`,
+          },
+        },
+      });
+      if (error) return { error: error.message };
+      if (data.user) {
+        setUser(data.user);
+        setSession(data.session);
+        setProfile(buildProfile(data.user));
+      }
+      return { user: data.user };
+    } catch (err: any) {
+      return { error: err?.message || 'Failed to register account' };
     }
   };
 
   const signOut = async () => {
     if (isSupabaseConfigured && supabase) {
-      await supabase.auth.signOut();
+      try {
+        await supabase.auth.signOut();
+      } catch (e) {
+        console.error('Error during signOut:', e);
+      }
     }
-    localStorage.removeItem(LOCAL_USER_KEY);
     setUser(null);
     setSession(null);
     setProfile(null);
   };
 
   const updateProfile = async (data: { fullName?: string; avatarUrl?: string }): Promise<{ error?: string }> => {
-    if (isSupabaseConfigured && supabase && user) {
-      try {
-        const { data: updated, error } = await supabase.auth.updateUser({
-          data: {
-            full_name: data.fullName,
-            avatar_url: data.avatarUrl,
-          },
-        });
-        if (error) return { error: error.message };
-        if (updated.user) {
-          setUser(updated.user);
-          setProfile(buildProfile(updated.user));
-        }
-        return {};
-      } catch (err: any) {
-        return { error: err?.message || 'Failed to update profile' };
-      }
-    } else if (profile) {
-      const updated: UserProfile = {
-        ...profile,
-        fullName: data.fullName || profile.fullName,
-        avatarUrl: data.avatarUrl || profile.avatarUrl,
-      };
-      setProfile(updated);
-      localStorage.setItem(LOCAL_USER_KEY, JSON.stringify(updated));
-      return {};
+    if (!isSupabaseConfigured || !supabase || !user) {
+      return { error: 'You must be signed in to update your profile.' };
     }
-    return { error: 'Not authenticated' };
+
+    try {
+      const { data: updated, error } = await supabase.auth.updateUser({
+        data: {
+          full_name: data.fullName,
+          avatar_url: data.avatarUrl,
+        },
+      });
+      if (error) return { error: error.message };
+      if (updated.user) {
+        setUser(updated.user);
+        setProfile(buildProfile(updated.user));
+      }
+      return {};
+    } catch (err: any) {
+      return { error: err?.message || 'Failed to update profile' };
+    }
   };
 
   const isAdmin = profile?.role === 'admin' || Boolean(profile?.email?.toLowerCase().includes('admin'));
