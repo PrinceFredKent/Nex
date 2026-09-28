@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS public.movies (
 -- 2. Create System Settings Table
 CREATE TABLE IF NOT EXISTS public.settings (
   id TEXT PRIMARY KEY DEFAULT 'default_settings',
-  site_name TEXT DEFAULT 'Prime Vision',
+  site_name TEXT DEFAULT 'Nex',
   site_description TEXT DEFAULT 'Watch unlimited movies, TV shows, and series in HD.',
   tmdb_api_key TEXT DEFAULT '841459a58d04735c026040cd8ab00d02',
   primary_stream_provider TEXT DEFAULT 'vidlink',
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS public.settings (
 
 -- 3. Insert default system settings if not present
 INSERT INTO public.settings (id, site_name, site_description, tmdb_api_key, primary_stream_provider)
-VALUES ('default_settings', 'Prime Vision', 'Stream movies & TV shows in HD', '841459a58d04735c026040cd8ab00d02', 'vidlink')
+VALUES ('default_settings', 'Nex', 'Stream movies & TV shows in HD', '841459a58d04735c026040cd8ab00d02', 'vidlink')
 ON CONFLICT (id) DO NOTHING;
 
 -- 4. Enable Row Level Security (RLS) with Public Read & Service Role Write
