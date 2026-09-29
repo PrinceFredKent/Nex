@@ -432,8 +432,8 @@ function AdminContent() {
         </div>
       )}
 
-      {/* Responsive Tabs Bar */}
-      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+      {/* Responsive Tabs Bar (Sticky) */}
+      <div className="sticky top-[74px] sm:top-[82px] z-20 bg-surface-app/90 dark:bg-[#0b0d12]/90 backdrop-blur-md py-2 -my-2 flex items-center gap-2 overflow-x-auto no-scrollbar">
         {[
           { id: 'search', label: '🔍 Search & Import' },
           { id: 'manual', label: '➕ Add Your Movie' },

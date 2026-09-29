@@ -1,6 +1,674 @@
 {
   "movies": [
     {
+      "id": "tv-95350",
+      "tmdbId": 95350,
+      "imdbId": "tt26545992",
+      "title": "Lanterns",
+      "originalTitle": "Lanterns",
+      "type": "tv",
+      "overview": "Two intergalactic cops, new recruit John Stewart and Lantern legend Hal Jordan, are drawn into a dark, Earth-based mystery as they investigate a murder in the American heartland.",
+      "tagline": "Only one can wear the ring.",
+      "posterUrl": "https://image.tmdb.org/t/p/w500/gpC7h43xPMEV3goYMQShfJbTtLq.jpg",
+      "backdropUrl": "https://image.tmdb.org/t/p/original/6gqezQJ2mkm4jreWwLyOZy2Vf6i.jpg",
+      "releaseDate": "2026-08-16",
+      "rating": 8.3,
+      "runtime": 45,
+      "genres": [
+        "Drama",
+        "Mystery",
+        "Sci-Fi & Fantasy"
+      ],
+      "cast": [
+        {
+          "id": 3497,
+          "name": "Kyle Chandler",
+          "character": "Hal Jordan / Halogram",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/66n7XNj1dyYkzCBWR3Lq8Vz4PJ1.jpg"
+        },
+        {
+          "id": 1763709,
+          "name": "Aaron Pierre",
+          "character": "John Stewart",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/hNwZWdT2KxKj1YLbipvtUhNjfAp.jpg"
+        },
+        {
+          "id": 9015,
+          "name": "Kelly Macdonald",
+          "character": "Sheriff Kerry Kane",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/k0yVocTnTMWlNdaeOO7YRViCdhO.jpg"
+        }
+      ],
+      "director": "",
+      "trailerKey": "7UIBOsuUwc4",
+      "trailerUrl": "https://www.youtube.com/watch?v=7UIBOsuUwc4",
+      "featured": false,
+      "trending": false,
+      "status": "published",
+      "views": 521,
+      "createdAt": "2026-09-29T08:33:45.485757+00:00",
+      "updatedAt": "2026-09-29T09:12:57.911+00:00",
+      "streams": [],
+      "seasons": [
+        {
+          "name": "Season 1",
+          "episodes": [
+            {
+              "id": "ep-95350-1-1",
+              "title": "Pilot",
+              "airDate": "2026-08-16",
+              "runtime": 57,
+              "streams": [
+                {
+                  "id": "vidsrc-cc-95350-1-1",
+                  "url": "https://vidsrc.cc/v2/embed/tv/95350/1/1",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "VidSrc VIP (Fast HD)"
+                },
+                {
+                  "id": "superembed-95350-1-1",
+                  "url": "https://multiembed.mov/?video_id=95350&tmdb=1&s=1&e=1",
+                  "type": "embed",
+                  "quality": "Auto / 4K",
+                  "isWorking": true,
+                  "serverName": "MultiStream / SuperEmbed"
+                },
+                {
+                  "id": "autoembed-95350-1-1",
+                  "url": "https://player.autoembed.cc/embed/tv/95350/1/1",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "AutoEmbed Global"
+                },
+                {
+                  "id": "videasy-95350-1-1",
+                  "url": "https://player.videasy.net/tv/95350/1/1",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "Videasy Fast"
+                },
+                {
+                  "id": "vidlink-95350-1-1",
+                  "url": "https://vidlink.pro/tv/95350/1/1?primaryColor=e50914&autoplay=false",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "VidLink Ultra"
+                },
+                {
+                  "id": "vidsrc-xyz-95350-1-1",
+                  "url": "https://vidsrc.xyz/embed/tv?tmdb=95350&season=1&episode=1",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "VidSrc Alpha"
+                },
+                {
+                  "id": "smashystream-95350-1-1",
+                  "url": "https://embed.smashystream.com/playere.php?tmdb=95350&season=1&episode=1",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "SmashyStream"
+                },
+                {
+                  "id": "2embed-95350-1-1",
+                  "url": "https://www.2embed.cc/embedtv/95350&s=1&e=1",
+                  "type": "embed",
+                  "quality": "720p/1080p",
+                  "isWorking": true,
+                  "serverName": "2Embed Server"
+                }
+              ],
+              "overview": "After a fatal shooting, Green Lantern Hal Jordan and new recruit John Stewart set out to prove it was an extraterrestrial event.",
+              "stillUrl": "https://image.tmdb.org/t/p/w780/eamjkYDnuDcvS1MyynI4B9nE6KL.jpg",
+              "seasonNumber": 1,
+              "episodeNumber": 1
+            },
+            {
+              "id": "ep-95350-1-2",
+              "title": "Trust Fall",
+              "airDate": "2026-08-23",
+              "runtime": 52,
+              "streams": [
+                {
+                  "id": "vidsrc-cc-95350-1-2",
+                  "url": "https://vidsrc.cc/v2/embed/tv/95350/1/2",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "VidSrc VIP (Fast HD)"
+                },
+                {
+                  "id": "superembed-95350-1-2",
+                  "url": "https://multiembed.mov/?video_id=95350&tmdb=1&s=1&e=2",
+                  "type": "embed",
+                  "quality": "Auto / 4K",
+                  "isWorking": true,
+                  "serverName": "MultiStream / SuperEmbed"
+                },
+                {
+                  "id": "autoembed-95350-1-2",
+                  "url": "https://player.autoembed.cc/embed/tv/95350/1/2",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "AutoEmbed Global"
+                },
+                {
+                  "id": "videasy-95350-1-2",
+                  "url": "https://player.videasy.net/tv/95350/1/2",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "Videasy Fast"
+                },
+                {
+                  "id": "vidlink-95350-1-2",
+                  "url": "https://vidlink.pro/tv/95350/1/2?primaryColor=e50914&autoplay=false",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "VidLink Ultra"
+                },
+                {
+                  "id": "vidsrc-xyz-95350-1-2",
+                  "url": "https://vidsrc.xyz/embed/tv?tmdb=95350&season=1&episode=2",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "VidSrc Alpha"
+                },
+                {
+                  "id": "smashystream-95350-1-2",
+                  "url": "https://embed.smashystream.com/playere.php?tmdb=95350&season=1&episode=2",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "SmashyStream"
+                },
+                {
+                  "id": "2embed-95350-1-2",
+                  "url": "https://www.2embed.cc/embedtv/95350&s=1&e=2",
+                  "type": "embed",
+                  "quality": "720p/1080p",
+                  "isWorking": true,
+                  "serverName": "2Embed Server"
+                }
+              ],
+              "overview": "While John's middling errand ultimately proves eventful, Hal makes waves in Rushville – which only inspires him to dig deeper.",
+              "stillUrl": "https://image.tmdb.org/t/p/w780/kccUM3MF6AmqdcsgPMKoBfcl54a.jpg",
+              "seasonNumber": 1,
+              "episodeNumber": 2
+            },
+            {
+              "id": "ep-95350-1-3",
+              "title": "OutKast",
+              "airDate": "2026-08-30",
+              "runtime": 54,
+              "streams": [
+                {
+                  "id": "vidsrc-cc-95350-1-3",
+                  "url": "https://vidsrc.cc/v2/embed/tv/95350/1/3",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "VidSrc VIP (Fast HD)"
+                },
+                {
+                  "id": "superembed-95350-1-3",
+                  "url": "https://multiembed.mov/?video_id=95350&tmdb=1&s=1&e=3",
+                  "type": "embed",
+                  "quality": "Auto / 4K",
+                  "isWorking": true,
+                  "serverName": "MultiStream / SuperEmbed"
+                },
+                {
+                  "id": "autoembed-95350-1-3",
+                  "url": "https://player.autoembed.cc/embed/tv/95350/1/3",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "AutoEmbed Global"
+                },
+                {
+                  "id": "videasy-95350-1-3",
+                  "url": "https://player.videasy.net/tv/95350/1/3",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "Videasy Fast"
+                },
+                {
+                  "id": "vidlink-95350-1-3",
+                  "url": "https://vidlink.pro/tv/95350/1/3?primaryColor=e50914&autoplay=false",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "VidLink Ultra"
+                },
+                {
+                  "id": "vidsrc-xyz-95350-1-3",
+                  "url": "https://vidsrc.xyz/embed/tv?tmdb=95350&season=1&episode=3",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "VidSrc Alpha"
+                },
+                {
+                  "id": "smashystream-95350-1-3",
+                  "url": "https://embed.smashystream.com/playere.php?tmdb=95350&season=1&episode=3",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "SmashyStream"
+                },
+                {
+                  "id": "2embed-95350-1-3",
+                  "url": "https://www.2embed.cc/embedtv/95350&s=1&e=3",
+                  "type": "embed",
+                  "quality": "720p/1080p",
+                  "isWorking": true,
+                  "serverName": "2Embed Server"
+                }
+              ],
+              "overview": "When his dad misunderstands a contact attempt from the Guardians, John is put forth as the next best option to fulfill the Green Lantern destiny. Then, after a lifetime of preparation, John finally gets his chance to interview for the Guardians.",
+              "stillUrl": "https://image.tmdb.org/t/p/w780/1SH9BxLQa0jyxWSe0qgDZXVzPR8.jpg",
+              "seasonNumber": 1,
+              "episodeNumber": 3
+            },
+            {
+              "id": "ep-95350-1-4",
+              "title": "The Weenie",
+              "airDate": "2026-09-06",
+              "runtime": 53,
+              "streams": [
+                {
+                  "id": "vidsrc-cc-95350-1-4",
+                  "url": "https://vidsrc.cc/v2/embed/tv/95350/1/4",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "VidSrc VIP (Fast HD)"
+                },
+                {
+                  "id": "superembed-95350-1-4",
+                  "url": "https://multiembed.mov/?video_id=95350&tmdb=1&s=1&e=4",
+                  "type": "embed",
+                  "quality": "Auto / 4K",
+                  "isWorking": true,
+                  "serverName": "MultiStream / SuperEmbed"
+                },
+                {
+                  "id": "autoembed-95350-1-4",
+                  "url": "https://player.autoembed.cc/embed/tv/95350/1/4",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "AutoEmbed Global"
+                },
+                {
+                  "id": "videasy-95350-1-4",
+                  "url": "https://player.videasy.net/tv/95350/1/4",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "Videasy Fast"
+                },
+                {
+                  "id": "vidlink-95350-1-4",
+                  "url": "https://vidlink.pro/tv/95350/1/4?primaryColor=e50914&autoplay=false",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "VidLink Ultra"
+                },
+                {
+                  "id": "vidsrc-xyz-95350-1-4",
+                  "url": "https://vidsrc.xyz/embed/tv?tmdb=95350&season=1&episode=4",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "VidSrc Alpha"
+                },
+                {
+                  "id": "smashystream-95350-1-4",
+                  "url": "https://embed.smashystream.com/playere.php?tmdb=95350&season=1&episode=4",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "SmashyStream"
+                },
+                {
+                  "id": "2embed-95350-1-4",
+                  "url": "https://www.2embed.cc/embedtv/95350&s=1&e=4",
+                  "type": "embed",
+                  "quality": "720p/1080p",
+                  "isWorking": true,
+                  "serverName": "2Embed Server"
+                }
+              ],
+              "overview": "As the 48-hour deadline nears, John develops a new theory about the Manhunter's location, leading him and Hal to run their next move by Sheriff Kane. Meanwhile, Hal's visit to Sinestro has consequences.",
+              "stillUrl": "https://image.tmdb.org/t/p/w780/i6Wz0LHsnqke3Bw0ZKmVjFfd1du.jpg",
+              "seasonNumber": 1,
+              "episodeNumber": 4
+            },
+            {
+              "id": "ep-95350-1-5",
+              "title": "Lights Out",
+              "airDate": "2026-09-13",
+              "runtime": 54,
+              "streams": [
+                {
+                  "id": "vidsrc-cc-95350-1-5",
+                  "url": "https://vidsrc.cc/v2/embed/tv/95350/1/5",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "VidSrc VIP (Fast HD)"
+                },
+                {
+                  "id": "superembed-95350-1-5",
+                  "url": "https://multiembed.mov/?video_id=95350&tmdb=1&s=1&e=5",
+                  "type": "embed",
+                  "quality": "Auto / 4K",
+                  "isWorking": true,
+                  "serverName": "MultiStream / SuperEmbed"
+                },
+                {
+                  "id": "autoembed-95350-1-5",
+                  "url": "https://player.autoembed.cc/embed/tv/95350/1/5",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "AutoEmbed Global"
+                },
+                {
+                  "id": "videasy-95350-1-5",
+                  "url": "https://player.videasy.net/tv/95350/1/5",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "Videasy Fast"
+                },
+                {
+                  "id": "vidlink-95350-1-5",
+                  "url": "https://vidlink.pro/tv/95350/1/5?primaryColor=e50914&autoplay=false",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "VidLink Ultra"
+                },
+                {
+                  "id": "vidsrc-xyz-95350-1-5",
+                  "url": "https://vidsrc.xyz/embed/tv?tmdb=95350&season=1&episode=5",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "VidSrc Alpha"
+                },
+                {
+                  "id": "smashystream-95350-1-5",
+                  "url": "https://embed.smashystream.com/playere.php?tmdb=95350&season=1&episode=5",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "SmashyStream"
+                },
+                {
+                  "id": "2embed-95350-1-5",
+                  "url": "https://www.2embed.cc/embedtv/95350&s=1&e=5",
+                  "type": "embed",
+                  "quality": "720p/1080p",
+                  "isWorking": true,
+                  "serverName": "2Embed Server"
+                }
+              ],
+              "overview": "As the Macon family's history unravels, Rushville mobilizes in the face of the escalating threat. As John is placed in an impossible position, Hal risks everything in a final attempt to take down the Manhunter.",
+              "stillUrl": "https://image.tmdb.org/t/p/w780/gl01bQzjDH93bbMtYeHiHIuQg3r.jpg",
+              "seasonNumber": 1,
+              "episodeNumber": 5
+            },
+            {
+              "id": "ep-95350-1-6",
+              "title": "Bad Optics",
+              "airDate": "2026-09-20",
+              "runtime": 54,
+              "streams": [
+                {
+                  "id": "vidsrc-cc-95350-1-6",
+                  "url": "https://vidsrc.cc/v2/embed/tv/95350/1/6",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "VidSrc VIP (Fast HD)"
+                },
+                {
+                  "id": "superembed-95350-1-6",
+                  "url": "https://multiembed.mov/?video_id=95350&tmdb=1&s=1&e=6",
+                  "type": "embed",
+                  "quality": "Auto / 4K",
+                  "isWorking": true,
+                  "serverName": "MultiStream / SuperEmbed"
+                },
+                {
+                  "id": "autoembed-95350-1-6",
+                  "url": "https://player.autoembed.cc/embed/tv/95350/1/6",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "AutoEmbed Global"
+                },
+                {
+                  "id": "videasy-95350-1-6",
+                  "url": "https://player.videasy.net/tv/95350/1/6",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "Videasy Fast"
+                },
+                {
+                  "id": "vidlink-95350-1-6",
+                  "url": "https://vidlink.pro/tv/95350/1/6?primaryColor=e50914&autoplay=false",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "VidLink Ultra"
+                },
+                {
+                  "id": "vidsrc-xyz-95350-1-6",
+                  "url": "https://vidsrc.xyz/embed/tv?tmdb=95350&season=1&episode=6",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "VidSrc Alpha"
+                },
+                {
+                  "id": "smashystream-95350-1-6",
+                  "url": "https://embed.smashystream.com/playere.php?tmdb=95350&season=1&episode=6",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "SmashyStream"
+                },
+                {
+                  "id": "2embed-95350-1-6",
+                  "url": "https://www.2embed.cc/embedtv/95350&s=1&e=6",
+                  "type": "embed",
+                  "quality": "720p/1080p",
+                  "isWorking": true,
+                  "serverName": "2Embed Server"
+                }
+              ],
+              "overview": "Now in business with his brother Marcus, John is on the verge of landing a major investor for his innovative take on panic rooms when an unexpected phone call pulls him back to Rushville - and everything he worked so hard to leave behind.",
+              "stillUrl": "https://image.tmdb.org/t/p/w780/lnaPnNgtufzsNjX1V9MbcwlCIqd.jpg",
+              "seasonNumber": 1,
+              "episodeNumber": 6
+            },
+            {
+              "id": "ep-95350-1-7",
+              "title": "The Jordan Boys' Legacy",
+              "airDate": "2026-09-27",
+              "runtime": 48,
+              "streams": [
+                {
+                  "id": "vidsrc-cc-95350-1-7",
+                  "url": "https://vidsrc.cc/v2/embed/tv/95350/1/7",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "VidSrc VIP (Fast HD)"
+                },
+                {
+                  "id": "superembed-95350-1-7",
+                  "url": "https://multiembed.mov/?video_id=95350&tmdb=1&s=1&e=7",
+                  "type": "embed",
+                  "quality": "Auto / 4K",
+                  "isWorking": true,
+                  "serverName": "MultiStream / SuperEmbed"
+                },
+                {
+                  "id": "autoembed-95350-1-7",
+                  "url": "https://player.autoembed.cc/embed/tv/95350/1/7",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "AutoEmbed Global"
+                },
+                {
+                  "id": "videasy-95350-1-7",
+                  "url": "https://player.videasy.net/tv/95350/1/7",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "Videasy Fast"
+                },
+                {
+                  "id": "vidlink-95350-1-7",
+                  "url": "https://vidlink.pro/tv/95350/1/7?primaryColor=e50914&autoplay=false",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "VidLink Ultra"
+                },
+                {
+                  "id": "vidsrc-xyz-95350-1-7",
+                  "url": "https://vidsrc.xyz/embed/tv?tmdb=95350&season=1&episode=7",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "VidSrc Alpha"
+                },
+                {
+                  "id": "smashystream-95350-1-7",
+                  "url": "https://embed.smashystream.com/playere.php?tmdb=95350&season=1&episode=7",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "SmashyStream"
+                },
+                {
+                  "id": "2embed-95350-1-7",
+                  "url": "https://www.2embed.cc/embedtv/95350&s=1&e=7",
+                  "type": "embed",
+                  "quality": "720p/1080p",
+                  "isWorking": true,
+                  "serverName": "2Embed Server"
+                }
+              ],
+              "overview": "Finding themselves on another planet, Hal and John must put aside their fractured past to solve a murder. Along their journey, both men are forced to confront the ghosts of their pasts...and the ways their childhoods shaped who they are today.",
+              "stillUrl": "https://image.tmdb.org/t/p/w780/sZNpNcHcTSd9qRD1ig7EmO6SsZ8.jpg",
+              "seasonNumber": 1,
+              "episodeNumber": 7
+            },
+            {
+              "id": "ep-95350-1-8",
+              "title": "Dirt and Stars",
+              "airDate": "2026-10-04",
+              "runtime": null,
+              "streams": [
+                {
+                  "id": "vidsrc-cc-95350-1-8",
+                  "url": "https://vidsrc.cc/v2/embed/tv/95350/1/8",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "VidSrc VIP (Fast HD)"
+                },
+                {
+                  "id": "superembed-95350-1-8",
+                  "url": "https://multiembed.mov/?video_id=95350&tmdb=1&s=1&e=8",
+                  "type": "embed",
+                  "quality": "Auto / 4K",
+                  "isWorking": true,
+                  "serverName": "MultiStream / SuperEmbed"
+                },
+                {
+                  "id": "autoembed-95350-1-8",
+                  "url": "https://player.autoembed.cc/embed/tv/95350/1/8",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "AutoEmbed Global"
+                },
+                {
+                  "id": "videasy-95350-1-8",
+                  "url": "https://player.videasy.net/tv/95350/1/8",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "Videasy Fast"
+                },
+                {
+                  "id": "vidlink-95350-1-8",
+                  "url": "https://vidlink.pro/tv/95350/1/8?primaryColor=e50914&autoplay=false",
+                  "type": "embed",
+                  "quality": "1080p HD",
+                  "isWorking": true,
+                  "serverName": "VidLink Ultra"
+                },
+                {
+                  "id": "vidsrc-xyz-95350-1-8",
+                  "url": "https://vidsrc.xyz/embed/tv?tmdb=95350&season=1&episode=8",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "VidSrc Alpha"
+                },
+                {
+                  "id": "smashystream-95350-1-8",
+                  "url": "https://embed.smashystream.com/playere.php?tmdb=95350&season=1&episode=8",
+                  "type": "embed",
+                  "quality": "1080p",
+                  "isWorking": true,
+                  "serverName": "SmashyStream"
+                },
+                {
+                  "id": "2embed-95350-1-8",
+                  "url": "https://www.2embed.cc/embedtv/95350&s=1&e=8",
+                  "type": "embed",
+                  "quality": "720p/1080p",
+                  "isWorking": true,
+                  "serverName": "2Embed Server"
+                }
+              ],
+              "overview": "",
+              "seasonNumber": 1,
+              "episodeNumber": 8
+            }
+          ],
+          "overview": "",
+          "posterUrl": "https://image.tmdb.org/t/p/w342/j9PTWG0Xn0NeIRhGGFJbciNYWvS.jpg",
+          "episodeCount": 8,
+          "seasonNumber": 1
+        }
+      ]
+    },
+    {
       "id": "movie-1285959",
       "tmdbId": 1285959,
       "imdbId": "tt32298956",
@@ -3780,674 +4448,6 @@
         }
       ],
       "seasons": []
-    },
-    {
-      "id": "tv-95350",
-      "tmdbId": 95350,
-      "imdbId": "tt26545992",
-      "title": "Lanterns",
-      "originalTitle": "Lanterns",
-      "type": "tv",
-      "overview": "Two intergalactic cops, new recruit John Stewart and Lantern legend Hal Jordan, are drawn into a dark, Earth-based mystery as they investigate a murder in the American heartland.",
-      "tagline": "Only one can wear the ring.",
-      "posterUrl": "https://image.tmdb.org/t/p/w500/gpC7h43xPMEV3goYMQShfJbTtLq.jpg",
-      "backdropUrl": "https://image.tmdb.org/t/p/original/6gqezQJ2mkm4jreWwLyOZy2Vf6i.jpg",
-      "releaseDate": "2026-08-16",
-      "rating": 8.3,
-      "runtime": 45,
-      "genres": [
-        "Drama",
-        "Mystery",
-        "Sci-Fi & Fantasy"
-      ],
-      "cast": [
-        {
-          "id": 3497,
-          "name": "Kyle Chandler",
-          "character": "Hal Jordan / Halogram",
-          "profileUrl": "https://image.tmdb.org/t/p/w342/66n7XNj1dyYkzCBWR3Lq8Vz4PJ1.jpg"
-        },
-        {
-          "id": 1763709,
-          "name": "Aaron Pierre",
-          "character": "John Stewart",
-          "profileUrl": "https://image.tmdb.org/t/p/w342/hNwZWdT2KxKj1YLbipvtUhNjfAp.jpg"
-        },
-        {
-          "id": 9015,
-          "name": "Kelly Macdonald",
-          "character": "Sheriff Kerry Kane",
-          "profileUrl": "https://image.tmdb.org/t/p/w342/k0yVocTnTMWlNdaeOO7YRViCdhO.jpg"
-        }
-      ],
-      "director": "",
-      "trailerKey": "7UIBOsuUwc4",
-      "trailerUrl": "https://www.youtube.com/watch?v=7UIBOsuUwc4",
-      "featured": false,
-      "trending": false,
-      "status": "published",
-      "views": 1,
-      "createdAt": "2026-09-29T08:33:45.485757+00:00",
-      "updatedAt": "2026-09-29T08:33:56.501+00:00",
-      "streams": [],
-      "seasons": [
-        {
-          "name": "Season 1",
-          "episodes": [
-            {
-              "id": "ep-95350-1-1",
-              "title": "Pilot",
-              "airDate": "2026-08-16",
-              "runtime": 57,
-              "streams": [
-                {
-                  "id": "vidsrc-cc-95350-1-1",
-                  "url": "https://vidsrc.cc/v2/embed/tv/95350/1/1",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "VidSrc VIP (Fast HD)"
-                },
-                {
-                  "id": "superembed-95350-1-1",
-                  "url": "https://multiembed.mov/?video_id=95350&tmdb=1&s=1&e=1",
-                  "type": "embed",
-                  "quality": "Auto / 4K",
-                  "isWorking": true,
-                  "serverName": "MultiStream / SuperEmbed"
-                },
-                {
-                  "id": "autoembed-95350-1-1",
-                  "url": "https://player.autoembed.cc/embed/tv/95350/1/1",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "AutoEmbed Global"
-                },
-                {
-                  "id": "videasy-95350-1-1",
-                  "url": "https://player.videasy.net/tv/95350/1/1",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "Videasy Fast"
-                },
-                {
-                  "id": "vidlink-95350-1-1",
-                  "url": "https://vidlink.pro/tv/95350/1/1?primaryColor=e50914&autoplay=false",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "VidLink Ultra"
-                },
-                {
-                  "id": "vidsrc-xyz-95350-1-1",
-                  "url": "https://vidsrc.xyz/embed/tv?tmdb=95350&season=1&episode=1",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "VidSrc Alpha"
-                },
-                {
-                  "id": "smashystream-95350-1-1",
-                  "url": "https://embed.smashystream.com/playere.php?tmdb=95350&season=1&episode=1",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "SmashyStream"
-                },
-                {
-                  "id": "2embed-95350-1-1",
-                  "url": "https://www.2embed.cc/embedtv/95350&s=1&e=1",
-                  "type": "embed",
-                  "quality": "720p/1080p",
-                  "isWorking": true,
-                  "serverName": "2Embed Server"
-                }
-              ],
-              "overview": "After a fatal shooting, Green Lantern Hal Jordan and new recruit John Stewart set out to prove it was an extraterrestrial event.",
-              "stillUrl": "https://image.tmdb.org/t/p/w780/eamjkYDnuDcvS1MyynI4B9nE6KL.jpg",
-              "seasonNumber": 1,
-              "episodeNumber": 1
-            },
-            {
-              "id": "ep-95350-1-2",
-              "title": "Trust Fall",
-              "airDate": "2026-08-23",
-              "runtime": 52,
-              "streams": [
-                {
-                  "id": "vidsrc-cc-95350-1-2",
-                  "url": "https://vidsrc.cc/v2/embed/tv/95350/1/2",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "VidSrc VIP (Fast HD)"
-                },
-                {
-                  "id": "superembed-95350-1-2",
-                  "url": "https://multiembed.mov/?video_id=95350&tmdb=1&s=1&e=2",
-                  "type": "embed",
-                  "quality": "Auto / 4K",
-                  "isWorking": true,
-                  "serverName": "MultiStream / SuperEmbed"
-                },
-                {
-                  "id": "autoembed-95350-1-2",
-                  "url": "https://player.autoembed.cc/embed/tv/95350/1/2",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "AutoEmbed Global"
-                },
-                {
-                  "id": "videasy-95350-1-2",
-                  "url": "https://player.videasy.net/tv/95350/1/2",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "Videasy Fast"
-                },
-                {
-                  "id": "vidlink-95350-1-2",
-                  "url": "https://vidlink.pro/tv/95350/1/2?primaryColor=e50914&autoplay=false",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "VidLink Ultra"
-                },
-                {
-                  "id": "vidsrc-xyz-95350-1-2",
-                  "url": "https://vidsrc.xyz/embed/tv?tmdb=95350&season=1&episode=2",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "VidSrc Alpha"
-                },
-                {
-                  "id": "smashystream-95350-1-2",
-                  "url": "https://embed.smashystream.com/playere.php?tmdb=95350&season=1&episode=2",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "SmashyStream"
-                },
-                {
-                  "id": "2embed-95350-1-2",
-                  "url": "https://www.2embed.cc/embedtv/95350&s=1&e=2",
-                  "type": "embed",
-                  "quality": "720p/1080p",
-                  "isWorking": true,
-                  "serverName": "2Embed Server"
-                }
-              ],
-              "overview": "While John's middling errand ultimately proves eventful, Hal makes waves in Rushville – which only inspires him to dig deeper.",
-              "stillUrl": "https://image.tmdb.org/t/p/w780/kccUM3MF6AmqdcsgPMKoBfcl54a.jpg",
-              "seasonNumber": 1,
-              "episodeNumber": 2
-            },
-            {
-              "id": "ep-95350-1-3",
-              "title": "OutKast",
-              "airDate": "2026-08-30",
-              "runtime": 54,
-              "streams": [
-                {
-                  "id": "vidsrc-cc-95350-1-3",
-                  "url": "https://vidsrc.cc/v2/embed/tv/95350/1/3",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "VidSrc VIP (Fast HD)"
-                },
-                {
-                  "id": "superembed-95350-1-3",
-                  "url": "https://multiembed.mov/?video_id=95350&tmdb=1&s=1&e=3",
-                  "type": "embed",
-                  "quality": "Auto / 4K",
-                  "isWorking": true,
-                  "serverName": "MultiStream / SuperEmbed"
-                },
-                {
-                  "id": "autoembed-95350-1-3",
-                  "url": "https://player.autoembed.cc/embed/tv/95350/1/3",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "AutoEmbed Global"
-                },
-                {
-                  "id": "videasy-95350-1-3",
-                  "url": "https://player.videasy.net/tv/95350/1/3",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "Videasy Fast"
-                },
-                {
-                  "id": "vidlink-95350-1-3",
-                  "url": "https://vidlink.pro/tv/95350/1/3?primaryColor=e50914&autoplay=false",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "VidLink Ultra"
-                },
-                {
-                  "id": "vidsrc-xyz-95350-1-3",
-                  "url": "https://vidsrc.xyz/embed/tv?tmdb=95350&season=1&episode=3",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "VidSrc Alpha"
-                },
-                {
-                  "id": "smashystream-95350-1-3",
-                  "url": "https://embed.smashystream.com/playere.php?tmdb=95350&season=1&episode=3",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "SmashyStream"
-                },
-                {
-                  "id": "2embed-95350-1-3",
-                  "url": "https://www.2embed.cc/embedtv/95350&s=1&e=3",
-                  "type": "embed",
-                  "quality": "720p/1080p",
-                  "isWorking": true,
-                  "serverName": "2Embed Server"
-                }
-              ],
-              "overview": "When his dad misunderstands a contact attempt from the Guardians, John is put forth as the next best option to fulfill the Green Lantern destiny. Then, after a lifetime of preparation, John finally gets his chance to interview for the Guardians.",
-              "stillUrl": "https://image.tmdb.org/t/p/w780/1SH9BxLQa0jyxWSe0qgDZXVzPR8.jpg",
-              "seasonNumber": 1,
-              "episodeNumber": 3
-            },
-            {
-              "id": "ep-95350-1-4",
-              "title": "The Weenie",
-              "airDate": "2026-09-06",
-              "runtime": 53,
-              "streams": [
-                {
-                  "id": "vidsrc-cc-95350-1-4",
-                  "url": "https://vidsrc.cc/v2/embed/tv/95350/1/4",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "VidSrc VIP (Fast HD)"
-                },
-                {
-                  "id": "superembed-95350-1-4",
-                  "url": "https://multiembed.mov/?video_id=95350&tmdb=1&s=1&e=4",
-                  "type": "embed",
-                  "quality": "Auto / 4K",
-                  "isWorking": true,
-                  "serverName": "MultiStream / SuperEmbed"
-                },
-                {
-                  "id": "autoembed-95350-1-4",
-                  "url": "https://player.autoembed.cc/embed/tv/95350/1/4",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "AutoEmbed Global"
-                },
-                {
-                  "id": "videasy-95350-1-4",
-                  "url": "https://player.videasy.net/tv/95350/1/4",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "Videasy Fast"
-                },
-                {
-                  "id": "vidlink-95350-1-4",
-                  "url": "https://vidlink.pro/tv/95350/1/4?primaryColor=e50914&autoplay=false",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "VidLink Ultra"
-                },
-                {
-                  "id": "vidsrc-xyz-95350-1-4",
-                  "url": "https://vidsrc.xyz/embed/tv?tmdb=95350&season=1&episode=4",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "VidSrc Alpha"
-                },
-                {
-                  "id": "smashystream-95350-1-4",
-                  "url": "https://embed.smashystream.com/playere.php?tmdb=95350&season=1&episode=4",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "SmashyStream"
-                },
-                {
-                  "id": "2embed-95350-1-4",
-                  "url": "https://www.2embed.cc/embedtv/95350&s=1&e=4",
-                  "type": "embed",
-                  "quality": "720p/1080p",
-                  "isWorking": true,
-                  "serverName": "2Embed Server"
-                }
-              ],
-              "overview": "As the 48-hour deadline nears, John develops a new theory about the Manhunter's location, leading him and Hal to run their next move by Sheriff Kane. Meanwhile, Hal's visit to Sinestro has consequences.",
-              "stillUrl": "https://image.tmdb.org/t/p/w780/i6Wz0LHsnqke3Bw0ZKmVjFfd1du.jpg",
-              "seasonNumber": 1,
-              "episodeNumber": 4
-            },
-            {
-              "id": "ep-95350-1-5",
-              "title": "Lights Out",
-              "airDate": "2026-09-13",
-              "runtime": 54,
-              "streams": [
-                {
-                  "id": "vidsrc-cc-95350-1-5",
-                  "url": "https://vidsrc.cc/v2/embed/tv/95350/1/5",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "VidSrc VIP (Fast HD)"
-                },
-                {
-                  "id": "superembed-95350-1-5",
-                  "url": "https://multiembed.mov/?video_id=95350&tmdb=1&s=1&e=5",
-                  "type": "embed",
-                  "quality": "Auto / 4K",
-                  "isWorking": true,
-                  "serverName": "MultiStream / SuperEmbed"
-                },
-                {
-                  "id": "autoembed-95350-1-5",
-                  "url": "https://player.autoembed.cc/embed/tv/95350/1/5",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "AutoEmbed Global"
-                },
-                {
-                  "id": "videasy-95350-1-5",
-                  "url": "https://player.videasy.net/tv/95350/1/5",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "Videasy Fast"
-                },
-                {
-                  "id": "vidlink-95350-1-5",
-                  "url": "https://vidlink.pro/tv/95350/1/5?primaryColor=e50914&autoplay=false",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "VidLink Ultra"
-                },
-                {
-                  "id": "vidsrc-xyz-95350-1-5",
-                  "url": "https://vidsrc.xyz/embed/tv?tmdb=95350&season=1&episode=5",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "VidSrc Alpha"
-                },
-                {
-                  "id": "smashystream-95350-1-5",
-                  "url": "https://embed.smashystream.com/playere.php?tmdb=95350&season=1&episode=5",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "SmashyStream"
-                },
-                {
-                  "id": "2embed-95350-1-5",
-                  "url": "https://www.2embed.cc/embedtv/95350&s=1&e=5",
-                  "type": "embed",
-                  "quality": "720p/1080p",
-                  "isWorking": true,
-                  "serverName": "2Embed Server"
-                }
-              ],
-              "overview": "As the Macon family's history unravels, Rushville mobilizes in the face of the escalating threat. As John is placed in an impossible position, Hal risks everything in a final attempt to take down the Manhunter.",
-              "stillUrl": "https://image.tmdb.org/t/p/w780/gl01bQzjDH93bbMtYeHiHIuQg3r.jpg",
-              "seasonNumber": 1,
-              "episodeNumber": 5
-            },
-            {
-              "id": "ep-95350-1-6",
-              "title": "Bad Optics",
-              "airDate": "2026-09-20",
-              "runtime": 54,
-              "streams": [
-                {
-                  "id": "vidsrc-cc-95350-1-6",
-                  "url": "https://vidsrc.cc/v2/embed/tv/95350/1/6",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "VidSrc VIP (Fast HD)"
-                },
-                {
-                  "id": "superembed-95350-1-6",
-                  "url": "https://multiembed.mov/?video_id=95350&tmdb=1&s=1&e=6",
-                  "type": "embed",
-                  "quality": "Auto / 4K",
-                  "isWorking": true,
-                  "serverName": "MultiStream / SuperEmbed"
-                },
-                {
-                  "id": "autoembed-95350-1-6",
-                  "url": "https://player.autoembed.cc/embed/tv/95350/1/6",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "AutoEmbed Global"
-                },
-                {
-                  "id": "videasy-95350-1-6",
-                  "url": "https://player.videasy.net/tv/95350/1/6",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "Videasy Fast"
-                },
-                {
-                  "id": "vidlink-95350-1-6",
-                  "url": "https://vidlink.pro/tv/95350/1/6?primaryColor=e50914&autoplay=false",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "VidLink Ultra"
-                },
-                {
-                  "id": "vidsrc-xyz-95350-1-6",
-                  "url": "https://vidsrc.xyz/embed/tv?tmdb=95350&season=1&episode=6",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "VidSrc Alpha"
-                },
-                {
-                  "id": "smashystream-95350-1-6",
-                  "url": "https://embed.smashystream.com/playere.php?tmdb=95350&season=1&episode=6",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "SmashyStream"
-                },
-                {
-                  "id": "2embed-95350-1-6",
-                  "url": "https://www.2embed.cc/embedtv/95350&s=1&e=6",
-                  "type": "embed",
-                  "quality": "720p/1080p",
-                  "isWorking": true,
-                  "serverName": "2Embed Server"
-                }
-              ],
-              "overview": "Now in business with his brother Marcus, John is on the verge of landing a major investor for his innovative take on panic rooms when an unexpected phone call pulls him back to Rushville - and everything he worked so hard to leave behind.",
-              "stillUrl": "https://image.tmdb.org/t/p/w780/lnaPnNgtufzsNjX1V9MbcwlCIqd.jpg",
-              "seasonNumber": 1,
-              "episodeNumber": 6
-            },
-            {
-              "id": "ep-95350-1-7",
-              "title": "The Jordan Boys' Legacy",
-              "airDate": "2026-09-27",
-              "runtime": 48,
-              "streams": [
-                {
-                  "id": "vidsrc-cc-95350-1-7",
-                  "url": "https://vidsrc.cc/v2/embed/tv/95350/1/7",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "VidSrc VIP (Fast HD)"
-                },
-                {
-                  "id": "superembed-95350-1-7",
-                  "url": "https://multiembed.mov/?video_id=95350&tmdb=1&s=1&e=7",
-                  "type": "embed",
-                  "quality": "Auto / 4K",
-                  "isWorking": true,
-                  "serverName": "MultiStream / SuperEmbed"
-                },
-                {
-                  "id": "autoembed-95350-1-7",
-                  "url": "https://player.autoembed.cc/embed/tv/95350/1/7",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "AutoEmbed Global"
-                },
-                {
-                  "id": "videasy-95350-1-7",
-                  "url": "https://player.videasy.net/tv/95350/1/7",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "Videasy Fast"
-                },
-                {
-                  "id": "vidlink-95350-1-7",
-                  "url": "https://vidlink.pro/tv/95350/1/7?primaryColor=e50914&autoplay=false",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "VidLink Ultra"
-                },
-                {
-                  "id": "vidsrc-xyz-95350-1-7",
-                  "url": "https://vidsrc.xyz/embed/tv?tmdb=95350&season=1&episode=7",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "VidSrc Alpha"
-                },
-                {
-                  "id": "smashystream-95350-1-7",
-                  "url": "https://embed.smashystream.com/playere.php?tmdb=95350&season=1&episode=7",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "SmashyStream"
-                },
-                {
-                  "id": "2embed-95350-1-7",
-                  "url": "https://www.2embed.cc/embedtv/95350&s=1&e=7",
-                  "type": "embed",
-                  "quality": "720p/1080p",
-                  "isWorking": true,
-                  "serverName": "2Embed Server"
-                }
-              ],
-              "overview": "Finding themselves on another planet, Hal and John must put aside their fractured past to solve a murder. Along their journey, both men are forced to confront the ghosts of their pasts...and the ways their childhoods shaped who they are today.",
-              "stillUrl": "https://image.tmdb.org/t/p/w780/sZNpNcHcTSd9qRD1ig7EmO6SsZ8.jpg",
-              "seasonNumber": 1,
-              "episodeNumber": 7
-            },
-            {
-              "id": "ep-95350-1-8",
-              "title": "Dirt and Stars",
-              "airDate": "2026-10-04",
-              "runtime": null,
-              "streams": [
-                {
-                  "id": "vidsrc-cc-95350-1-8",
-                  "url": "https://vidsrc.cc/v2/embed/tv/95350/1/8",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "VidSrc VIP (Fast HD)"
-                },
-                {
-                  "id": "superembed-95350-1-8",
-                  "url": "https://multiembed.mov/?video_id=95350&tmdb=1&s=1&e=8",
-                  "type": "embed",
-                  "quality": "Auto / 4K",
-                  "isWorking": true,
-                  "serverName": "MultiStream / SuperEmbed"
-                },
-                {
-                  "id": "autoembed-95350-1-8",
-                  "url": "https://player.autoembed.cc/embed/tv/95350/1/8",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "AutoEmbed Global"
-                },
-                {
-                  "id": "videasy-95350-1-8",
-                  "url": "https://player.videasy.net/tv/95350/1/8",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "Videasy Fast"
-                },
-                {
-                  "id": "vidlink-95350-1-8",
-                  "url": "https://vidlink.pro/tv/95350/1/8?primaryColor=e50914&autoplay=false",
-                  "type": "embed",
-                  "quality": "1080p HD",
-                  "isWorking": true,
-                  "serverName": "VidLink Ultra"
-                },
-                {
-                  "id": "vidsrc-xyz-95350-1-8",
-                  "url": "https://vidsrc.xyz/embed/tv?tmdb=95350&season=1&episode=8",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "VidSrc Alpha"
-                },
-                {
-                  "id": "smashystream-95350-1-8",
-                  "url": "https://embed.smashystream.com/playere.php?tmdb=95350&season=1&episode=8",
-                  "type": "embed",
-                  "quality": "1080p",
-                  "isWorking": true,
-                  "serverName": "SmashyStream"
-                },
-                {
-                  "id": "2embed-95350-1-8",
-                  "url": "https://www.2embed.cc/embedtv/95350&s=1&e=8",
-                  "type": "embed",
-                  "quality": "720p/1080p",
-                  "isWorking": true,
-                  "serverName": "2Embed Server"
-                }
-              ],
-              "overview": "",
-              "seasonNumber": 1,
-              "episodeNumber": 8
-            }
-          ],
-          "overview": "",
-          "posterUrl": "https://image.tmdb.org/t/p/w342/j9PTWG0Xn0NeIRhGGFJbciNYWvS.jpg",
-          "episodeCount": 8,
-          "seasonNumber": 1
-        }
-      ]
     },
     {
       "id": "movie-1377237",

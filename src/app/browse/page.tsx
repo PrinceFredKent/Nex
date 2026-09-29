@@ -102,8 +102,8 @@ function BrowseContent() {
         </form>
       </div>
 
-      {/* Filter Controls */}
-      <div className="bg-white dark:bg-[#141721] rounded-3xl p-5 shadow-app border border-slate-100/80 dark:border-white/10 space-y-4">
+      {/* Filter Controls & Sorter Section (Sticky) */}
+      <div className="sticky top-[74px] sm:top-[82px] z-20 bg-white/95 dark:bg-[#141721]/95 backdrop-blur-md rounded-3xl p-4 sm:p-5 shadow-md dark:shadow-2xl border border-slate-100/80 dark:border-white/10 space-y-3.5 transition-all">
         <div className="flex flex-wrap items-center justify-between gap-3">
           {/* Type Switcher */}
           <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-white/10 p-1 rounded-full">
@@ -137,7 +137,7 @@ function BrowseContent() {
             <select
               value={currentSort}
               onChange={(e) => updateParam('sort', e.target.value)}
-              className="bg-slate-50 dark:bg-darkCard border border-slate-200 dark:border-white/10 text-xs font-semibold rounded-full px-3.5 py-1.5 text-gray-800 dark:text-gray-200 focus:outline-none focus:border-brand-500"
+              className="bg-slate-50 dark:bg-darkCard border border-slate-200 dark:border-white/10 text-xs font-semibold rounded-full px-3.5 py-1.5 text-gray-800 dark:text-gray-200 focus:outline-none focus:border-brand-500 shadow-sm"
             >
               <option value="newest_added">✨ Newest Added First</option>
               <option value="views">🔥 Most Popular</option>

@@ -12,8 +12,8 @@ export default function WatchlistPage() {
 
   return (
     <div className="space-y-6 animate-fadeIn">
-      {/* Header */}
-      <div className="bg-white dark:bg-[#141721] rounded-3xl p-6 shadow-app border border-slate-100/80 dark:border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* Header & Tab Switcher (Sticky) */}
+      <div className="sticky top-[74px] sm:top-[82px] z-20 bg-white/95 dark:bg-[#141721]/95 backdrop-blur-md rounded-3xl p-5 sm:p-6 shadow-md dark:shadow-2xl border border-slate-100/80 dark:border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all">
         <div>
           <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-2">
             <Bookmark className="w-6 h-6 text-brand-500" />
