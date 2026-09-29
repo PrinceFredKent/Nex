@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { MediaItem, StreamSource } from '@/types';
 import { generateStreamSources } from '@/lib/streams';
 import { 
@@ -11,7 +12,7 @@ import {
   ExternalLink,
   Layers,
   ArrowRight,
-  AlertTriangle
+  X
 } from 'lucide-react';
 import { useWatchlist } from './WatchlistProvider';
 
@@ -21,9 +22,14 @@ interface StreamPlayerProps {
 
 export default function StreamPlayer({ media }: StreamPlayerProps) {
   const { saveProgress } = useWatchlist();
+  const [mounted, setMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // TV series state
-  const isTv = media.type === 'tv';
+  const isTv = media.type === 'tv' || media.id.startsWith('tv-');
   const seasons = media.seasons || [];
   const [selectedSeasonNum, setSelectedSeasonNum] = useState<number>(
     seasons.length > 0 ? seasons[0].seasonNumber : 1
@@ -44,6 +50,8 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
   );
   const [isCinemaMode, setIsCinemaMode] = useState<boolean>(false);
   const [keyReload, setKeyReload] = useState<number>(0);
+  const [showCinemaControls, setShowCinemaControls] = useState<boolean>(true);
+  const controlsTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Sync selectedServerId if stream list changes
   useEffect(() => {
@@ -63,7 +71,7 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
       mediaId: media.id,
       mediaTitle: media.title,
       posterUrl: media.posterUrl,
-      type: media.type,
+      type: isTv ? 'tv' : 'movie',
       season: isTv ? selectedSeasonNum : undefined,
       episode: isTv ? selectedEpisodeNum : undefined,
       timestamp: Date.now(),
@@ -72,7 +80,41 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
 
     // Record view in API
     fetch(`/api/views/${media.id}`, { method: 'POST' }).catch(() => {});
-  }, [media.id, isTv, selectedSeasonNum, selectedEpisodeNum]);
+  }, [media.id, media.type, media.title, media.posterUrl, isTv, selectedSeasonNum, selectedEpisodeNum, saveProgress]);
+
+  // Handle Esc key to exit cinema mode
+  useEffect(() => {
+    if (!isCinemaMode) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsCinemaMode(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isCinemaMode]);
+
+  // Lock body scroll during cinema mode
+  useEffect(() => {
+    if (isCinemaMode) {
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = prevOverflow;
+      };
+    }
+  }, [isCinemaMode]);
+
+  // Auto-hide controls in cinema mode on inactivity
+  const handleCinemaActivity = () => {
+    setShowCinemaControls(true);
+    if (controlsTimerRef.current) {
+      clearTimeout(controlsTimerRef.current);
+    }
+    controlsTimerRef.current = setTimeout(() => {
+      setShowCinemaControls(false);
+    }, 3500);
+  };
 
   const handleNextServer = () => {
     if (nextStream) {
@@ -105,51 +147,210 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
   };
 
   return (
-    <div className={`transition-all duration-300 ${isCinemaMode ? 'fixed inset-0 z-50 bg-black p-4 sm:p-8 overflow-y-auto' : 'space-y-4'}`}>
-      {/* Video Screen Container */}
-      <div className="relative w-full aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10 group">
-        {activeStream?.type === 'mp4' ? (
-          <video
-            key={`${activeStream.url}-${keyReload}`}
-            src={activeStream.url}
-            controls
-            autoPlay
-            className="w-full h-full object-contain"
-          />
-        ) : (
-          <iframe
-            key={`${activeStream?.url}-${keyReload}`}
-            src={activeStream?.url || ''}
-            title={media.title}
-            allowFullScreen
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
-            className="w-full h-full border-0"
-            referrerPolicy="origin"
-            loading="eager"
-          />
-        )}
-
-        {/* Top Floating Controls */}
-        <div className="absolute top-3 right-3 flex items-center gap-2 bg-black/70 backdrop-blur-md p-1.5 rounded-xl border border-white/10 z-20">
+    <div className="space-y-4">
+      {/* Video Screen Container / Placeholder when in Cinema Mode */}
+      {isCinemaMode ? (
+        <div className="relative w-full aspect-video bg-black/80 dark:bg-black/90 rounded-2xl overflow-hidden border border-brand-500/40 flex flex-col items-center justify-center p-6 text-center space-y-3 shadow-xl">
+          <div className="w-12 h-12 rounded-full bg-brand-500/20 text-brand-500 flex items-center justify-center animate-pulse">
+            <Layers className="w-6 h-6" />
+          </div>
+          <div className="space-y-1">
+            <h3 className="text-sm sm:text-base font-bold text-white">Cinema Mode is Active</h3>
+            <p className="text-xs text-gray-400 max-w-sm">Video is currently occupying the full screen edge-to-edge.</p>
+          </div>
           <button
-            onClick={() => setKeyReload((k) => k + 1)}
-            title="Reload Video Stream"
-            className="p-1.5 rounded-lg hover:bg-white/20 text-gray-300 hover:text-white transition"
+            onClick={() => setIsCinemaMode(false)}
+            className="px-4 py-2 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-xs font-bold shadow-md transition flex items-center gap-1.5"
           >
-            <RotateCw className="w-4 h-4" />
-          </button>
-          <button
-            onClick={() => setIsCinemaMode(!isCinemaMode)}
-            title={isCinemaMode ? 'Exit Cinema Mode' : 'Cinema Mode'}
-            className={`p-1.5 rounded-lg text-xs font-semibold px-2.5 transition flex items-center gap-1 ${
-              isCinemaMode ? 'bg-brand-500 text-white' : 'hover:bg-white/20 text-gray-300 hover:text-white'
-            }`}
-          >
-            <Layers className="w-4 h-4" />
-            <span className="hidden sm:inline">{isCinemaMode ? 'Exit' : 'Cinema'}</span>
+            <span>Exit Cinema Mode</span>
           </button>
         </div>
-      </div>
+      ) : (
+        <div className="relative w-full aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10 group">
+          {activeStream?.type === 'mp4' ? (
+            <video
+              key={`${activeStream.url}-${keyReload}`}
+              src={activeStream.url}
+              controls
+              autoPlay
+              className="w-full h-full object-contain"
+            />
+          ) : (
+            <iframe
+              key={`${activeStream?.url}-${keyReload}`}
+              src={activeStream?.url || ''}
+              title={media.title}
+              allowFullScreen
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+              className="w-full h-full border-0"
+              referrerPolicy="origin"
+              loading="eager"
+            />
+          )}
+
+          {/* Top Floating Controls */}
+          <div className="absolute top-3 right-3 flex items-center gap-2 bg-black/70 backdrop-blur-md p-1.5 rounded-xl border border-white/10 z-20">
+            <button
+              onClick={() => setKeyReload((k) => k + 1)}
+              title="Reload Video Stream"
+              className="p-1.5 rounded-lg hover:bg-white/20 text-gray-300 hover:text-white transition"
+            >
+              <RotateCw className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => setIsCinemaMode(true)}
+              title="Enter Cinema Mode"
+              className="p-1.5 rounded-lg text-xs font-semibold px-2.5 transition flex items-center gap-1 hover:bg-white/20 text-gray-300 hover:text-white"
+            >
+              <Layers className="w-4 h-4" />
+              <span className="hidden sm:inline">Cinema</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Full-Screen Edge-to-Edge Cinema Mode Portal */}
+      {mounted && isCinemaMode && createPortal(
+        <div 
+          className="fixed inset-0 z-[99999] w-screen h-screen bg-black overflow-hidden flex flex-col justify-between select-none"
+          onMouseMove={handleCinemaActivity}
+          onTouchStart={handleCinemaActivity}
+        >
+          {/* Main Video: Occupies 100% of available screen */}
+          <div className="relative w-full h-full flex-1 bg-black flex items-center justify-center overflow-hidden">
+            {activeStream?.type === 'mp4' ? (
+              <video
+                key={`${activeStream.url}-${keyReload}-cinema`}
+                src={activeStream.url}
+                controls
+                autoPlay
+                className="w-full h-full object-contain"
+              />
+            ) : (
+              <iframe
+                key={`${activeStream?.url}-${keyReload}-cinema`}
+                src={activeStream?.url || ''}
+                title={media.title}
+                allowFullScreen
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+                className="w-full h-full border-0"
+                referrerPolicy="origin"
+                loading="eager"
+              />
+            )}
+          </div>
+
+          {/* Floating Header Controls */}
+          <div 
+            className={`absolute top-0 inset-x-0 p-3 sm:p-5 bg-gradient-to-b from-black/95 via-black/70 to-transparent z-40 flex items-center justify-between transition-opacity duration-300 ${
+              showCinemaControls ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <span className="px-2.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-brand-500 text-white shadow-sm flex items-center gap-1">
+                <Layers className="w-3.5 h-3.5" />
+                Cinema Mode
+              </span>
+              <div className="text-white">
+                <h2 className="text-sm sm:text-base font-black truncate max-w-[200px] sm:max-w-md">
+                  {media.title}
+                </h2>
+                <p className="text-[11px] text-gray-300">
+                  {isTv ? `Season ${selectedSeasonNum} • Episode ${selectedEpisodeNum}` : 'Full Movie'} • <span className="text-brand-400 font-bold">{activeStream?.serverName}</span>
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 pointer-events-auto">
+              <button
+                onClick={() => setKeyReload((k) => k + 1)}
+                title="Reload Stream"
+                className="p-2 sm:px-3 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold backdrop-blur-md transition flex items-center gap-1.5"
+              >
+                <RotateCw className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Reload</span>
+              </button>
+
+              {nextStream && (
+                <button
+                  onClick={handleNextServer}
+                  title="Switch to Next Server"
+                  className="p-2 sm:px-3 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold backdrop-blur-md transition flex items-center gap-1.5"
+                >
+                  <Server className="w-3.5 h-3.5 text-brand-400" />
+                  <span className="hidden sm:inline">Next Server</span>
+                </button>
+              )}
+
+              <button
+                onClick={() => setIsCinemaMode(false)}
+                title="Exit Cinema Mode (Esc)"
+                className="px-3.5 py-2 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-xs font-black shadow-lg shadow-brand-500/40 transition flex items-center gap-1.5"
+              >
+                <X className="w-4 h-4" />
+                <span>Exit Cinema</span>
+                <span className="hidden sm:inline text-[10px] opacity-75 font-mono">(Esc)</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Floating Bottom Controls (Server selection + TV Episodes) */}
+          <div 
+            className={`absolute bottom-0 inset-x-0 p-3 sm:p-5 bg-gradient-to-t from-black/95 via-black/70 to-transparent z-40 transition-opacity duration-300 ${
+              showCinemaControls ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            }`}
+          >
+            <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 pointer-events-auto">
+              {/* Quick Server Chips */}
+              <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 py-1 no-scrollbar">
+                <span className="text-[11px] font-bold text-gray-400 uppercase shrink-0 mr-1 flex items-center gap-1">
+                  <Server className="w-3 h-3 text-brand-500" />
+                  Servers:
+                </span>
+                {currentStreams.map((s) => (
+                  <button
+                    key={s.id}
+                    onClick={() => {
+                      setSelectedServerId(s.id);
+                      setKeyReload((k) => k + 1);
+                    }}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-semibold shrink-0 transition ${
+                      selectedServerId === s.id
+                        ? 'bg-brand-500 text-white shadow-md'
+                        : 'bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white backdrop-blur-md'
+                    }`}
+                  >
+                    {s.serverName.replace(' (Fast HD)', '').replace(' / SuperEmbed', '')}
+                  </button>
+                ))}
+              </div>
+
+              {/* TV Series Episode Controls in Cinema Mode */}
+              {isTv && activeSeason && (
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    onClick={handlePrevEpisode}
+                    disabled={selectedEpisodeNum <= 1 && selectedSeasonNum <= 1}
+                    className="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 disabled:opacity-30 text-white text-xs font-semibold backdrop-blur-md transition"
+                  >
+                    Prev Ep
+                  </button>
+                  <span className="text-xs font-mono font-bold text-brand-400 px-2 py-0.5 rounded bg-black/60 border border-white/10">
+                    S{selectedSeasonNum} • E{selectedEpisodeNum}
+                  </span>
+                  <button
+                    onClick={handleNextEpisode}
+                    className="px-2.5 py-1 rounded-lg bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold shadow-md transition"
+                  >
+                    Next Ep
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
 
       {/* Instant Stream Switcher Quick Bar */}
       <div className="bg-gradient-to-r from-brand-950/70 via-dark-900 to-dark-900 border border-brand-500/30 rounded-2xl p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-lg">

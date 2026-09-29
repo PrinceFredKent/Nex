@@ -26,7 +26,33 @@ export function WatchlistProvider({ children }: { children: React.ReactNode }) {
       if (savedWatchlist) setWatchlist(JSON.parse(savedWatchlist));
 
       const savedHistory = localStorage.getItem('nex_history');
-      if (savedHistory) setHistory(JSON.parse(savedHistory));
+      if (savedHistory) {
+        const parsed = JSON.parse(savedHistory);
+        if (Array.isArray(parsed)) {
+          // Clean up any stale or corrupted history items where a movie was tagged with tv or episode
+          const sanitized: WatchHistoryItem[] = parsed.map((item: WatchHistoryItem) => {
+            const isMovie = 
+              item.type === 'movie' || 
+              item.mediaId?.startsWith('movie-') || 
+              (!item.mediaId?.startsWith('tv-') && item.type !== 'tv');
+            if (isMovie) {
+              return {
+                ...item,
+                type: 'movie',
+                episode: undefined,
+                season: undefined,
+              };
+            }
+            return {
+              ...item,
+              type: 'tv',
+              episode: item.episode || 1,
+              season: item.season || 1,
+            };
+          });
+          setHistory(sanitized);
+        }
+      }
     } catch (e) {
       console.error('Error loading watchlist from localStorage', e);
     } finally {

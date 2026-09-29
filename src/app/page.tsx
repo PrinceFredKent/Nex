@@ -9,10 +9,30 @@ export const revalidate = 0;
 export default async function HomePage() {
   const allMedia = await db.getAll();
 
-  const featured = allMedia.filter((m) => m.featured);
-  const heroItems = featured.length > 0 ? featured : allMedia.slice(0, 5);
+  // Top 6 Featured Movies/Shows:
+  // Select top 6 highest-rated blockbuster titles (rating >= 7.0 and featured priority)
+  const topFeatured = [...allMedia]
+    .filter((m) => m.featured || (m.rating && m.rating >= 7.0))
+    .sort((a, b) => {
+      const ratingDiff = (b.rating || 0) - (a.rating || 0);
+      if (ratingDiff !== 0) return ratingDiff;
+      return (b.views || 0) - (a.views || 0);
+    });
 
-  const youMightLike = allMedia.filter((m) => m.id !== heroItems[0]?.id).slice(0, 6);
+  const heroItems = topFeatured.slice(0, 6);
+
+  // If fewer than 6, backfill with next best titles
+  if (heroItems.length < 6) {
+    const existingHeroIds = new Set(heroItems.map((m) => m.id));
+    const backfill = [...allMedia]
+      .filter((m) => !existingHeroIds.has(m.id))
+      .sort((a, b) => (b.rating || 0) - (a.rating || 0))
+      .slice(0, 6 - heroItems.length);
+    heroItems.push(...backfill);
+  }
+
+  const heroIds = new Set(heroItems.map((m) => m.id));
+  const youMightLike = allMedia.filter((m) => !heroIds.has(m.id)).slice(0, 6);
 
   return (
     <div className="space-y-6">

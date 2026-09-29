@@ -30,7 +30,7 @@ function BrowseContent() {
   // Filters
   const currentType = searchParams.get('type') || 'all';
   const currentGenre = searchParams.get('genre') || 'All';
-  const currentSort = searchParams.get('sort') || 'views';
+  const currentSort = searchParams.get('sort') || 'newest_added';
   const currentSearch = searchParams.get('search') || '';
 
   const [searchTerm, setSearchTerm] = useState(currentSearch);
@@ -139,9 +139,10 @@ function BrowseContent() {
               onChange={(e) => updateParam('sort', e.target.value)}
               className="bg-slate-50 dark:bg-darkCard border border-slate-200 dark:border-white/10 text-xs font-semibold rounded-full px-3.5 py-1.5 text-gray-800 dark:text-gray-200 focus:outline-none focus:border-brand-500"
             >
+              <option value="newest_added">✨ Newest Added First</option>
               <option value="views">🔥 Most Popular</option>
               <option value="rating">⭐ Highest Rated</option>
-              <option value="newest">📅 Newest Release</option>
+              <option value="newest">📅 Release Date</option>
               <option value="title">🔤 Title A-Z</option>
             </select>
           </div>

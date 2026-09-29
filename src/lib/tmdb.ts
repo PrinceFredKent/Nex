@@ -177,8 +177,8 @@ export async function fetchFullTMDBDetails(tmdbId: number | string, type: MediaT
       seasons: seasons.length > 0 ? seasons : undefined,
       status: 'published',
       views: Math.floor(Math.random() * 500) + 50,
-      featured: false,
-      trending: false,
+      featured: Number((data.vote_average || 7.0).toFixed(1)) >= 7.0,
+      trending: Number((data.vote_average || 7.0).toFixed(1)) >= 7.5,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

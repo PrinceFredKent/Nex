@@ -293,6 +293,7 @@ function AdminContent() {
         backdropUrl: manualForm.backdropUrl.trim() || manualForm.posterUrl.trim() || defaultPoster,
         releaseDate: manualForm.releaseDate,
         rating: Number(manualForm.rating) || 8.0,
+        featured: (Number(manualForm.rating) || 8.0) >= 7.0,
         genres: genresList.length > 0 ? genresList : ['Action'],
         cast: [],
         status: 'published' as const,

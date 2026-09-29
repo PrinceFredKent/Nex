@@ -76,33 +76,36 @@ export default function Sidebar() {
             </h3>
 
             <div className="space-y-2.5">
-              {continueWatchingItems.map((item, idx) => (
-                <Link
-                  key={`${item.mediaId}-${idx}`}
-                  href={`/watch/${item.mediaId}`}
-                  className="flex items-center justify-between p-1 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 transition group"
-                >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <img
-                      src={item.posterUrl}
-                      alt={item.mediaTitle}
-                      className="w-10 h-8 object-cover rounded-lg shrink-0 shadow-sm"
-                    />
-                    <div className="min-w-0">
-                      <p className="text-xs font-bold text-gray-800 dark:text-gray-200 truncate group-hover:text-brand-500 transition">
-                        {item.mediaTitle}
-                      </p>
-                      <p className="text-[10px] text-gray-400 font-medium">
-                        EP {item.episode || 1}
-                      </p>
+              {continueWatchingItems.map((item, idx) => {
+                const isTv = (item.type === 'tv' || item.mediaId.startsWith('tv-')) && item.type !== 'movie' && !item.mediaId.startsWith('movie-');
+                return (
+                  <Link
+                    key={`${item.mediaId}-${idx}`}
+                    href={`/watch/${item.mediaId}`}
+                    className="flex items-center justify-between p-1 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 transition group"
+                  >
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <img
+                        src={item.posterUrl}
+                        alt={item.mediaTitle}
+                        className="w-10 h-8 object-cover rounded-lg shrink-0 shadow-sm"
+                      />
+                      <div className="min-w-0">
+                        <p className="text-xs font-bold text-gray-800 dark:text-gray-200 truncate group-hover:text-brand-500 transition">
+                          {item.mediaTitle}
+                        </p>
+                        <p className="text-[10px] text-gray-400 font-medium">
+                          {isTv ? `EP ${item.episode || 1}` : 'Movie'}
+                        </p>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="w-6 h-6 rounded-full bg-black dark:bg-white/20 text-white flex items-center justify-center shrink-0 group-hover:bg-brand-500 group-hover:scale-105 transition">
-                    <Play className="w-2.5 h-2.5 fill-white ml-0.5" />
-                  </div>
-                </Link>
-              ))}
+                    <div className="w-6 h-6 rounded-full bg-black dark:bg-white/20 text-white flex items-center justify-center shrink-0 group-hover:bg-brand-500 group-hover:scale-105 transition">
+                      <Play className="w-2.5 h-2.5 fill-white ml-0.5" />
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         )}

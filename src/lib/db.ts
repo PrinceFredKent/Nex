@@ -219,6 +219,9 @@ export const db = {
 
     if (query?.sort) {
       switch (query.sort) {
+        case 'newest_added':
+          results.sort((a, b) => new Date(b.createdAt || b.releaseDate || 0).getTime() - new Date(a.createdAt || a.releaseDate || 0).getTime());
+          break;
         case 'rating':
           results.sort((a, b) => b.rating - a.rating);
           break;
@@ -226,14 +229,18 @@ export const db = {
           results.sort((a, b) => b.views - a.views);
           break;
         case 'newest':
-          results.sort((a, b) => new Date(b.releaseDate || b.createdAt).getTime() - new Date(a.releaseDate || a.createdAt).getTime());
+        case 'release_date':
+          results.sort((a, b) => new Date(b.releaseDate || b.createdAt || 0).getTime() - new Date(a.releaseDate || a.createdAt || 0).getTime());
           break;
         case 'title':
           results.sort((a, b) => a.title.localeCompare(b.title));
           break;
         default:
-          results.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+          results.sort((a, b) => new Date(b.createdAt || b.releaseDate || 0).getTime() - new Date(a.createdAt || a.releaseDate || 0).getTime());
       }
+    } else {
+      // Default: arranged by newest added first
+      results.sort((a, b) => new Date(b.createdAt || b.releaseDate || 0).getTime() - new Date(a.createdAt || a.releaseDate || 0).getTime());
     }
 
     return results;
@@ -270,9 +277,13 @@ export const db = {
     const existingIndex = current.movies.findIndex(m => m.id === id || (item.tmdbId && m.tmdbId === item.tmdbId && m.type === item.type));
     const now = new Date().toISOString();
 
+    const numRating = typeof item.rating === 'number' ? item.rating : (parseFloat(String(item.rating)) || 0);
+    const shouldAutoFeature = numRating >= 7.0 || Boolean(item.featured);
+
     const newItem: MediaItem = {
       ...item,
       id,
+      featured: shouldAutoFeature,
       views: existingIndex >= 0 ? (current.movies[existingIndex].views || 0) : 0,
       createdAt: existingIndex >= 0 ? current.movies[existingIndex].createdAt : now,
       updatedAt: now,
