@@ -32,6 +32,7 @@ function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [isActivating, setIsActivating] = useState(false);
   const [activationSuccess, setActivationSuccess] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   // If already logged in, redirect
@@ -72,6 +73,7 @@ function LoginForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setNotice(null);
     setIsLoading(true);
 
     try {
@@ -79,10 +81,17 @@ function LoginForm() {
       if (result.error) {
         setError(result.error);
       } else {
-        router.push(next);
+        if (result.notice) {
+          setNotice(result.notice);
+          setTimeout(() => {
+            router.push(next);
+          }, 800);
+        } else {
+          router.push(next);
+        }
       }
     } catch (err: any) {
-      setError(err?.message || 'An unexpected error occurred');
+      setError(err?.message || 'An unexpected error occurred. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -128,6 +137,14 @@ function LoginForm() {
           <div className="mb-5 p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200/80 dark:border-emerald-500/30 text-emerald-700 dark:text-emerald-400 text-xs font-semibold flex items-center gap-2.5">
             <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
             <span>{activationSuccess}</span>
+          </div>
+        )}
+
+        {/* Notice Alert */}
+        {notice && (
+          <div className="mb-5 p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200/80 dark:border-amber-500/30 text-amber-700 dark:text-amber-400 text-xs font-semibold flex items-center gap-2.5">
+            <Sparkles className="w-4 h-4 text-amber-500 shrink-0" />
+            <span>{notice}</span>
           </div>
         )}
 

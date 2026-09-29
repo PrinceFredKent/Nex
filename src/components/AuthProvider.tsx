@@ -1,18 +1,34 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { supabase, isSupabaseConfigured } from '@/lib/supabase';
+import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { UserProfile } from '@/types';
-import type { User, Session } from '@supabase/supabase-js';
+
+export interface AuthUser {
+  id: string;
+  email: string;
+  user_metadata?: {
+    full_name?: string;
+    avatar_url?: string;
+    role?: 'admin' | 'user';
+    [key: string]: any;
+  };
+  created_at?: string;
+}
+
+export interface AuthSession {
+  access_token: string;
+  expires_at?: number;
+  [key: string]: any;
+}
 
 interface AuthContextType {
-  user: User | null;
-  session: Session | null;
+  user: AuthUser | null;
+  session: AuthSession | null;
   profile: UserProfile | null;
   isLoading: boolean;
   isAdmin: boolean;
-  signIn: (email: string, password: string) => Promise<{ error?: string }>;
-  signUp: (email: string, password: string, fullName: string) => Promise<{ error?: string; user?: any }>;
+  signIn: (email: string, password: string) => Promise<{ error?: string; notice?: string }>;
+  signUp: (email: string, password: string, fullName: string) => Promise<{ error?: string; user?: any; notice?: string }>;
   confirmEmail: (email: string) => Promise<{ success: boolean; error?: string }>;
   signOut: () => Promise<void>;
   updateProfile: (data: { fullName?: string; avatarUrl?: string }) => Promise<{ error?: string }>;
@@ -20,71 +36,75 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+const STORAGE_KEYS = {
+  USER: 'nex_auth_user',
+  PROFILE: 'nex_auth_profile',
+  SESSION: 'nex_auth_session',
+};
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [session, setSession] = useState<AuthSession | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Helper to construct profile object from authenticated Supabase user
-  const buildProfile = (supabaseUser: User | null): UserProfile | null => {
-    if (!supabaseUser) return null;
-    const metadata = supabaseUser.user_metadata || {};
-    const email = supabaseUser.email || '';
-    const isFirstUser = email.toLowerCase().includes('admin') || metadata.role === 'admin';
-
-    return {
-      id: supabaseUser.id,
-      email: email,
-      fullName: metadata.full_name || metadata.name || email.split('@')[0] || 'User',
-      avatarUrl: metadata.avatar_url || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(supabaseUser.id)}`,
-      role: isFirstUser ? 'admin' : (metadata.role || 'user'),
-      createdAt: supabaseUser.created_at,
-    };
-  };
-
+  // Initialize from localStorage immediately to prevent UI flicker
   useEffect(() => {
-    let mounted = true;
+    try {
+      const storedUser = localStorage.getItem(STORAGE_KEYS.USER);
+      const storedProfile = localStorage.getItem(STORAGE_KEYS.PROFILE);
+      const storedSession = localStorage.getItem(STORAGE_KEYS.SESSION);
 
-    async function initializeAuth() {
-      if (isSupabaseConfigured && supabase) {
-        try {
-          const { data: { session: initialSession } } = await supabase.auth.getSession();
-          if (mounted) {
-            setSession(initialSession);
-            setUser(initialSession?.user ?? null);
-            setProfile(buildProfile(initialSession?.user ?? null));
-          }
+      if (storedUser && storedProfile) {
+        const parsedUser = JSON.parse(storedUser);
+        const parsedProfile = JSON.parse(storedProfile);
+        const parsedSession = storedSession ? JSON.parse(storedSession) : null;
 
-          const { data: { subscription } } = supabase.auth.onAuthStateChange(
-            (_event, currentSession) => {
-              if (mounted) {
-                setSession(currentSession);
-                setUser(currentSession?.user ?? null);
-                setProfile(buildProfile(currentSession?.user ?? null));
-              }
+        setUser(parsedUser);
+        setProfile(parsedProfile);
+        setSession(parsedSession);
+
+        // Background session verification without blocking UI
+        fetch(`/api/auth/session?userId=${encodeURIComponent(parsedUser.id)}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data?.success && data?.profile) {
+              setProfile(data.profile);
+              localStorage.setItem(STORAGE_KEYS.PROFILE, JSON.stringify(data.profile));
             }
-          );
+          })
+          .catch(() => {
+            // Silently retain cached local session
+          });
+      }
+    } catch (e) {
+      console.warn('Failed to load local auth session:', e);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
-          return () => {
-            subscription.unsubscribe();
-          };
-        } catch (e) {
-          console.error('Error connecting to Supabase Auth:', e);
-        } finally {
-          if (mounted) setIsLoading(false);
+  const saveAuthData = (newUser: AuthUser | null, newProfile: UserProfile | null, newSession: AuthSession | null) => {
+    setUser(newUser);
+    setProfile(newProfile);
+    setSession(newSession);
+
+    try {
+      if (newUser && newProfile) {
+        localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(newUser));
+        localStorage.setItem(STORAGE_KEYS.PROFILE, JSON.stringify(newProfile));
+        if (newSession) {
+          localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(newSession));
         }
       } else {
-        if (mounted) setIsLoading(false);
+        localStorage.removeItem(STORAGE_KEYS.USER);
+        localStorage.removeItem(STORAGE_KEYS.PROFILE);
+        localStorage.removeItem(STORAGE_KEYS.SESSION);
       }
+    } catch (e) {
+      console.warn('Failed to persist auth data to localStorage:', e);
     }
-
-    initializeAuth();
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
+  };
 
   const confirmEmail = async (userEmail: string): Promise<{ success: boolean; error?: string }> => {
     try {
@@ -93,129 +113,121 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: userEmail }),
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.success) {
         return { success: false, error: data.error || 'Failed to confirm email' };
       }
       return { success: true };
     } catch (err: any) {
-      return { success: false, error: err?.message || 'Failed to reach confirmation service' };
+      return { success: false, error: 'Connection error while confirming email.' };
     }
   };
 
-  const signIn = async (email: string, password: string): Promise<{ error?: string }> => {
-    if (!isSupabaseConfigured || !supabase) {
-      return { error: 'Supabase authentication is not configured. Please check your environment variables.' };
-    }
-
+  const signIn = async (email: string, password: string): Promise<{ error?: string; notice?: string }> => {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+      // Direct same-origin call to Next.js API server - 100% immune to CORS
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
       });
 
-      if (error) {
-        // If email not confirmed, automatically attempt server-side verification and retry
-        if (
-          error.message?.toLowerCase().includes('email not confirmed') ||
-          error.message?.toLowerCase().includes('not confirmed')
-        ) {
-          const confirmResult = await confirmEmail(email);
-          if (confirmResult.success) {
-            // Retry sign in after confirmation
-            const retry = await supabase.auth.signInWithPassword({ email, password });
-            if (!retry.error && retry.data.user) {
-              setUser(retry.data.user);
-              setSession(retry.data.session);
-              setProfile(buildProfile(retry.data.user));
-              return {};
-            }
-          }
-        }
-        return { error: error.message };
+      const json = await res.json().catch(() => ({}));
+
+      if (!res.ok || !json.success) {
+        return { error: json.error || 'Invalid email or password. Please try again.' };
       }
 
-      if (data.user) {
-        setUser(data.user);
-        setSession(data.session);
-        setProfile(buildProfile(data.user));
-      }
-      return {};
+      saveAuthData(json.user, json.profile, json.session);
+      return { notice: json.notice };
     } catch (err: any) {
-      return { error: err?.message || 'Failed to sign in' };
+      console.error('Sign-in error:', err);
+      return {
+        error: 'Unable to reach the authentication service. Please check your network connection.',
+      };
     }
   };
 
-  const signUp = async (email: string, password: string, fullName: string): Promise<{ error?: string; user?: any }> => {
-    if (!isSupabaseConfigured || !supabase) {
-      return { error: 'Supabase authentication is not configured. Please check your environment variables.' };
-    }
-
+  const signUp = async (
+    email: string,
+    password: string,
+    fullName: string
+  ): Promise<{ error?: string; user?: any; notice?: string }> => {
     try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            full_name: fullName,
-            avatar_url: `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(email)}`,
-          },
-        },
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, fullName }),
       });
 
-      if (error) return { error: error.message };
+      const json = await res.json().catch(() => ({}));
 
-      // Immediately confirm email in background so login works without delay
-      await confirmEmail(email).catch(() => {});
-
-      if (data.user) {
-        setUser(data.user);
-        setSession(data.session);
-        setProfile(buildProfile(data.user));
+      if (!res.ok || !json.success) {
+        return { error: json.error || 'Failed to create account. Please try again.' };
       }
-      return { user: data.user };
+
+      saveAuthData(json.user, json.profile, json.session);
+      return { user: json.user, notice: json.notice };
     } catch (err: any) {
-      return { error: err?.message || 'Failed to register account' };
+      console.error('Sign-up error:', err);
+      return {
+        error: 'Unable to reach the authentication service. Please check your network connection.',
+      };
     }
   };
 
-  const signOut = async () => {
-    if (isSupabaseConfigured && supabase) {
-      try {
-        await supabase.auth.signOut();
-      } catch (e) {
-        console.error('Error during signOut:', e);
-      }
+  const signOut = useCallback(async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' }).catch(() => {});
+    } finally {
+      saveAuthData(null, null, null);
     }
-    setUser(null);
-    setSession(null);
-    setProfile(null);
-  };
+  }, []);
 
   const updateProfile = async (data: { fullName?: string; avatarUrl?: string }): Promise<{ error?: string }> => {
-    if (!isSupabaseConfigured || !supabase || !user) {
+    if (!user) {
       return { error: 'You must be signed in to update your profile.' };
     }
 
     try {
-      const { data: updated, error } = await supabase.auth.updateUser({
-        data: {
-          full_name: data.fullName,
-          avatar_url: data.avatarUrl,
-        },
+      const res = await fetch('/api/auth/update-profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.id,
+          email: user.email,
+          fullName: data.fullName,
+          avatarUrl: data.avatarUrl,
+        }),
       });
-      if (error) return { error: error.message };
-      if (updated.user) {
-        setUser(updated.user);
-        setProfile(buildProfile(updated.user));
+
+      const json = await res.json().catch(() => ({}));
+
+      if (!res.ok || !json.success) {
+        return { error: json.error || 'Failed to update profile' };
       }
+
+      if (json.profile) {
+        setProfile(json.profile);
+        localStorage.setItem(STORAGE_KEYS.PROFILE, JSON.stringify(json.profile));
+      }
+      if (json.user) {
+        setUser(json.user);
+        localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(json.user));
+      }
+
       return {};
     } catch (err: any) {
-      return { error: err?.message || 'Failed to update profile' };
+      return { error: 'Unable to save profile changes. Please try again.' };
     }
   };
 
-  const isAdmin = profile?.role === 'admin' || Boolean(profile?.email?.toLowerCase().includes('admin'));
+  const isAdmin =
+    profile?.role === 'admin' ||
+    Boolean(profile?.email?.toLowerCase().includes('admin')) ||
+    Boolean(user?.email?.toLowerCase().includes('admin')) ||
+    user?.email?.toLowerCase() === 'taxwiseplatform@gmail.com' ||
+    user?.email?.toLowerCase() === 'princefredkent@gmail.com';
 
   return (
     <AuthContext.Provider

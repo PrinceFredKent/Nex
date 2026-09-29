@@ -18,7 +18,7 @@ export default function Sidebar() {
     { label: 'Favorite', href: '/watchlist', icon: Heart, count: watchlist.length },
     ...(profile ? [{ label: 'Profile', href: '/profile', icon: User }] : [{ label: 'Sign In', href: '/auth/login', icon: User }]),
     { label: 'Admin Panel', href: '/admin', icon: Shield },
-    { label: 'Settings', href: '/admin?tab=settings', icon: Settings },
+    { label: 'Settings', href: isAdmin ? '/admin?tab=settings' : (profile ? '/profile' : '/auth/login'), icon: Settings },
   ];
 
   const continueWatchingItems = history.slice(0, 4);
@@ -38,7 +38,8 @@ export default function Sidebar() {
         {/* Navigation Menu */}
         <nav className="space-y-4">
           {navItems.map((item) => {
-            const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href.split('?')[0]));
+            const isHome = item.href === '/';
+            const isActive = isHome ? pathname === '/' : pathname === item.href || (item.href !== '/admin' && pathname.startsWith(item.href.split('?')[0]));
             const Icon = item.icon;
             return (
               <Link

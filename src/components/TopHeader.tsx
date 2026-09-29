@@ -25,11 +25,13 @@ function CategoryPills() {
   const currentGenre = searchParams.get('genre');
 
   const isSelectedCategory = (cat: typeof CATEGORIES[0]) => {
-    if (cat.label === 'Movies' && (currentType === 'movie' || pathname === '/')) return true;
+    if (pathname !== '/browse') return false;
+    if (cat.label === 'Movies' && currentType === 'movie') return true;
     if (cat.label === 'TV Series' && currentType === 'tv') return true;
     if (cat.label === 'Animation' && currentGenre === 'Animation') return true;
     if (cat.label === 'Thriller' && currentGenre === 'Thriller') return true;
     if (cat.label === 'Drama' && currentGenre === 'Drama') return true;
+    if (cat.label === 'More' && !currentType && !currentGenre) return true;
     return false;
   };
 
@@ -133,8 +135,8 @@ export default function TopHeader() {
 
           {/* Notification Bell */}
           <Link
-            href="/admin"
-            title="System & Notifications"
+            href={isAdmin ? "/admin" : "/watchlist"}
+            title={isAdmin ? "Admin & System Alerts" : "Saved Watchlist & Activity"}
             className="w-9 h-9 rounded-full bg-white dark:bg-darkCard flex items-center justify-center text-gray-600 dark:text-gray-200 hover:text-brand-500 dark:hover:text-brand-400 shadow-sm border border-slate-100/80 dark:border-white/10 transition shrink-0"
           >
             <Bell className="w-4 h-4" />

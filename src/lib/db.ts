@@ -218,9 +218,15 @@ export const db = {
       results = results.filter(m => m.type === query.type);
     }
 
-    if (query?.genre && query.genre !== 'all') {
-      const g = query.genre.toLowerCase();
-      results = results.filter(m => m.genres.some(genre => genre.toLowerCase().includes(g)));
+    if (query?.genre && query.genre !== 'all' && query.genre !== 'All') {
+      const g = query.genre.toLowerCase().trim();
+      results = results.filter(m => m.genres.some(genre => {
+        const itemGenre = genre.toLowerCase();
+        if (itemGenre.includes(g)) return true;
+        if ((g.includes('sci-fi') || g.includes('science fiction')) && (itemGenre.includes('sci-fi') || itemGenre.includes('science fiction'))) return true;
+        if ((g.includes('action') || g.includes('adventure')) && (itemGenre.includes('action') || itemGenre.includes('adventure'))) return true;
+        return false;
+      }));
     }
 
     if (query?.search && query.search.trim()) {
