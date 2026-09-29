@@ -23,12 +23,12 @@ export default async function HomePage() {
       {youMightLike.length > 0 && (
         <section className="space-y-4 pt-1">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-black text-gray-900 tracking-tight">
+            <h2 className="text-xl font-black text-gray-900 dark:text-white tracking-tight">
               You Might Like
             </h2>
             <Link
               href="/browse"
-              className="text-xs font-semibold text-gray-500 hover:text-brand-500 transition"
+              className="text-xs font-semibold text-gray-500 dark:text-gray-400 hover:text-brand-500 transition"
             >
               See all
             </Link>

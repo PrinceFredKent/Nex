@@ -83,16 +83,16 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto">
+    <div className="space-y-6 max-w-5xl mx-auto animate-fadeIn">
       {/* Top Banner Card */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-app border border-slate-100/80 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div className="bg-white dark:bg-[#141721] rounded-3xl p-6 sm:p-8 shadow-app border border-slate-100/80 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div className="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
           {/* Avatar */}
           <div className="relative">
             <img
               src={profile.avatarUrl || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(profile.email)}`}
               alt={profile.fullName}
-              className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl object-cover border-2 border-slate-100 shadow-md"
+              className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl object-cover border-2 border-slate-100 dark:border-white/10 shadow-md"
             />
             {isAdmin && (
               <span className="absolute -bottom-1 -right-1 bg-brand-500 text-white p-1.5 rounded-xl shadow-sm" title="Admin Account">
@@ -104,19 +104,19 @@ export default function ProfilePage() {
           {/* User Details */}
           <div>
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
-              <h1 className="text-2xl font-black text-gray-900 tracking-tight">
+              <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">
                 {profile.fullName}
               </h1>
               <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full ${
                 isAdmin 
                   ? 'bg-brand-500 text-white' 
-                  : 'bg-slate-100 text-gray-700'
+                  : 'bg-slate-100 dark:bg-white/10 text-gray-700 dark:text-gray-300'
               }`}>
                 {isAdmin ? 'ADMINISTRATOR' : 'VIP MEMBER'}
               </span>
             </div>
 
-            <p className="text-xs text-gray-500 mt-1 flex items-center justify-center sm:justify-start gap-1.5">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 flex items-center justify-center sm:justify-start gap-1.5">
               <Mail className="w-3.5 h-3.5 text-gray-400" />
               <span>{profile.email}</span>
             </p>
@@ -139,7 +139,7 @@ export default function ProfilePage() {
 
           <button
             onClick={handleSignOut}
-            className="flex-1 sm:flex-initial px-4 py-2.5 bg-slate-100 hover:bg-red-50 hover:text-red-600 text-gray-700 rounded-2xl text-xs font-bold transition flex items-center justify-center gap-1.5"
+            className="flex-1 sm:flex-initial px-4 py-2.5 bg-slate-100 dark:bg-white/10 hover:bg-red-50 dark:hover:bg-red-500/20 text-gray-700 dark:text-gray-200 hover:text-red-600 dark:hover:text-red-400 rounded-2xl text-xs font-bold transition flex items-center justify-center gap-1.5"
           >
             <LogOut className="w-4 h-4" />
             <span>Sign Out</span>
@@ -150,57 +150,57 @@ export default function ProfilePage() {
       {/* Stats Counter Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
         {/* Watchlist Count */}
-        <div className="bg-white rounded-3xl p-5 shadow-app border border-slate-100/80 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center shrink-0">
+        <div className="bg-white dark:bg-[#141721] rounded-3xl p-5 shadow-app border border-slate-100/80 dark:border-white/10 flex items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-rose-50 dark:bg-rose-500/10 text-rose-500 flex items-center justify-center shrink-0">
             <Heart className="w-6 h-6 fill-rose-500" />
           </div>
           <div>
-            <div className="text-2xl font-black text-gray-900">{watchlist.length}</div>
-            <div className="text-xs font-medium text-gray-500">Bookmarked Titles</div>
+            <div className="text-2xl font-black text-gray-900 dark:text-white">{watchlist.length}</div>
+            <div className="text-xs font-medium text-gray-500 dark:text-gray-400">Bookmarked Titles</div>
           </div>
         </div>
 
         {/* History Count */}
-        <div className="bg-white rounded-3xl p-5 shadow-app border border-slate-100/80 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center shrink-0">
+        <div className="bg-white dark:bg-[#141721] rounded-3xl p-5 shadow-app border border-slate-100/80 dark:border-white/10 flex items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0">
             <Clock className="w-6 h-6" />
           </div>
           <div>
-            <div className="text-2xl font-black text-gray-900">{history.length}</div>
-            <div className="text-xs font-medium text-gray-500">History Sessions</div>
+            <div className="text-2xl font-black text-gray-900 dark:text-white">{history.length}</div>
+            <div className="text-xs font-medium text-gray-500 dark:text-gray-400">History Sessions</div>
           </div>
         </div>
 
         {/* Account Status */}
-        <div className="col-span-2 sm:col-span-1 bg-white rounded-3xl p-5 shadow-app border border-slate-100/80 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-500 flex items-center justify-center shrink-0">
+        <div className="col-span-2 sm:col-span-1 bg-white dark:bg-[#141721] rounded-3xl p-5 shadow-app border border-slate-100/80 dark:border-white/10 flex items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0">
             <Sparkles className="w-6 h-6" />
           </div>
           <div>
-            <div className="text-2xl font-black text-gray-900">HD Multi-Server</div>
-            <div className="text-xs font-medium text-gray-500">Unlimited VIP Access</div>
+            <div className="text-2xl font-black text-gray-900 dark:text-white">HD Multi-Server</div>
+            <div className="text-xs font-medium text-gray-500 dark:text-gray-400">Unlimited VIP Access</div>
           </div>
         </div>
       </div>
 
       {/* Profile Tabs */}
-      <div className="flex items-center gap-2 border-b border-slate-200/80 pb-3">
+      <div className="flex items-center gap-2 border-b border-slate-200/80 dark:border-white/10 pb-3">
         <button
           onClick={() => setActiveTab('overview')}
-          className={`px-4 py-2 rounded-full text-xs font-bold transition ${
+          className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
             activeTab === 'overview'
               ? 'bg-brand-500 text-white shadow-sm'
-              : 'bg-white text-gray-600 hover:text-gray-900'
+              : 'bg-white dark:bg-[#141721] text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
           }`}
         >
           Watch Activity
         </button>
         <button
           onClick={() => setActiveTab('settings')}
-          className={`px-4 py-2 rounded-full text-xs font-bold transition ${
+          className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
             activeTab === 'settings'
               ? 'bg-brand-500 text-white shadow-sm'
-              : 'bg-white text-gray-600 hover:text-gray-900'
+              : 'bg-white dark:bg-[#141721] text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
           }`}
         >
           Account Settings
@@ -209,13 +209,13 @@ export default function ProfilePage() {
 
       {/* Tab: Overview / Watch Activity */}
       {activeTab === 'overview' && (
-        <div className="space-y-6">
+        <div className="space-y-6 animate-fadeIn">
           {/* Watchlist Section */}
-          <div className="bg-white rounded-3xl p-6 shadow-app border border-slate-100/80 space-y-4">
+          <div className="bg-white dark:bg-[#141721] rounded-3xl p-6 shadow-app border border-slate-100/80 dark:border-white/10 space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Heart className="w-4 h-4 text-brand-500" />
-                <h2 className="text-sm font-bold text-gray-900 uppercase tracking-wider">
+                <h2 className="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">
                   My Favorite Watchlist ({watchlist.length})
                 </h2>
               </div>
@@ -242,11 +242,11 @@ export default function ProfilePage() {
           </div>
 
           {/* Continue Watching Section */}
-          <div className="bg-white rounded-3xl p-6 shadow-app border border-slate-100/80 space-y-4">
+          <div className="bg-white dark:bg-[#141721] rounded-3xl p-6 shadow-app border border-slate-100/80 dark:border-white/10 space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-brand-500" />
-                <h2 className="text-sm font-bold text-gray-900 uppercase tracking-wider">
+                <h2 className="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">
                   Recent Watch History ({history.length})
                 </h2>
               </div>
@@ -266,7 +266,7 @@ export default function ProfilePage() {
                 No recent watch history recorded. Start streaming to track your progress!
               </div>
             ) : (
-              <div className="divide-y divide-slate-100">
+              <div className="divide-y divide-slate-100 dark:divide-white/5">
                 {history.slice(0, 5).map((item) => (
                   <div key={item.mediaId} className="py-3 flex items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
@@ -276,8 +276,8 @@ export default function ProfilePage() {
                         className="w-12 h-16 rounded-xl object-cover"
                       />
                       <div>
-                        <div className="text-xs font-bold text-gray-900">{item.mediaTitle}</div>
-                        <div className="text-[11px] text-gray-500">
+                        <div className="text-xs font-bold text-gray-900 dark:text-white">{item.mediaTitle}</div>
+                        <div className="text-[11px] text-gray-500 dark:text-gray-400">
                           {item.type === 'tv' ? `Season ${item.season || 1} • Episode ${item.episode || 1}` : 'Movie'}
                         </div>
                         <div className="text-[10px] text-gray-400 mt-0.5">
@@ -287,7 +287,7 @@ export default function ProfilePage() {
                     </div>
                     <Link
                       href={`/watch/${item.mediaId}`}
-                      className="px-3.5 py-1.5 bg-brand-500/10 text-brand-500 hover:bg-brand-500 hover:text-white rounded-xl text-xs font-bold transition"
+                      className="px-3.5 py-1.5 bg-brand-500/10 text-brand-500 hover:bg-brand-500 hover:text-white rounded-xl text-xs font-bold transition shadow-sm"
                     >
                       Resume
                     </Link>
@@ -301,8 +301,8 @@ export default function ProfilePage() {
 
       {/* Tab: Settings */}
       {activeTab === 'settings' && (
-        <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-app border border-slate-100/80 max-w-xl">
-          <h2 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+        <div className="bg-white dark:bg-[#141721] rounded-3xl p-6 sm:p-8 shadow-app border border-slate-100/80 dark:border-white/10 max-w-xl animate-fadeIn">
+          <h2 className="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider mb-4 flex items-center gap-2">
             <Settings className="w-4 h-4 text-brand-500" />
             <span>Update Account Profile</span>
           </h2>
@@ -310,8 +310,8 @@ export default function ProfilePage() {
           {notification && (
             <div className={`mb-6 p-4 rounded-2xl text-xs font-medium flex items-center gap-2.5 ${
               notification.type === 'success'
-                ? 'bg-emerald-50 border border-emerald-200 text-emerald-700'
-                : 'bg-red-50 border border-red-200 text-red-600'
+                ? 'bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400'
+                : 'bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-600 dark:text-red-400'
             }`}>
               {notification.type === 'success' ? (
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
@@ -324,7 +324,7 @@ export default function ProfilePage() {
 
           <form onSubmit={handleUpdateProfile} className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1.5">
+              <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">
                 Full Display Name
               </label>
               <input
@@ -332,12 +332,12 @@ export default function ProfilePage() {
                 required
                 value={nameInput}
                 onChange={(e) => setNameInput(e.target.value)}
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm font-medium text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition"
+                className="w-full px-4 py-3 bg-slate-50 dark:bg-[#0c0e14] border border-slate-200 dark:border-white/10 rounded-2xl text-xs sm:text-sm font-medium text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1.5">
+              <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">
                 Avatar Image URL (Optional)
               </label>
               <input
@@ -345,7 +345,7 @@ export default function ProfilePage() {
                 value={avatarUrlInput}
                 onChange={(e) => setAvatarUrlInput(e.target.value)}
                 placeholder="https://..."
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm font-medium text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition"
+                className="w-full px-4 py-3 bg-slate-50 dark:bg-[#0c0e14] border border-slate-200 dark:border-white/10 rounded-2xl text-xs sm:text-sm font-medium text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition"
               />
             </div>
 
@@ -366,12 +366,12 @@ export default function ProfilePage() {
           </form>
 
           {/* App Version Info Card */}
-          <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+          <div className="pt-4 border-t border-slate-100 dark:border-white/10 flex items-center justify-between text-xs mt-6">
             <div>
-              <p className="font-bold text-gray-800">System Platform</p>
+              <p className="font-bold text-gray-800 dark:text-gray-200">System Platform</p>
               <p className="text-[11px] text-gray-400">Nex High-Performance Streaming Platform</p>
             </div>
-            <span className="font-mono font-bold bg-slate-100 text-gray-700 px-3 py-1 rounded-full border border-slate-200">
+            <span className="font-mono font-bold bg-slate-100 dark:bg-white/10 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full border border-slate-200 dark:border-white/10">
               Nex 1.2
             </span>
           </div>

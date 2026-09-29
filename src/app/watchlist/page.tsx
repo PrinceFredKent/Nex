@@ -11,37 +11,37 @@ export default function WatchlistPage() {
   const [activeTab, setActiveTab] = useState<'saved' | 'history'>('saved');
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fadeIn">
       {/* Header */}
-      <div className="bg-white rounded-3xl p-6 shadow-app border border-slate-100/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white dark:bg-[#141721] rounded-3xl p-6 shadow-app border border-slate-100/80 dark:border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-gray-900 tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-2">
             <Bookmark className="w-6 h-6 text-brand-500" />
             <span>My Favorite Hub</span>
           </h1>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
             Your saved watchlist and continue watching history
           </p>
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-full">
+        <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-white/10 p-1 rounded-full">
           <button
             onClick={() => setActiveTab('saved')}
-            className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${
+            className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
               activeTab === 'saved'
                 ? 'bg-brand-500 text-white shadow-sm'
-                : 'text-gray-600 hover:text-gray-950'
+                : 'text-gray-600 dark:text-gray-300 hover:text-gray-950 dark:hover:text-white'
             }`}
           >
             Saved Favorites ({watchlist.length})
           </button>
           <button
             onClick={() => setActiveTab('history')}
-            className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${
+            className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
               activeTab === 'history'
                 ? 'bg-brand-500 text-white shadow-sm'
-                : 'text-gray-600 hover:text-gray-950'
+                : 'text-gray-600 dark:text-gray-300 hover:text-gray-950 dark:hover:text-white'
             }`}
           >
             History ({history.length})
@@ -51,12 +51,12 @@ export default function WatchlistPage() {
 
       {/* Tab 1: Saved Watchlist */}
       {activeTab === 'saved' && (
-        <div>
+        <div className="animate-fadeIn">
           {watchlist.length === 0 ? (
-            <div className="py-20 text-center bg-white rounded-3xl p-8 border border-slate-100/80 shadow-app space-y-3">
+            <div className="py-20 text-center bg-white dark:bg-[#141721] rounded-3xl p-8 border border-slate-100/80 dark:border-white/10 shadow-app space-y-3">
               <Bookmark className="w-10 h-10 mx-auto text-gray-400" />
-              <h3 className="text-base font-bold text-gray-900">Your Watchlist is empty</h3>
-              <p className="text-xs text-gray-500 max-w-sm mx-auto">
+              <h3 className="text-base font-bold text-gray-900 dark:text-white">Your Watchlist is empty</h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400 max-w-sm mx-auto">
                 Explore movies and series, and click the bookmark button to save them here.
               </p>
               <Link
@@ -78,12 +78,12 @@ export default function WatchlistPage() {
 
       {/* Tab 2: History */}
       {activeTab === 'history' && (
-        <div className="space-y-4">
+        <div className="space-y-4 animate-fadeIn">
           {history.length > 0 && (
             <div className="flex justify-end">
               <button
                 onClick={clearHistory}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-xs font-semibold text-red-500 hover:bg-red-50 border border-slate-200 transition shadow-sm"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-[#141721] text-xs font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 border border-slate-200 dark:border-white/10 transition shadow-sm"
               >
                 <Trash2 className="w-3.5 h-3.5" />
                 <span>Clear History</span>
@@ -92,10 +92,10 @@ export default function WatchlistPage() {
           )}
 
           {history.length === 0 ? (
-            <div className="py-20 text-center bg-white rounded-3xl p-8 border border-slate-100/80 shadow-app space-y-2">
+            <div className="py-20 text-center bg-white dark:bg-[#141721] rounded-3xl p-8 border border-slate-100/80 dark:border-white/10 shadow-app space-y-2">
               <Clock className="w-10 h-10 mx-auto text-gray-400" />
-              <h3 className="text-base font-bold text-gray-900">No viewing history yet</h3>
-              <p className="text-xs text-gray-500">
+              <h3 className="text-base font-bold text-gray-900 dark:text-white">No viewing history yet</h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
                 Titles you watch will automatically show up here.
               </p>
             </div>
@@ -104,7 +104,7 @@ export default function WatchlistPage() {
               {history.map((item, idx) => (
                 <div
                   key={`${item.mediaId}-${idx}`}
-                  className="flex items-center gap-3.5 p-3 rounded-2xl bg-white border border-slate-100/80 shadow-sm hover:shadow-md transition group"
+                  className="flex items-center gap-3.5 p-3 rounded-2xl bg-white dark:bg-[#141721] border border-slate-100/80 dark:border-white/10 shadow-sm hover:shadow-md transition group"
                 >
                   <img
                     src={item.posterUrl}
@@ -112,10 +112,10 @@ export default function WatchlistPage() {
                     className="w-14 h-20 object-cover rounded-xl shadow-sm shrink-0"
                   />
                   <div className="flex-1 min-w-0">
-                    <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-100 text-gray-700">
+                    <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-100 dark:bg-white/10 text-gray-700 dark:text-gray-300">
                       {item.type}
                     </span>
-                    <h4 className="text-gray-900 font-bold text-sm truncate mt-1 group-hover:text-brand-500 transition">
+                    <h4 className="text-gray-900 dark:text-white font-bold text-sm truncate mt-1 group-hover:text-brand-500 transition">
                       {item.mediaTitle}
                     </h4>
                     {item.type === 'tv' && (
@@ -125,7 +125,7 @@ export default function WatchlistPage() {
                     )}
                     <Link
                       href={`/watch/${item.mediaId}`}
-                      className="inline-flex items-center gap-1 text-xs font-bold text-white bg-brand-500 hover:bg-brand-600 px-3 py-1 rounded-full mt-2 transition"
+                      className="inline-flex items-center gap-1 text-xs font-bold text-white bg-brand-500 hover:bg-brand-600 px-3 py-1 rounded-full mt-2 transition shadow-sm"
                     >
                       <Play className="w-3 h-3 fill-white" />
                       <span>Resume</span>

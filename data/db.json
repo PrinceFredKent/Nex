@@ -1,155 +1,6 @@
 {
   "movies": [
     {
-      "id": "movie-1288445",
-      "tmdbId": 1288445,
-      "imdbId": "tt32338669",
-      "title": "Mutiny",
-      "originalTitle": "Mutiny",
-      "type": "movie",
-      "overview": "After witnessing his billionaire boss' murder and being framed for the crime, Cole Reed boards a cargo ship on a one-man crusade to avenge his boss' death only to discover an international conspiracy.",
-      "tagline": "There's blood in the water.",
-      "posterUrl": "https://image.tmdb.org/t/p/w500/pu2VxGlpGwffOx292w18b1tv96j.jpg",
-      "backdropUrl": "https://image.tmdb.org/t/p/original/e2QAGrEmbpmZpMymDRkDisJkvg9.jpg",
-      "releaseDate": "2026-08-19",
-      "rating": 7.3,
-      "runtime": 96,
-      "genres": [
-        "Action",
-        "Thriller"
-      ],
-      "cast": [
-        {
-          "id": 976,
-          "name": "Jason Statham",
-          "character": "Cole Reed",
-          "profileUrl": "https://image.tmdb.org/t/p/w342/8l6lmrmKFDvhDjMJPj6tBpJdhaA.jpg"
-        },
-        {
-          "id": 82809,
-          "name": "Annabelle Wallis",
-          "character": "Angie Ellis",
-          "profileUrl": "https://image.tmdb.org/t/p/w342/2ZmO2Zz9TcR0rmSJHOkivcu0heR.jpg"
-        },
-        {
-          "id": 141876,
-          "name": "Roland Møller",
-          "character": "Captain Marko Madsen",
-          "profileUrl": "https://image.tmdb.org/t/p/w342/bF7wrJ5mrIhSwyi6ylhyQWj9BoN.jpg"
-        },
-        {
-          "id": 178622,
-          "name": "Ramon Tikaram",
-          "character": "Tibu Campallo",
-          "profileUrl": "https://image.tmdb.org/t/p/w342/wtBLiI8tzeqPLMB9uswkyFhChva.jpg"
-        },
-        {
-          "id": 1156305,
-          "name": "Arnas Fedaravičius",
-          "character": "Mateo Pineda",
-          "profileUrl": "https://image.tmdb.org/t/p/w342/7WfcGugvkuPqEzu0cUJBeJPt1lD.jpg"
-        },
-        {
-          "id": 1033691,
-          "name": "Jason Wong",
-          "character": "Taran",
-          "profileUrl": "https://image.tmdb.org/t/p/w342/tt3D1PAoB8Yf4jPCovnhlP4pvL3.jpg"
-        },
-        {
-          "id": 76215,
-          "name": "Adrian Lester",
-          "character": "Captain Adam Spencer",
-          "profileUrl": "https://image.tmdb.org/t/p/w342/xyRB9aykTFtI42Ce8xFKZDCsHYd.jpg"
-        },
-        {
-          "id": 2223751,
-          "name": "Chaneil Kular",
-          "character": "Kameron Campallo",
-          "profileUrl": "https://image.tmdb.org/t/p/w342/b6TmM2wcVntDMJGZWQM3ftshhIi.jpg"
-        },
-        {
-          "id": 1712829,
-          "name": "Andrew John Tait",
-          "character": "BK Lobby Businessman",
-          "profileUrl": "https://image.tmdb.org/t/p/w342/zwRwArmNyMTjXTJQopegK0kL439.jpg"
-        },
-        {
-          "id": 1917917,
-          "name": "Simon Kluth",
-          "character": "Jaran Daniles",
-          "profileUrl": "https://image.tmdb.org/t/p/w342/tk4Iwjm5z3G4bQRebSOpGopx6f0.jpg"
-        }
-      ],
-      "director": "Jean-François Richet",
-      "trailerKey": "c38ogNyQe3g",
-      "trailerUrl": "https://www.youtube.com/watch?v=c38ogNyQe3g",
-      "featured": false,
-      "trending": false,
-      "status": "published",
-      "views": 1,
-      "createdAt": "2026-09-28T16:25:25.119889+00:00",
-      "updatedAt": "2026-09-28T18:51:19.639+00:00",
-      "streams": [
-        {
-          "id": "vidlink-1288445-0-0",
-          "url": "https://vidlink.pro/movie/1288445?primaryColor=e50914&autoplay=false",
-          "type": "embed",
-          "quality": "1080p HD",
-          "isWorking": true,
-          "serverName": "VidLink (Ultra Fast HD)"
-        },
-        {
-          "id": "vidsrc-xyz-1288445-0-0",
-          "url": "https://vidsrc.xyz/embed/movie?tmdb=1288445",
-          "type": "embed",
-          "quality": "1080p",
-          "isWorking": true,
-          "serverName": "VidSrc Alpha (Multi-Sub)"
-        },
-        {
-          "id": "vidsrc-cc-1288445-0-0",
-          "url": "https://vidsrc.cc/v2/embed/movie/1288445",
-          "type": "embed",
-          "quality": "1080p HD",
-          "isWorking": true,
-          "serverName": "VidSrc VIP (Ad-Reduced)"
-        },
-        {
-          "id": "superembed-1288445-0-0",
-          "url": "https://multiembed.mov/?video_id=1288445&tmdb=1",
-          "type": "embed",
-          "quality": "Auto / 4K",
-          "isWorking": true,
-          "serverName": "SuperEmbed / MultiStream"
-        },
-        {
-          "id": "autoembed-1288445-0-0",
-          "url": "https://player.autoembed.cc/embed/movie/1288445",
-          "type": "embed",
-          "quality": "1080p",
-          "isWorking": true,
-          "serverName": "AutoEmbed Global"
-        },
-        {
-          "id": "2embed-1288445-0-0",
-          "url": "https://www.2embed.cc/embed/1288445",
-          "type": "embed",
-          "quality": "720p/1080p",
-          "isWorking": true,
-          "serverName": "2Embed Server"
-        },
-        {
-          "id": "smashystream-1288445-0-0",
-          "url": "https://embed.smashystream.com/playere.php?tmdb=1288445",
-          "type": "embed",
-          "quality": "1080p",
-          "isWorking": true,
-          "serverName": "SmashyStream Fast"
-        }
-      ],
-      "seasons": []
-    },
-    {
       "id": "tv-86831",
       "tmdbId": 86831,
       "imdbId": "tt9561862",
@@ -3773,6 +3624,155 @@
         {
           "id": "smashystream-1285959-0-0",
           "url": "https://embed.smashystream.com/playere.php?tmdb=1285959",
+          "type": "embed",
+          "quality": "1080p",
+          "isWorking": true,
+          "serverName": "SmashyStream Fast"
+        }
+      ],
+      "seasons": []
+    },
+    {
+      "id": "movie-1288445",
+      "tmdbId": 1288445,
+      "imdbId": "tt32338669",
+      "title": "Mutiny",
+      "originalTitle": "Mutiny",
+      "type": "movie",
+      "overview": "After witnessing his billionaire boss' murder and being framed for the crime, Cole Reed boards a cargo ship on a one-man crusade to avenge his boss' death only to discover an international conspiracy.",
+      "tagline": "There's blood in the water.",
+      "posterUrl": "https://image.tmdb.org/t/p/w500/pu2VxGlpGwffOx292w18b1tv96j.jpg",
+      "backdropUrl": "https://image.tmdb.org/t/p/original/e2QAGrEmbpmZpMymDRkDisJkvg9.jpg",
+      "releaseDate": "2026-08-19",
+      "rating": 7.3,
+      "runtime": 96,
+      "genres": [
+        "Action",
+        "Thriller"
+      ],
+      "cast": [
+        {
+          "id": 976,
+          "name": "Jason Statham",
+          "character": "Cole Reed",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/8l6lmrmKFDvhDjMJPj6tBpJdhaA.jpg"
+        },
+        {
+          "id": 82809,
+          "name": "Annabelle Wallis",
+          "character": "Angie Ellis",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/2ZmO2Zz9TcR0rmSJHOkivcu0heR.jpg"
+        },
+        {
+          "id": 141876,
+          "name": "Roland Møller",
+          "character": "Captain Marko Madsen",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/bF7wrJ5mrIhSwyi6ylhyQWj9BoN.jpg"
+        },
+        {
+          "id": 178622,
+          "name": "Ramon Tikaram",
+          "character": "Tibu Campallo",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/wtBLiI8tzeqPLMB9uswkyFhChva.jpg"
+        },
+        {
+          "id": 1156305,
+          "name": "Arnas Fedaravičius",
+          "character": "Mateo Pineda",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/7WfcGugvkuPqEzu0cUJBeJPt1lD.jpg"
+        },
+        {
+          "id": 1033691,
+          "name": "Jason Wong",
+          "character": "Taran",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/tt3D1PAoB8Yf4jPCovnhlP4pvL3.jpg"
+        },
+        {
+          "id": 76215,
+          "name": "Adrian Lester",
+          "character": "Captain Adam Spencer",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/xyRB9aykTFtI42Ce8xFKZDCsHYd.jpg"
+        },
+        {
+          "id": 2223751,
+          "name": "Chaneil Kular",
+          "character": "Kameron Campallo",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/b6TmM2wcVntDMJGZWQM3ftshhIi.jpg"
+        },
+        {
+          "id": 1712829,
+          "name": "Andrew John Tait",
+          "character": "BK Lobby Businessman",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/zwRwArmNyMTjXTJQopegK0kL439.jpg"
+        },
+        {
+          "id": 1917917,
+          "name": "Simon Kluth",
+          "character": "Jaran Daniles",
+          "profileUrl": "https://image.tmdb.org/t/p/w342/tk4Iwjm5z3G4bQRebSOpGopx6f0.jpg"
+        }
+      ],
+      "director": "Jean-François Richet",
+      "trailerKey": "c38ogNyQe3g",
+      "trailerUrl": "https://www.youtube.com/watch?v=c38ogNyQe3g",
+      "featured": false,
+      "trending": false,
+      "status": "published",
+      "views": 2,
+      "createdAt": "2026-09-28T16:25:25.119889+00:00",
+      "updatedAt": "2026-09-29T08:06:48.203+00:00",
+      "streams": [
+        {
+          "id": "vidlink-1288445-0-0",
+          "url": "https://vidlink.pro/movie/1288445?primaryColor=e50914&autoplay=false",
+          "type": "embed",
+          "quality": "1080p HD",
+          "isWorking": true,
+          "serverName": "VidLink (Ultra Fast HD)"
+        },
+        {
+          "id": "vidsrc-xyz-1288445-0-0",
+          "url": "https://vidsrc.xyz/embed/movie?tmdb=1288445",
+          "type": "embed",
+          "quality": "1080p",
+          "isWorking": true,
+          "serverName": "VidSrc Alpha (Multi-Sub)"
+        },
+        {
+          "id": "vidsrc-cc-1288445-0-0",
+          "url": "https://vidsrc.cc/v2/embed/movie/1288445",
+          "type": "embed",
+          "quality": "1080p HD",
+          "isWorking": true,
+          "serverName": "VidSrc VIP (Ad-Reduced)"
+        },
+        {
+          "id": "superembed-1288445-0-0",
+          "url": "https://multiembed.mov/?video_id=1288445&tmdb=1",
+          "type": "embed",
+          "quality": "Auto / 4K",
+          "isWorking": true,
+          "serverName": "SuperEmbed / MultiStream"
+        },
+        {
+          "id": "autoembed-1288445-0-0",
+          "url": "https://player.autoembed.cc/embed/movie/1288445",
+          "type": "embed",
+          "quality": "1080p",
+          "isWorking": true,
+          "serverName": "AutoEmbed Global"
+        },
+        {
+          "id": "2embed-1288445-0-0",
+          "url": "https://www.2embed.cc/embed/1288445",
+          "type": "embed",
+          "quality": "720p/1080p",
+          "isWorking": true,
+          "serverName": "2Embed Server"
+        },
+        {
+          "id": "smashystream-1288445-0-0",
+          "url": "https://embed.smashystream.com/playere.php?tmdb=1288445",
           "type": "embed",
           "quality": "1080p",
           "isWorking": true,

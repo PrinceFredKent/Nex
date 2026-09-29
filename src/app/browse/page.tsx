@@ -78,13 +78,13 @@ function BrowseContent() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-3xl p-6 shadow-app border border-slate-100/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white dark:bg-[#141721] rounded-3xl p-6 shadow-app border border-slate-100/80 dark:border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-gray-900 tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-2">
             <SlidersHorizontal className="w-6 h-6 text-brand-500" />
             <span>Explore Streaming Catalog</span>
           </h1>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
             Browse all full movies, TV shows, and series
           </p>
         </div>
@@ -96,17 +96,17 @@ function BrowseContent() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search titles..."
-            className="w-full bg-slate-50 border border-slate-200 rounded-full px-4 py-2 pl-9 text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:border-brand-500"
+            className="w-full bg-slate-50 dark:bg-darkCard border border-slate-200 dark:border-white/10 rounded-full px-4 py-2 pl-9 text-xs text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:border-brand-500"
           />
           <Search className="w-4 h-4 text-gray-400 absolute left-3 top-2.5" />
         </form>
       </div>
 
       {/* Filter Controls */}
-      <div className="bg-white rounded-3xl p-5 shadow-app border border-slate-100/80 space-y-4">
+      <div className="bg-white dark:bg-[#141721] rounded-3xl p-5 shadow-app border border-slate-100/80 dark:border-white/10 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           {/* Type Switcher */}
-          <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-full">
+          <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-white/10 p-1 rounded-full">
             {[
               { label: 'All', value: 'all' },
               { label: 'Movies', value: 'movie', icon: Film },
@@ -121,7 +121,7 @@ function BrowseContent() {
                   className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold transition ${
                     isSelected
                       ? 'bg-brand-500 text-white shadow-sm'
-                      : 'text-gray-600 hover:text-gray-950'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-950 dark:hover:text-white'
                   }`}
                 >
                   {Icon && <Icon className="w-3.5 h-3.5" />}
@@ -137,7 +137,7 @@ function BrowseContent() {
             <select
               value={currentSort}
               onChange={(e) => updateParam('sort', e.target.value)}
-              className="bg-slate-50 border border-slate-200 text-xs font-semibold rounded-full px-3.5 py-1.5 text-gray-800 focus:outline-none focus:border-brand-500"
+              className="bg-slate-50 dark:bg-darkCard border border-slate-200 dark:border-white/10 text-xs font-semibold rounded-full px-3.5 py-1.5 text-gray-800 dark:text-gray-200 focus:outline-none focus:border-brand-500"
             >
               <option value="views">🔥 Most Popular</option>
               <option value="rating">⭐ Highest Rated</option>
@@ -157,8 +157,8 @@ function BrowseContent() {
                 onClick={() => updateParam('genre', g)}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition ${
                   isSelected
-                    ? 'bg-gray-900 text-white shadow-sm'
-                    : 'bg-slate-100 text-gray-600 hover:text-gray-950'
+                    ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-950 shadow-sm'
+                    : 'bg-slate-100 dark:bg-white/10 text-gray-600 dark:text-gray-300 hover:text-gray-950 dark:hover:text-white'
                 }`}
               >
                 {g}
