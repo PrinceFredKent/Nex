@@ -24,8 +24,11 @@ import {
 } from 'lucide-react';
 import { MediaItem, MediaType, StreamSource, SystemSettings } from '@/types';
 import Link from 'next/link';
+import ConfirmationModal, { ModalVariant } from '@/components/ConfirmationModal';
+import { useToast } from '@/components/ToastProvider';
 
 function AdminContent() {
+  const toast = useToast();
   const searchParams = useSearchParams();
   const initialTab = (searchParams.get('tab') as any) || 'search';
 
@@ -34,6 +37,23 @@ function AdminContent() {
       ? initialTab
       : 'search'
   );
+
+  // Custom Confirmation Alert Modal State
+  const [confirmModal, setConfirmModal] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: React.ReactNode;
+    confirmText?: string;
+    cancelText?: string;
+    variant?: ModalVariant;
+    isLoading?: boolean;
+    onConfirm: () => Promise<void> | void;
+  }>({
+    isOpen: false,
+    title: '',
+    message: '',
+    onConfirm: () => {},
+  });
 
   // Search Ingestion State
   const [searchQuery, setSearchQuery] = useState('');
@@ -83,6 +103,11 @@ function AdminContent() {
 
   const showNotification = (type: 'success' | 'error', message: string) => {
     setNotification({ type, message });
+    if (type === 'success') {
+      toast.success(message);
+    } else {
+      toast.error(message);
+    }
     setTimeout(() => setNotification(null), 5000);
   };
 
@@ -208,39 +233,73 @@ function AdminContent() {
     }
   };
 
-  // Delete media
-  const handleDelete = async (id: string, title: string) => {
-    if (!confirm(`Are you sure you want to delete "${title}"?`)) return;
-    try {
-      const res = await fetch(`/api/movies/${id}`, { method: 'DELETE' });
-      if (res.ok) {
-        setLibraryItems((prev) => prev.filter((m) => m.id !== id));
-        loadStats();
-        showNotification('success', `Deleted "${title}"`);
-      }
-    } catch (e) {
-      showNotification('error', 'Failed to delete item');
-    }
+  // Delete media with custom confirmation modal
+  const handleDelete = (id: string, title: string) => {
+    setConfirmModal({
+      isOpen: true,
+      title: 'Delete Title',
+      variant: 'danger',
+      confirmText: 'Delete Title',
+      cancelText: 'Cancel',
+      message: (
+        <span>
+          Are you sure you want to delete <strong className="text-gray-900 dark:text-white font-bold">&quot;{title}&quot;</strong> from the catalog? This will remove all streaming streams and metadata.
+        </span>
+      ),
+      onConfirm: async () => {
+        setConfirmModal((prev) => ({ ...prev, isLoading: true }));
+        try {
+          const res = await fetch(`/api/movies/${id}`, { method: 'DELETE' });
+          if (res.ok) {
+            setLibraryItems((prev) => prev.filter((m) => m.id !== id));
+            loadStats();
+            toast.success(`"${title}" has been deleted.`);
+            setConfirmModal((prev) => ({ ...prev, isOpen: false, isLoading: false }));
+          } else {
+            toast.error('Failed to delete item.');
+            setConfirmModal((prev) => ({ ...prev, isLoading: false }));
+          }
+        } catch (e) {
+          toast.error('Failed to delete item.');
+          setConfirmModal((prev) => ({ ...prev, isLoading: false }));
+        }
+      },
+    });
   };
 
-  // Clear Entire Catalog
-  const handleClearAll = async () => {
-    if (!confirm('⚠️ Are you sure you want to delete ALL titles from the catalog? This will remove all movies and TV shows completely.')) {
-      return;
-    }
-    try {
-      const res = await fetch('/api/movies?all=true', { method: 'DELETE' });
-      const json = await res.json();
-      if (json.success) {
-        setLibraryItems([]);
-        loadStats();
-        showNotification('success', 'All media has been removed from your catalog.');
-      } else {
-        showNotification('error', json.error || 'Failed to clear catalog');
-      }
-    } catch (e) {
-      showNotification('error', 'Error clearing catalog');
-    }
+  // Clear Entire Catalog with custom confirmation modal
+  const handleClearAll = () => {
+    setConfirmModal({
+      isOpen: true,
+      title: 'Clear Entire Catalog',
+      variant: 'danger',
+      confirmText: 'Yes, Clear Catalog',
+      cancelText: 'Keep Catalog',
+      message: (
+        <span>
+          Are you sure you want to delete <strong className="text-red-500 font-bold">ALL titles</strong> from the catalog? This will permanently remove all movies and TV series.
+        </span>
+      ),
+      onConfirm: async () => {
+        setConfirmModal((prev) => ({ ...prev, isLoading: true }));
+        try {
+          const res = await fetch('/api/movies?all=true', { method: 'DELETE' });
+          const json = await res.json();
+          if (json.success) {
+            setLibraryItems([]);
+            loadStats();
+            toast.success('All media has been removed from your catalog.');
+            setConfirmModal((prev) => ({ ...prev, isOpen: false, isLoading: false }));
+          } else {
+            toast.error(json.error || 'Failed to clear catalog');
+            setConfirmModal((prev) => ({ ...prev, isLoading: false }));
+          }
+        } catch (e) {
+          toast.error('Error clearing catalog');
+          setConfirmModal((prev) => ({ ...prev, isLoading: false }));
+        }
+      },
+    });
   };
 
   // Handle Manual Add
@@ -1075,6 +1134,19 @@ function AdminContent() {
           </form>
         </div>
       )}
+
+      {/* Custom Confirmation Alert Modal */}
+      <ConfirmationModal
+        isOpen={confirmModal.isOpen}
+        onClose={() => setConfirmModal((prev) => ({ ...prev, isOpen: false }))}
+        onConfirm={confirmModal.onConfirm}
+        title={confirmModal.title}
+        message={confirmModal.message}
+        confirmText={confirmModal.confirmText}
+        cancelText={confirmModal.cancelText}
+        variant={confirmModal.variant}
+        isLoading={confirmModal.isLoading}
+      />
     </div>
   );
 }

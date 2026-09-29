@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Play, Star, Plus, Check, Film, Tv } from 'lucide-react';
 import { MediaItem } from '@/types';
 import { useWatchlist } from './WatchlistProvider';
+import { useToast } from './ToastProvider';
 
 interface MediaCardProps {
   item: MediaItem;
@@ -13,6 +14,7 @@ interface MediaCardProps {
 
 export default function MediaCard({ item }: MediaCardProps) {
   const { isInWatchlist, addToWatchlist, removeFromWatchlist } = useWatchlist();
+  const toast = useToast();
   const inWatchlist = isInWatchlist(item.id);
 
   const toggleWatchlist = (e: React.MouseEvent) => {
@@ -20,8 +22,10 @@ export default function MediaCard({ item }: MediaCardProps) {
     e.stopPropagation();
     if (inWatchlist) {
       removeFromWatchlist(item.id);
+      toast.info(`Removed "${item.title}" from favorites`);
     } else {
       addToWatchlist(item);
+      toast.success(`Saved "${item.title}" to favorites!`);
     }
   };
 

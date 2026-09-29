@@ -4,6 +4,7 @@ import AppShell from '@/components/AppShell';
 import { WatchlistProvider } from '@/components/WatchlistProvider';
 import { AuthProvider } from '@/components/AuthProvider';
 import { ThemeProvider } from '@/components/ThemeProvider';
+import { ToastProvider } from '@/components/ToastProvider';
 
 export const metadata: Metadata = {
   title: 'Nex | Stream Movies & TV Shows',
@@ -34,9 +35,11 @@ export default function RootLayout({
         <ThemeProvider>
           <AuthProvider>
             <WatchlistProvider>
-              <AppShell>
-                {children}
-              </AppShell>
+              <ToastProvider>
+                <AppShell>
+                  {children}
+                </AppShell>
+              </ToastProvider>
             </WatchlistProvider>
           </AuthProvider>
         </ThemeProvider>

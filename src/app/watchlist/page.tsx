@@ -5,10 +5,20 @@ import Link from 'next/link';
 import { useWatchlist } from '@/components/WatchlistProvider';
 import CardYouMightLike from '@/components/CardYouMightLike';
 import { Bookmark, Clock, Trash2, Play } from 'lucide-react';
+import ConfirmationModal from '@/components/ConfirmationModal';
+import { useToast } from '@/components/ToastProvider';
 
 export default function WatchlistPage() {
   const { watchlist, history, clearHistory } = useWatchlist();
   const [activeTab, setActiveTab] = useState<'saved' | 'history'>('saved');
+  const [isClearModalOpen, setIsClearModalOpen] = useState(false);
+  const toast = useToast();
+
+  const handleConfirmClearHistory = () => {
+    clearHistory();
+    setIsClearModalOpen(false);
+    toast.success('Your viewing history has been cleared.');
+  };
 
   return (
     <div className="space-y-6 animate-fadeIn">
@@ -82,8 +92,8 @@ export default function WatchlistPage() {
           {history.length > 0 && (
             <div className="flex justify-end">
               <button
-                onClick={clearHistory}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-[#141721] text-xs font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 border border-slate-200 dark:border-white/10 transition shadow-sm"
+                onClick={() => setIsClearModalOpen(true)}
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white dark:bg-[#141721] text-xs font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 border border-slate-200 dark:border-white/10 transition shadow-sm"
               >
                 <Trash2 className="w-3.5 h-3.5" />
                 <span>Clear History</span>
@@ -137,6 +147,18 @@ export default function WatchlistPage() {
           )}
         </div>
       )}
+
+      {/* Custom Confirmation Alert Modal */}
+      <ConfirmationModal
+        isOpen={isClearModalOpen}
+        onClose={() => setIsClearModalOpen(false)}
+        onConfirm={handleConfirmClearHistory}
+        title="Clear Viewing History"
+        message="Are you sure you want to clear your entire watching history? This cannot be undone."
+        confirmText="Clear History"
+        cancelText="Cancel"
+        variant="danger"
+      />
     </div>
   );
 }
