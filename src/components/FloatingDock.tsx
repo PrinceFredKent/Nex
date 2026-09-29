@@ -18,8 +18,13 @@ export default function FloatingDock() {
     { label: profile ? 'Profile' : 'Sign In', href: profile ? '/profile' : '/auth/login', icon: User },
   ];
 
+  // Hide floating dock on watch player page to prevent blocking video controls or server buttons
+  if (pathname.startsWith('/watch')) {
+    return null;
+  }
+
   return (
-    <div className="fixed bottom-4 sm:bottom-5 left-1/2 -translate-x-1/2 z-40 max-w-[96vw]">
+    <div className="md:hidden fixed bottom-4 sm:bottom-5 left-1/2 -translate-x-1/2 z-40 max-w-[96vw]">
       <nav className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full bg-cinemaDark-900/95 backdrop-blur-xl border border-white/15 shadow-dock">
         {dockItems.map((item) => {
           const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));

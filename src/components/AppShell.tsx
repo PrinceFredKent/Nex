@@ -18,17 +18,19 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     );
   }
 
+  const isWatchPage = pathname.startsWith('/watch');
+
   return (
-    <div className="p-3 sm:p-5 pb-24">
+    <div className={`min-h-screen p-2.5 sm:p-5 ${isWatchPage ? 'pb-8 bg-[#0d0f14]' : 'pb-24'}`}>
       {/* Main App Container */}
-      <div className="max-w-[1440px] mx-auto w-full flex flex-col space-y-4">
+      <div className="max-w-[1800px] mx-auto w-full flex flex-col space-y-4">
         {/* Top Navigation Bar */}
         <TopHeader />
 
         {/* Main Center Area: Sidebar + Content */}
-        <div className="flex flex-col lg:flex-row gap-5 items-stretch">
+        <div className="flex flex-col md:flex-row gap-4 lg:gap-6 items-stretch">
           {/* Left Sidebar */}
-          <div className="hidden lg:block shrink-0">
+          <div className="hidden md:block shrink-0">
             <Sidebar />
           </div>
 
