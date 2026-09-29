@@ -7,8 +7,12 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import { ToastProvider } from '@/components/ToastProvider';
 
 export const metadata: Metadata = {
-  title: 'Nex | Stream Movies & TV Shows',
-  description: 'Watch unlimited movies, TV shows, and series in HD with instant multi-server streaming.',
+  title: 'Nex Streaming Platform',
+  description: 'Premium movie and series streaming platform with interactive discovery, watchlists, AI recommendations, and custom collections.',
+  openGraph: {
+    title: 'Nex Streaming Platform',
+    description: 'Premium movie and series streaming platform with interactive discovery, watchlists, AI recommendations, and custom collections.',
+  },
   icons: {
     icon: [
       { url: '/icon.svg', type: 'image/svg+xml' },

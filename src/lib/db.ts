@@ -15,6 +15,10 @@ const FALLBACK_DATA_DIR = path.join(os.tmpdir(), 'cool-maxwell-data');
 let DATA_DIR = PROJECT_DATA_DIR;
 let DB_FILE = path.join(DATA_DIR, 'db.json');
 
+let inMemoryCache: DatabaseSchema | null = null;
+let lastCacheTime = 0;
+const CACHE_TTL_MS = 2000;
+
 function resolveWritableDataStore() {
   const candidates = [
     { dir: PROJECT_DATA_DIR, file: path.join(PROJECT_DATA_DIR, 'db.json') },
@@ -52,6 +56,11 @@ const DEFAULT_SETTINGS: SystemSettings = {
 };
 
 function ensureDbExists(): DatabaseSchema {
+  const now = Date.now();
+  if (inMemoryCache && now - lastCacheTime < CACHE_TTL_MS) {
+    return inMemoryCache;
+  }
+
   resolveWritableDataStore();
 
   if (!fs.existsSync(DATA_DIR)) {
@@ -64,8 +73,10 @@ function ensureDbExists(): DatabaseSchema {
       settings: DEFAULT_SETTINGS,
     };
     try {
-      fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2), 'utf-8');
+      fs.writeFileSync(DB_FILE, JSON.stringify(initialData), 'utf-8');
     } catch {}
+    inMemoryCache = initialData;
+    lastCacheTime = now;
     return initialData;
   }
 
@@ -78,6 +89,8 @@ function ensureDbExists(): DatabaseSchema {
     if (!parsed.settings) {
       parsed.settings = DEFAULT_SETTINGS;
     }
+    inMemoryCache = parsed;
+    lastCacheTime = now;
     return parsed;
   } catch (err) {
     const initialData: DatabaseSchema = {
@@ -85,19 +98,23 @@ function ensureDbExists(): DatabaseSchema {
       settings: DEFAULT_SETTINGS,
     };
     try {
-      fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2), 'utf-8');
+      fs.writeFileSync(DB_FILE, JSON.stringify(initialData), 'utf-8');
     } catch {}
+    inMemoryCache = initialData;
+    lastCacheTime = now;
     return initialData;
   }
 }
 
 function saveDb(data: DatabaseSchema): void {
+  inMemoryCache = data;
+  lastCacheTime = Date.now();
   try {
     resolveWritableDataStore();
     if (!fs.existsSync(DATA_DIR)) {
       fs.mkdirSync(DATA_DIR, { recursive: true });
     }
-    fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
+    fs.writeFileSync(DB_FILE, JSON.stringify(data), 'utf-8');
   } catch (e) {
     // Ignore write errors on read-only serverless lambdas
   }
@@ -243,7 +260,17 @@ export const db = {
       results.sort((a, b) => new Date(b.createdAt || b.releaseDate || 0).getTime() - new Date(a.createdAt || a.releaseDate || 0).getTime());
     }
 
-    return results;
+    return results.map(item => ({
+      ...item,
+      seasons: item.seasons ? item.seasons.map(s => ({
+        seasonNumber: s.seasonNumber,
+        name: s.name,
+        overview: s.overview,
+        posterUrl: s.posterUrl,
+        episodeCount: s.episodes?.length || s.episodeCount || 0,
+        episodes: [],
+      })) : undefined
+    }));
   },
 
   getById: async (id: string): Promise<MediaItem | undefined> => {

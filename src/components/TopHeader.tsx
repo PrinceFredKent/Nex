@@ -132,13 +132,13 @@ export default function TopHeader() {
           </Link>
 
           {/* Notification Bell */}
-          <button
-            onClick={() => router.push('/admin')}
+          <Link
+            href="/admin"
             title="System & Notifications"
-            className="w-9 h-9 rounded-full bg-white dark:bg-darkCard flex items-center justify-center text-gray-600 dark:text-gray-200 hover:text-brand-500 dark:hover:text-brand-400 shadow-sm border border-slate-100/80 dark:border-white/10 transition"
+            className="w-9 h-9 rounded-full bg-white dark:bg-darkCard flex items-center justify-center text-gray-600 dark:text-gray-200 hover:text-brand-500 dark:hover:text-brand-400 shadow-sm border border-slate-100/80 dark:border-white/10 transition shrink-0"
           >
             <Bell className="w-4 h-4" />
-          </button>
+          </Link>
 
           {/* Profile Pill or Sign In Button */}
           {profile ? (

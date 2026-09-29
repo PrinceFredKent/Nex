@@ -36,29 +36,29 @@ function BrowseContent() {
   const [searchTerm, setSearchTerm] = useState(currentSearch);
 
   useEffect(() => {
+    const fetchMedia = async () => {
+      setLoading(true);
+      try {
+        const params = new URLSearchParams();
+        if (currentType !== 'all') params.set('type', currentType);
+        if (currentGenre !== 'All') params.set('genre', currentGenre);
+        if (currentSort) params.set('sort', currentSort);
+        if (currentSearch) params.set('search', currentSearch);
+
+        const res = await fetch(`/api/movies?${params.toString()}`);
+        const json = await res.json();
+        if (json.success) {
+          setItems(json.data);
+        }
+      } catch (e) {
+        console.error('Failed to fetch browse media', e);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchMedia();
   }, [currentType, currentGenre, currentSort, currentSearch]);
-
-  const fetchMedia = async () => {
-    setLoading(true);
-    try {
-      const params = new URLSearchParams();
-      if (currentType !== 'all') params.set('type', currentType);
-      if (currentGenre !== 'All') params.set('genre', currentGenre);
-      if (currentSort) params.set('sort', currentSort);
-      if (currentSearch) params.set('search', currentSearch);
-
-      const res = await fetch(`/api/movies?${params.toString()}`);
-      const json = await res.json();
-      if (json.success) {
-        setItems(json.data);
-      }
-    } catch (e) {
-      console.error('Failed to fetch browse media', e);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const updateParam = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());

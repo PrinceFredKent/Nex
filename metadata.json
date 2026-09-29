@@ -1,0 +1,7 @@
+{
+  "name": "Nex Streaming Platform",
+  "description": "Premium movie and series streaming platform with interactive discovery, watchlists, AI recommendations, and custom collections.",
+  "request_capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
