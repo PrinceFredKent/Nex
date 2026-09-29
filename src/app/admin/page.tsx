@@ -372,9 +372,6 @@ function AdminContent() {
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-brand-500 text-white font-bold">
                   LIVE
                 </span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-300 font-bold border border-slate-200 dark:border-white/10 font-mono">
-                  Nex 1.2
-                </span>
               </h1>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                 Add your own movies, search TMDB titles, and manage streaming servers
@@ -1047,7 +1044,7 @@ function AdminContent() {
               <p className="text-xs text-gray-500 dark:text-gray-400">Manage streaming platform configuration</p>
             </div>
             <div className="flex items-center gap-1.5 bg-brand-50 dark:bg-brand-500/20 text-brand-600 dark:text-brand-400 px-3 py-1 rounded-full border border-brand-200/60 dark:border-brand-500/30 text-xs font-mono font-bold">
-              <span>Nex 1.2</span>
+              <span>Nex Streaming</span>
             </div>
           </div>
           <form onSubmit={handleSaveSettings} className="space-y-4 text-xs">

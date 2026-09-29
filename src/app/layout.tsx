@@ -6,7 +6,7 @@ import { AuthProvider } from '@/components/AuthProvider';
 import { ThemeProvider } from '@/components/ThemeProvider';
 
 export const metadata: Metadata = {
-  title: 'Nex 1.2 | Stream Movies & TV Shows',
+  title: 'Nex | Stream Movies & TV Shows',
   description: 'Watch unlimited movies, TV shows, and series in HD with instant multi-server streaming.',
   icons: {
     icon: [

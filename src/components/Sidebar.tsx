@@ -32,9 +32,6 @@ export default function Sidebar() {
             <span className="text-sm font-black tracking-wider text-brand-500 uppercase font-sans flex items-center gap-1.5">
               NEX
             </span>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-50 dark:bg-brand-500/20 text-brand-600 dark:text-brand-400 border border-brand-200/60 dark:border-brand-500/30 font-mono tracking-tight">
-              1.2
-            </span>
           </div>
         </Link>
 
@@ -111,12 +108,12 @@ export default function Sidebar() {
         )}
       </div>
 
-      {/* App Version Info */}
+      {/* App Status Info */}
       <div className="pt-4 mt-6 border-t border-slate-100 dark:border-white/10 flex items-center justify-between text-[11px] text-gray-400">
-        <span className="font-semibold text-gray-500 dark:text-gray-400">Nex 1.2</span>
+        <span className="font-semibold text-gray-500 dark:text-gray-400">Nex Streaming</span>
         <span className="flex items-center gap-1.5 text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-100 dark:border-emerald-500/20">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
-          <span>v1.2</span>
+          <span>Online</span>
         </span>
       </div>
     </aside>

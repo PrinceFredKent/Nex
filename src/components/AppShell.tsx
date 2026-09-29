@@ -12,7 +12,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   if (isAuthPage) {
     return (
-      <main className="min-h-screen w-full flex items-center justify-center bg-surface-app p-4 sm:p-6">
+      <main className="min-h-screen w-full flex items-center justify-center bg-[#edf0f7] dark:bg-[#0b0d12] text-gray-900 dark:text-gray-100 transition-colors p-4 sm:p-6 relative overflow-hidden">
         {children}
       </main>
     );
