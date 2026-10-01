@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { MediaItem, StreamSource } from '@/types';
 import { generateStreamSources } from '@/lib/streams';
@@ -40,20 +40,13 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
   const activeSeason = seasons.find((s) => s.seasonNumber === selectedSeasonNum) || seasons[0];
   const activeEpisode = activeSeason?.episodes.find((e) => e.episodeNumber === selectedEpisodeNum) || activeSeason?.episodes[0];
 
-  // Stable memoized streams list
-  const currentStreams: StreamSource[] = useMemo(() => {
-    if (isTv) {
-      return activeEpisode?.streams?.length
-        ? activeEpisode.streams
-        : generateStreamSources('tv', media.tmdbId, media.imdbId, selectedSeasonNum, selectedEpisodeNum);
-    }
-    return media.streams?.length
-      ? media.streams
-      : generateStreamSources('movie', media.tmdbId, media.imdbId);
-  }, [isTv, activeEpisode?.streams, media.tmdbId, media.imdbId, selectedSeasonNum, selectedEpisodeNum, media.streams]);
+  // Streams list
+  const currentStreams: StreamSource[] = isTv
+    ? (activeEpisode?.streams?.length ? activeEpisode.streams : generateStreamSources('tv', media.tmdbId, media.imdbId, selectedSeasonNum, selectedEpisodeNum))
+    : (media.streams?.length ? media.streams : generateStreamSources('movie', media.tmdbId, media.imdbId));
 
   const [selectedServerId, setSelectedServerId] = useState<string>(
-    () => currentStreams[0]?.id || 'vidsrc-cc'
+    currentStreams[0]?.id || 'vidsrc-cc'
   );
   const [isCinemaMode, setIsCinemaMode] = useState<boolean>(false);
   const [keyReload, setKeyReload] = useState<number>(0);
@@ -68,20 +61,12 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
   }, [currentStreams, selectedServerId]);
 
   // Active stream source
-  const activeStream = useMemo(() => {
-    return currentStreams.find((s) => s.id === selectedServerId) || currentStreams[0];
-  }, [currentStreams, selectedServerId]);
-
+  const activeStream = currentStreams.find((s) => s.id === selectedServerId) || currentStreams[0];
   const activeIndex = currentStreams.findIndex((s) => s.id === (activeStream?.id || ''));
   const nextStream = currentStreams[(activeIndex + 1) % (currentStreams.length || 1)];
 
-  // Save viewing progress safely without infinite loops
-  const lastSavedProgressRef = useRef<string>('');
+  // Save viewing progress
   useEffect(() => {
-    const progressKey = `${media.id}-${selectedSeasonNum}-${selectedEpisodeNum}`;
-    if (lastSavedProgressRef.current === progressKey) return;
-    lastSavedProgressRef.current = progressKey;
-
     saveProgress({
       mediaId: media.id,
       mediaTitle: media.title,
@@ -92,15 +77,10 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
       timestamp: Date.now(),
       lastWatchedAt: new Date().toISOString(),
     });
-  }, [media.id, media.title, media.posterUrl, isTv, selectedSeasonNum, selectedEpisodeNum, saveProgress]);
 
-  // Record view count once per unique media visit
-  const viewLoggedRef = useRef<string>('');
-  useEffect(() => {
-    if (viewLoggedRef.current === media.id) return;
-    viewLoggedRef.current = media.id;
+    // Record view in API
     fetch(`/api/views/${media.id}`, { method: 'POST' }).catch(() => {});
-  }, [media.id]);
+  }, [media.id, media.type, media.title, media.posterUrl, isTv, selectedSeasonNum, selectedEpisodeNum, saveProgress]);
 
   // Handle Esc key to exit cinema mode
   useEffect(() => {
@@ -211,18 +191,16 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
           {/* Top Floating Controls */}
           <div className="absolute top-3 right-3 flex items-center gap-2 bg-black/70 backdrop-blur-md p-1.5 rounded-xl border border-white/10 z-20">
             <button
-              type="button"
               onClick={() => setKeyReload((k) => k + 1)}
               title="Reload Video Stream"
-              className="p-1.5 rounded-lg hover:bg-white/20 text-gray-300 hover:text-white transition cursor-pointer"
+              className="p-1.5 rounded-lg hover:bg-white/20 text-gray-300 hover:text-white transition"
             >
               <RotateCw className="w-4 h-4" />
             </button>
             <button
-              type="button"
               onClick={() => setIsCinemaMode(true)}
               title="Enter Cinema Mode"
-              className="p-1.5 rounded-lg text-xs font-semibold px-2.5 transition flex items-center gap-1 hover:bg-white/20 text-gray-300 hover:text-white cursor-pointer"
+              className="p-1.5 rounded-lg text-xs font-semibold px-2.5 transition flex items-center gap-1 hover:bg-white/20 text-gray-300 hover:text-white"
             >
               <Layers className="w-4 h-4" />
               <span className="hidden sm:inline">Cinema</span>
@@ -387,9 +365,8 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
         <div className="flex items-center gap-2 shrink-0">
           {nextStream && (
             <button
-              type="button"
               onClick={handleNextServer}
-              className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-xs font-bold shadow-md shadow-brand-500/30 transition cursor-pointer relative z-10"
+              className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-xs font-bold shadow-md shadow-brand-500/30 transition"
             >
               <span>Switch to Next Server</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -401,7 +378,7 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
               href={activeStream.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/10 transition cursor-pointer relative z-10"
+              className="flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/10 transition"
               title="Open stream in a clean external tab"
             >
               <ExternalLink className="w-3.5 h-3.5" />
@@ -412,7 +389,7 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
       </div>
 
       {/* Stream Control Bar & All Servers */}
-      <div className="bg-dark-900 border border-white/10 rounded-2xl p-4 sm:p-5 space-y-4 relative z-10">
+      <div className="bg-dark-900 border border-white/10 rounded-2xl p-4 sm:p-5 space-y-4">
         {/* Stream Servers Selector */}
         <div className="space-y-2.5 border-b border-white/10 pb-4">
           <div className="flex items-center justify-between">
@@ -432,13 +409,12 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
               const isSelected = selectedServerId === source.id;
               return (
                 <button
-                  type="button"
                   key={source.id || idx}
                   onClick={() => {
                     setSelectedServerId(source.id);
                     setKeyReload((k) => k + 1);
                   }}
-                  className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all text-left cursor-pointer relative z-10 ${
+                  className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all text-left ${
                     isSelected
                       ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/30 ring-2 ring-brand-400'
                       : 'bg-dark-800 hover:bg-dark-700 text-gray-300 hover:text-white border border-white/10'
@@ -466,13 +442,12 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
                 <span className="text-xs font-bold text-gray-400 uppercase">Season:</span>
                 {seasons.map((s) => (
                   <button
-                    type="button"
                     key={s.seasonNumber}
                     onClick={() => {
                       setSelectedSeasonNum(s.seasonNumber);
                       setSelectedEpisodeNum(s.episodes[0]?.episodeNumber || 1);
                     }}
-                    className={`px-3 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
+                    className={`px-3 py-1 rounded-lg text-xs font-bold transition ${
                       selectedSeasonNum === s.seasonNumber
                         ? 'bg-brand-500 text-white'
                         : 'bg-dark-800 text-gray-300 hover:bg-dark-700'
@@ -486,17 +461,15 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
               {/* Next / Prev Quick Buttons */}
               <div className="flex items-center gap-2">
                 <button
-                  type="button"
                   onClick={handlePrevEpisode}
                   disabled={selectedEpisodeNum <= 1 && selectedSeasonNum <= 1}
-                  className="px-3 py-1.5 rounded-lg bg-dark-800 hover:bg-dark-700 disabled:opacity-40 text-gray-300 text-xs font-semibold transition cursor-pointer"
+                  className="px-3 py-1.5 rounded-lg bg-dark-800 hover:bg-dark-700 disabled:opacity-40 text-gray-300 text-xs font-semibold transition"
                 >
                   Prev Episode
                 </button>
                 <button
-                  type="button"
                   onClick={handleNextEpisode}
-                  className="px-3 py-1.5 rounded-lg bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold transition cursor-pointer"
+                  className="px-3 py-1.5 rounded-lg bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold transition"
                 >
                   Next Episode
                 </button>
@@ -510,10 +483,9 @@ export default function StreamPlayer({ media }: StreamPlayerProps) {
                   const isSelected = selectedEpisodeNum === ep.episodeNumber;
                   return (
                     <button
-                      type="button"
                       key={ep.episodeNumber}
                       onClick={() => setSelectedEpisodeNum(ep.episodeNumber)}
-                      className={`p-2 rounded-xl text-left transition border cursor-pointer ${
+                      className={`p-2 rounded-xl text-left transition border ${
                         isSelected
                           ? 'bg-brand-500/20 border-brand-500 text-white'
                           : 'bg-dark-800/60 border-white/5 text-gray-400 hover:text-white hover:bg-dark-700'

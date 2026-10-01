@@ -44,14 +44,21 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Account & Library */}
+          {/* Admin & Legal */}
           <div>
-            <h4 className="text-white font-semibold mb-3 text-xs uppercase tracking-wider">Account & Library</h4>
+            <h4 className="text-white font-semibold mb-3 text-xs uppercase tracking-wider">Management</h4>
             <ul className="space-y-2 text-xs">
-              <li><Link href="/watchlist" className="hover:text-white transition">My Watchlist</Link></li>
-              <li><Link href="/browse" className="hover:text-white transition">Full Catalog</Link></li>
-              <li><Link href="/profile" className="hover:text-white transition">Account Profile</Link></li>
-              <li><Link href="/auth/login" className="hover:text-white transition">Sign In</Link></li>
+              <li>
+                <Link href="/admin" className="flex items-center gap-1.5 text-brand-400 hover:text-brand-300 font-semibold transition">
+                  <Shield className="w-3.5 h-3.5" />
+                  <span>Admin Control Center</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/admin?tab=search" className="hover:text-white transition">
+                  Add New Movies
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

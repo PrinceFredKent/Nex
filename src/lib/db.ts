@@ -180,52 +180,19 @@ function mapMediaItemToSupabaseRow(item: MediaItem) {
   };
 }
 
-// Circuit breaker for Supabase to protect against hanging requests when Supabase is unhealthy/slow
-let supabaseIsHealthy = true;
-let lastSupabaseHealthCheck = 0;
-const SUPABASE_CHECK_COOLDOWN_MS = 60000; // 1 minute cooldown if Supabase fails
-const SUPABASE_TIMEOUT_MS = 1500; // 1.5s max timeout before immediate local fallback
-
-function isSupabaseAvailable(): boolean {
-  if (!isSupabaseConfigured || !supabase) return false;
-  if (!supabaseIsHealthy) {
-    if (Date.now() - lastSupabaseHealthCheck < SUPABASE_CHECK_COOLDOWN_MS) {
-      return false; // Skip hanging calls during cooldown
-    }
-  }
-  return true;
-}
-
-async function withSupabaseTimeout<T>(promise: PromiseLike<T>, timeoutMs = SUPABASE_TIMEOUT_MS): Promise<T> {
-  let timer: NodeJS.Timeout;
-  const timeoutPromise = new Promise<never>((_, reject) => {
-    timer = setTimeout(() => reject(new Error('Supabase request timed out')), timeoutMs);
-  });
-  try {
-    return await Promise.race([promise, timeoutPromise]);
-  } catch (err) {
-    supabaseIsHealthy = false;
-    lastSupabaseHealthCheck = Date.now();
-    throw err;
-  } finally {
-    clearTimeout(timer!);
-  }
-}
-
 // Database operations
 export const db = {
   getAll: async (query?: { type?: string; genre?: string; search?: string; status?: string; sort?: string }): Promise<MediaItem[]> => {
     let items: MediaItem[] = [];
 
-    if (isSupabaseAvailable() && supabase) {
+    if (isSupabaseConfigured && supabase) {
       try {
-        const { data, error } = await withSupabaseTimeout(supabase.from('movies').select('*'));
+        const { data, error } = await supabase.from('movies').select('*');
         if (!error && data) {
           items = data.map(mapSupabaseRowToMediaItem);
-          supabaseIsHealthy = true;
         }
       } catch (e) {
-        // Fast local fallback without delaying user
+        console.error('Supabase fetch movies error, falling back to db.json:', e);
       }
     }
 
@@ -313,14 +280,7 @@ export const db = {
   },
 
   getById: async (id: string): Promise<MediaItem | undefined> => {
-    // Check local database first for instant sub-millisecond retrieval
-    const { movies } = ensureDbExists();
-    const localMatch = movies.find(m => m.id === id || String(m.tmdbId) === id || m.imdbId === id);
-    if (localMatch) {
-      return localMatch;
-    }
-
-    if (isSupabaseAvailable() && supabase) {
+    if (isSupabaseConfigured && supabase) {
       try {
         const numericId = !isNaN(Number(id)) ? Number(id) : null;
         let query = supabase.from('movies').select('*');
@@ -330,23 +290,17 @@ export const db = {
           query = query.or(`id.eq.${id},imdb_id.eq.${id}`);
         }
         
-        const { data, error } = await withSupabaseTimeout(query);
+        const { data, error } = await query;
         if (!error && data && data.length > 0) {
-          const item = mapSupabaseRowToMediaItem(data[0]);
-          // Cache in local db
-          const current = ensureDbExists();
-          if (!current.movies.some(m => m.id === item.id)) {
-            current.movies.unshift(item);
-            saveDb(current);
-          }
-          return item;
+          return mapSupabaseRowToMediaItem(data[0]);
         }
       } catch (e) {
-        // Fallback gracefully
+        console.error('Supabase getById error:', e);
       }
     }
 
-    return undefined;
+    const { movies } = ensureDbExists();
+    return movies.find(m => m.id === id || String(m.tmdbId) === id || m.imdbId === id);
   },
 
   create: async (item: Omit<MediaItem, 'id' | 'createdAt' | 'updatedAt' | 'views'> & { id?: string }): Promise<MediaItem> => {
@@ -375,10 +329,13 @@ export const db = {
     }
     saveDb(current);
 
-    if (isSupabaseAvailable() && supabase) {
-      withSupabaseTimeout(
-        supabase.from('movies').upsert(mapMediaItemToSupabaseRow(newItem))
-      ).catch(() => {});
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const row = mapMediaItemToSupabaseRow(newItem);
+        await supabase.from('movies').upsert(row);
+      } catch (e) {
+        console.error('Supabase create error:', e);
+      }
     }
 
     return newItem;
@@ -409,10 +366,13 @@ export const db = {
       saveDb(current);
     }
 
-    if (isSupabaseAvailable() && supabase) {
-      withSupabaseTimeout(
-        supabase.from('movies').upsert(mapMediaItemToSupabaseRow(updatedItem))
-      ).catch(() => {});
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const row = mapMediaItemToSupabaseRow(updatedItem);
+        await supabase.from('movies').upsert(row);
+      } catch (e) {
+        console.error('Supabase update error:', e);
+      }
     }
 
     return updatedItem;
@@ -423,10 +383,12 @@ export const db = {
     current.movies = current.movies.filter(m => m.id !== id);
     saveDb(current);
 
-    if (isSupabaseAvailable() && supabase) {
-      withSupabaseTimeout(
-        supabase.from('movies').delete().eq('id', id)
-      ).catch(() => {});
+    if (isSupabaseConfigured && supabase) {
+      try {
+        await supabase.from('movies').delete().eq('id', id);
+      } catch (e) {
+        console.error('Supabase delete error:', e);
+      }
     }
 
     return true;
@@ -437,27 +399,23 @@ export const db = {
     current.movies = [];
     saveDb(current);
 
-    if (isSupabaseAvailable() && supabase) {
-      withSupabaseTimeout(
-        supabase.from('movies').delete().neq('id', '____dummy_never_match____')
-      ).catch(() => {});
+    if (isSupabaseConfigured && supabase) {
+      try {
+        // Delete all rows in movies table
+        await supabase.from('movies').delete().neq('id', '____dummy_never_match____');
+      } catch (e) {
+        console.error('Supabase clearAll error:', e);
+      }
     }
 
     return true;
   },
 
   incrementViews: async (id: string): Promise<void> => {
-    const current = ensureDbExists();
-    const index = current.movies.findIndex(m => m.id === id || String(m.tmdbId) === id || m.imdbId === id);
-    if (index >= 0) {
-      current.movies[index].views = (current.movies[index].views || 0) + 1;
-      saveDb(current);
-
-      if (isSupabaseAvailable() && supabase) {
-        withSupabaseTimeout(
-          supabase.from('movies').update({ views: current.movies[index].views }).eq('id', current.movies[index].id)
-        ).catch(() => {});
-      }
+    const item = await db.getById(id);
+    if (item) {
+      const newViews = (item.views || 0) + 1;
+      await db.update(item.id, { views: newViews });
     }
   },
 

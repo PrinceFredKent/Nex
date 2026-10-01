@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, Suspense } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { 
   Shield, 
   Search, 
@@ -20,21 +20,15 @@ import {
   Film,
   Tv,
   Image as ImageIcon,
-  Play,
-  Lock,
-  ArrowLeft,
-  LogIn
+  Play
 } from 'lucide-react';
 import { MediaItem, MediaType, StreamSource, SystemSettings } from '@/types';
 import Link from 'next/link';
 import ConfirmationModal, { ModalVariant } from '@/components/ConfirmationModal';
 import { useToast } from '@/components/ToastProvider';
-import { useAuth } from '@/components/AuthProvider';
 
 function AdminContent() {
-  const router = useRouter();
   const toast = useToast();
-  const { user, profile, isAdmin, isLoading: authLoading } = useAuth();
   const searchParams = useSearchParams();
   const initialTab = (searchParams.get('tab') as any) || 'search';
 
@@ -421,53 +415,6 @@ function AdminContent() {
   const isAlreadyInLibrary = (tmdbId: number) => {
     return libraryItems.some((m) => m.tmdbId === tmdbId);
   };
-
-  // Loading state while checking auth
-  if (authLoading) {
-    return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center space-y-4 bg-white dark:bg-[#141721] rounded-3xl p-8 border border-slate-100/80 dark:border-white/10 shadow-app">
-        <Loader2 className="w-8 h-8 text-brand-500 animate-spin" />
-        <p className="text-xs font-semibold text-gray-500 dark:text-gray-400">Verifying administrator credentials...</p>
-      </div>
-    );
-  }
-
-  // Unauthorized Access Gate - only visible to signed-in admins
-  if (!user || !isAdmin) {
-    return (
-      <div className="min-h-[65vh] flex flex-col items-center justify-center text-center p-6 sm:p-10 bg-white dark:bg-[#141721] rounded-3xl border border-slate-100/80 dark:border-white/10 shadow-app max-w-xl mx-auto space-y-5 animate-fadeIn">
-        <div className="w-16 h-16 rounded-3xl bg-red-500/10 border border-red-500/20 text-red-500 flex items-center justify-center shadow-lg shadow-red-500/10">
-          <Lock className="w-8 h-8 text-red-500" />
-        </div>
-
-        <div className="space-y-2">
-          <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">
-            Administrator Access Only
-          </h1>
-          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 max-w-md mx-auto leading-relaxed">
-            This control center is strictly restricted to authorized administrators. You must be signed in with an administrator account to manage streaming media, ingest TMDB titles, and configure system settings.
-          </p>
-        </div>
-
-        <div className="flex flex-wrap items-center justify-center gap-3 pt-2 w-full">
-          <Link
-            href="/auth/login?next=/admin"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-brand-500 hover:bg-brand-600 text-white font-bold text-xs shadow-lg shadow-brand-500/30 transition transform hover:scale-105"
-          >
-            <LogIn className="w-4 h-4" />
-            <span>Sign In as Admin</span>
-          </Link>
-          <Link
-            href="/"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 text-gray-700 dark:text-gray-200 font-bold text-xs transition"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Return to Home</span>
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-6">

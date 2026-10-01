@@ -8,12 +8,12 @@ import { useAuth } from './AuthProvider';
 
 export default function FloatingDock() {
   const pathname = usePathname();
-  const { profile, isAdmin } = useAuth();
+  const { profile } = useAuth();
 
   const dockItems = [
     { label: 'Home', href: '/', icon: Home },
     { label: 'Explore', href: '/browse', icon: Compass },
-    ...(isAdmin ? [{ label: 'Admin', href: '/admin', icon: Shield, isSpecial: true }] : []),
+    { label: 'Admin', href: '/admin', icon: Shield, isSpecial: true },
     { label: 'Favorites', href: '/watchlist', icon: Heart },
     { label: profile ? 'Profile' : 'Sign In', href: profile ? '/profile' : '/auth/login', icon: User },
   ];

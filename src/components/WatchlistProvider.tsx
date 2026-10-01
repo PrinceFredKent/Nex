@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { MediaItem, WatchHistoryItem } from '@/types';
 
 interface WatchlistContextType {
@@ -80,53 +80,44 @@ export function WatchlistProvider({ children }: { children: React.ReactNode }) {
     }
   }, [history, isLoaded]);
 
-  const addToWatchlist = useCallback((item: MediaItem) => {
+  const addToWatchlist = (item: MediaItem) => {
     setWatchlist((prev) => {
       if (prev.some((m) => m.id === item.id)) return prev;
       return [item, ...prev];
     });
-  }, []);
+  };
 
-  const removeFromWatchlist = useCallback((id: string) => {
+  const removeFromWatchlist = (id: string) => {
     setWatchlist((prev) => prev.filter((m) => m.id !== id && String(m.tmdbId) !== id));
-  }, []);
+  };
 
-  const isInWatchlist = useCallback((id: string) => {
+  const isInWatchlist = (id: string) => {
     return watchlist.some((m) => m.id === id || String(m.tmdbId) === id);
-  }, [watchlist]);
+  };
 
-  const saveProgress = useCallback((historyItem: WatchHistoryItem) => {
+  const saveProgress = (historyItem: WatchHistoryItem) => {
     setHistory((prev) => {
-      const existing = prev.find((h) => h.mediaId === historyItem.mediaId);
-      if (
-        existing &&
-        existing.season === historyItem.season &&
-        existing.episode === historyItem.episode &&
-        Math.abs(Date.now() - (existing.timestamp || 0)) < 30000
-      ) {
-        return prev; // Exact match recently saved: no state change, no re-render
-      }
       const filtered = prev.filter((h) => h.mediaId !== historyItem.mediaId);
       return [historyItem, ...filtered].slice(0, 20); // keep last 20
     });
-  }, []);
+  };
 
-  const clearHistory = useCallback(() => {
+  const clearHistory = () => {
     setHistory([]);
-  }, []);
-
-  const contextValue = useMemo(() => ({
-    watchlist,
-    addToWatchlist,
-    removeFromWatchlist,
-    isInWatchlist,
-    history,
-    saveProgress,
-    clearHistory,
-  }), [watchlist, addToWatchlist, removeFromWatchlist, isInWatchlist, history, saveProgress, clearHistory]);
+  };
 
   return (
-    <WatchlistContext.Provider value={contextValue}>
+    <WatchlistContext.Provider
+      value={{
+        watchlist,
+        addToWatchlist,
+        removeFromWatchlist,
+        isInWatchlist,
+        history,
+        saveProgress,
+        clearHistory,
+      }}
+    >
       {children}
     </WatchlistContext.Provider>
   );
