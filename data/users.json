@@ -1,0 +1,26 @@
+{
+  "users": [
+    {
+      "id": "user_d721e4aa-808a-4844-bdfc-4b0599ade8e3",
+      "email": "vip_streamer@test.com",
+      "fullName": "VIP Streamer",
+      "avatarUrl": "https://api.dicebear.com/7.x/bottts/svg?seed=vip_streamer%40test.com",
+      "role": "user",
+      "passwordHash": "cd78bef1da7f43609a167d3fd6e1686585e99c2bf4e4e405b04632ee424023f1bee5620d34329188ddca5138b4472f95198511e1b93f033376e560526c1d8767",
+      "salt": "1e8653219159574fee09f4d17f871845",
+      "createdAt": "2026-09-29T12:39:23.317Z",
+      "updatedAt": "2026-09-29T12:39:23.317Z"
+    },
+    {
+      "id": "user_759961c0-4eb5-45ed-8b3b-9ca6a0ad5887",
+      "email": "princefredkent@gmail.com",
+      "fullName": "princefredkent",
+      "avatarUrl": "https://api.dicebear.com/7.x/bottts/svg?seed=princefredkent%40gmail.com",
+      "role": "admin",
+      "passwordHash": "6635658754b562e9975b904c8d2569fe5a5fe1785853d31683807418c82cd9dce59fa31ae6be24643a298c9e7dbb2fb107325b454c44fa8a1646165bcb21f5ec",
+      "salt": "4d93fbf01f9bf50ba84bf35ac1f30748",
+      "createdAt": "2026-09-29T12:39:04.699Z",
+      "updatedAt": "2026-09-29T12:39:18.576Z"
+    }
+  ]
+}
