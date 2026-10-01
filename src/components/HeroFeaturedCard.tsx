@@ -6,12 +6,14 @@ import { motion, AnimatePresence, type Variants } from 'motion/react';
 import { Play, ChevronUp, ChevronDown, Flame, Star, Film, Plus, Shield } from 'lucide-react';
 import { MediaItem } from '@/types';
 import TrailerModal from './TrailerModal';
+import { useAuth } from './AuthProvider';
 
 interface HeroFeaturedCardProps {
   items: MediaItem[];
 }
 
 export default function HeroFeaturedCard({ items }: HeroFeaturedCardProps) {
+  const { isAdmin } = useAuth();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState<number>(1); // 1 = down/next, -1 = up/prev
   const [isHovered, setIsHovered] = useState(false);
@@ -58,13 +60,23 @@ export default function HeroFeaturedCard({ items }: HeroFeaturedCardProps) {
           <p className="text-xs sm:text-sm text-gray-400 font-medium leading-relaxed">
             Search any movie or TV series title from the Admin Panel to automatically pull HD posters, cast, trailers, and streaming servers.
           </p>
-          <Link
-            href="/admin"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-brand-500 hover:bg-brand-600 text-white rounded-full text-xs font-bold shadow-lg shadow-brand-500/30 transition transform hover:scale-105"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Add Movies in Admin</span>
-          </Link>
+          {isAdmin ? (
+            <Link
+              href="/admin"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-brand-500 hover:bg-brand-600 text-white rounded-full text-xs font-bold shadow-lg shadow-brand-500/30 transition transform hover:scale-105"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add Movies in Admin</span>
+            </Link>
+          ) : (
+            <Link
+              href="/browse"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-brand-500 hover:bg-brand-600 text-white rounded-full text-xs font-bold shadow-lg shadow-brand-500/30 transition transform hover:scale-105"
+            >
+              <Film className="w-4 h-4" />
+              <span>Explore Catalog</span>
+            </Link>
+          )}
         </div>
 
         <div className="hidden md:flex items-center justify-center w-36 h-36 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-500">

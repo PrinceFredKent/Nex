@@ -17,8 +17,8 @@ export default function Sidebar() {
     { label: 'Explore', href: '/browse', icon: Compass, hasDot: true },
     { label: 'Favorite', href: '/watchlist', icon: Heart, count: watchlist.length },
     ...(profile ? [{ label: 'Profile', href: '/profile', icon: User }] : [{ label: 'Sign In', href: '/auth/login', icon: User }]),
-    { label: 'Admin Panel', href: '/admin', icon: Shield },
-    { label: 'Settings', href: isAdmin ? '/admin?tab=settings' : (profile ? '/profile' : '/auth/login'), icon: Settings },
+    ...(isAdmin ? [{ label: 'Admin Panel', href: '/admin', icon: Shield }] : []),
+    ...(isAdmin ? [{ label: 'Settings', href: '/admin?tab=settings', icon: Settings }] : (profile ? [{ label: 'Settings', href: '/profile?tab=settings', icon: Settings }] : [])),
   ];
 
   const continueWatchingItems = history.slice(0, 4);

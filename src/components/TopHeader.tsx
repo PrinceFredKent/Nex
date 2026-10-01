@@ -123,15 +123,17 @@ export default function TopHeader() {
           {/* Theme Toggle Button */}
           <ThemeToggle />
 
-          {/* Direct Admin & Add Movies Button */}
-          <Link
-            href="/admin"
-            className="flex items-center gap-1.5 bg-brand-500 hover:bg-brand-600 text-white px-3.5 py-1.5 rounded-full shadow-sm text-xs font-bold transition shrink-0"
-            title="Admin Center - Add & Manage Movies"
-          >
-            <Shield className="w-3.5 h-3.5" />
-            <span>Admin</span>
-          </Link>
+          {/* Direct Admin & Add Movies Button - ONLY for authenticated Admins */}
+          {isAdmin && (
+            <Link
+              href="/admin"
+              className="flex items-center gap-1.5 bg-brand-500 hover:bg-brand-600 text-white px-3.5 py-1.5 rounded-full shadow-sm text-xs font-bold transition shrink-0"
+              title="Admin Center - Add & Manage Movies"
+            >
+              <Shield className="w-3.5 h-3.5" />
+              <span>Admin</span>
+            </Link>
+          )}
 
           {/* Notification Bell */}
           <Link
@@ -186,14 +188,16 @@ export default function TopHeader() {
                     <span>Favorite Watchlist</span>
                   </Link>
 
-                  <Link
-                    href="/admin"
-                    onClick={() => setIsDropdownOpen(false)}
-                    className="w-full px-4 py-2 text-xs font-bold text-brand-600 dark:text-brand-400 hover:bg-brand-50 dark:hover:bg-brand-500/10 flex items-center gap-2.5 transition"
-                  >
-                    <Shield className="w-3.5 h-3.5 text-brand-500" />
-                    <span>Admin & Add Movies</span>
-                  </Link>
+                  {isAdmin && (
+                    <Link
+                      href="/admin"
+                      onClick={() => setIsDropdownOpen(false)}
+                      className="w-full px-4 py-2 text-xs font-bold text-brand-600 dark:text-brand-400 hover:bg-brand-50 dark:hover:bg-brand-500/10 flex items-center gap-2.5 transition"
+                    >
+                      <Shield className="w-3.5 h-3.5 text-brand-500" />
+                      <span>Admin & Add Movies</span>
+                    </Link>
+                  )}
 
                   <div className="border-t border-slate-100 dark:border-white/10 my-1" />
 
